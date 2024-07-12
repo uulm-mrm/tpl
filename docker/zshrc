@@ -1,0 +1,66 @@
+PROMPT='[TPL] %B%F{blue}%n@%m%f%b %B%F{blue}%~%f%b > '
+RPROMPT='%*'
+
+TERM=xterm-256color
+
+HISTFILE=~/.histfile
+HISTSIZE=10000000
+SAVEHIST=10000000
+
+setopt bang_hist                 
+setopt extended_history          
+setopt share_history
+setopt hist_reduce_blanks        
+setopt hist_find_no_dups         
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups         
+setopt hist_verify               
+
+setopt autocd
+setopt extendedglob
+setopt nomatch
+unsetopt correct_all
+unsetopt beep
+
+# Standard emacs keybindings
+bindkey -e
+
+# Completion system configuration
+zstyle :compinstall filename '/home/ruof/.zshrc'
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+autoload -Uz compinit
+compinit
+
+autoload -Uz add-zsh-hook
+
+run_ranger () {
+    echo
+    ranger --choosedir=$HOME/.rangerdir < $TTY
+    LASTDIR=`cat $HOME/.rangerdir`
+    cd "$LASTDIR"
+    zle reset-prompt
+}
+zle -N run_ranger
+bindkey "^o" run_ranger
+
+alias ls='ls --color=auto -F -p'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+PATH="$PATH:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+PATH="$PATH:$HOME/.local/bin"
+
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/nvidia/lib:/usr/local/nvidia/lib64"
+
+if ! pip3 show tpl > /dev/null 2>&1; then
+    printf "\nPackage tpl was not found! Building tpl for you :) \n\n"
+    # remove old build remains (if any)
+    $(rm -rf /workspace/tpl/library/build; rm -rf /workspace/tpl/library/*.egg-info)
+    pip3 install -e /workspace/tpl/library/
+fi

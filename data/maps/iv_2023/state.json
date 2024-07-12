@@ -1,0 +1,264 @@
+{
+  "33470e1815f54641a06e1ea345f1bf04": {
+    "name": "albert_einstein_allee",
+    "uuid": "33470e1815f54641a06e1ea345f1bf04",
+    "velocity_limits": [
+      {
+        "uuid": "cd2c4f4d26714a3ea4d2425af02f5edc",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570233.6458621558,
+            5363768.782191173
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "light_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570237.5159379346,
+            5363765.357252162
+          ]
+        },
+        "detection_radius": 2.0,
+        "state": -1,
+        "t_last_det": 0.0,
+        "__class__": "tpl.environment.map_module.TrafficLight"
+      },
+      {
+        "uuid": "4420e88469a54d829f6d0718d1afe99f",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570377.6237863273,
+            5363851.400872148
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "light_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570382.0600737298,
+            5363848.874652932
+          ]
+        },
+        "detection_radius": 1.0,
+        "state": -1,
+        "t_last_det": 0.0,
+        "__class__": "tpl.environment.map_module.TrafficLight"
+      },
+      {
+        "uuid": "1d8a3540b9c547f5b376d64e73dbaa63",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570442.5118343726,
+            5363886.556984641
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "light_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570445.9855303207,
+            5363883.702165557
+          ]
+        },
+        "detection_radius": 1.0,
+        "state": -1,
+        "t_last_det": 0.0,
+        "__class__": "tpl.environment.map_module.TrafficLight"
+      },
+      {
+        "uuid": "027b2d9b82bd493bafce9031504b4dae",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570506.2470680332,
+            5363922.631637184
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "light_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570510.0598040433,
+            5363918.916663636
+          ]
+        },
+        "detection_radius": 1.0,
+        "state": -1,
+        "t_last_det": 0.0,
+        "__class__": "tpl.environment.map_module.TrafficLight"
+      },
+      {
+        "uuid": "b04ac7e415c24b9e8768bd6d54518a42",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570438.814158232,
+            5363902.430506597
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "light_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570435.3289577599,
+            5363904.374881597
+          ]
+        },
+        "detection_radius": 1.0,
+        "state": -1,
+        "t_last_det": 0.0,
+        "__class__": "tpl.environment.map_module.TrafficLight"
+      },
+      {
+        "uuid": "31eb72e8facb4b4499b3c11c3488d953",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570377.9380482138,
+            5363866.550816822
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "light_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570373.0261674607,
+            5363868.621511649
+          ]
+        },
+        "detection_radius": 1.0,
+        "state": -1,
+        "t_last_det": 0.0,
+        "__class__": "tpl.environment.map_module.TrafficLight"
+      },
+      {
+        "uuid": "fad77723e5e44cb4af5b4323eb06ba4e",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570245.9795067552,
+            5363797.746457799
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "light_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            570241.213919841,
+            5363799.28020991
+          ]
+        },
+        "detection_radius": 1.0,
+        "state": -1,
+        "t_last_det": 0.0,
+        "__class__": "tpl.environment.map_module.TrafficLight"
+      }
+    ],
+    "turn_ind_points": [],
+    "map_switch_points": [],
+    "intersection_paths": [],
+    "control_points": {
+      "__class__": "__extern__",
+      "path": "33470e1815f54641a06e1ea345f1bf04.control_points"
+    },
+    "spline_degree": 5,
+    "smoothing": 0.0,
+    "step_size_discr": 0.5,
+    "closed_path": 1,
+    "__class__": "tpl.environment.map_module.Map"
+  },
+  "9c25601a39ab45799169be18a5f494de": {
+    "name": "lehr_map",
+    "uuid": "9c25601a39ab45799169be18a5f494de",
+    "velocity_limits": [
+      {
+        "uuid": "cd8456ec1a4e4712ad3c37f09fa64956",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            571707.5175124081,
+            5364789.309354317
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "light_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            571707.0816821927,
+            5364785.604797487
+          ]
+        },
+        "detection_radius": 1.0,
+        "state": -1,
+        "t_last_det": 0.0,
+        "__class__": "tpl.environment.map_module.TrafficLight"
+      }
+    ],
+    "turn_ind_points": [],
+    "map_switch_points": [],
+    "intersection_paths": [],
+    "control_points": {
+      "__class__": "__extern__",
+      "path": "9c25601a39ab45799169be18a5f494de.control_points"
+    },
+    "spline_degree": 5,
+    "smoothing": 0.0,
+    "step_size_discr": 0.5,
+    "closed_path": 1,
+    "__class__": "tpl.environment.map_module.Map"
+  },
+  "1aae32b429d14369a4d0a06bd652a491": {
+    "name": "lehr_crossing_north_to_east_20230502",
+    "uuid": "1aae32b429d14369a4d0a06bd652a491",
+    "velocity_limits": [],
+    "turn_ind_points": [],
+    "map_switch_points": [],
+    "intersection_paths": [],
+    "control_points": {
+      "__class__": "__extern__",
+      "path": "1aae32b429d14369a4d0a06bd652a491.control_points"
+    },
+    "spline_degree": 5,
+    "smoothing": 0.0,
+    "step_size_discr": 0.5,
+    "closed_path": 0,
+    "__class__": "tpl.environment.map_module.Map"
+  },
+  "__class__": "objtoolbox.utils.bundle"
+}

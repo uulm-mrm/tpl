@@ -1,0 +1,1170 @@
+{
+  "window_pos": {
+    "__class__": "numpy.ndarray",
+    "dtype": "float32",
+    "data": [
+      0.0,
+      37.0
+    ]
+  },
+  "window_size": {
+    "__class__": "numpy.ndarray",
+    "dtype": "float32",
+    "data": [
+      1920.0,
+      1163.0
+    ]
+  },
+  "config_delete_required": 0,
+  "window_config": "[Window][Exception]\nPos=0,389\nSize=1059,774\nCollapsed=0\nDockId=0x00000005,0\n\n[Window][App state]\nPos=488,0\nSize=320,240\nCollapsed=0\n\n[Window][Local variables]\nSize=1059,387\nCollapsed=0\nDockId=0x00000004,0\n\n[Window][Source code]\nPos=1030,275\nSize=320,240\nCollapsed=0\n\n[Window][Main DockSpace]\nPos=0,26\nSize=1920,1137\nCollapsed=0\n\n[Window][Debug##Default]\nPos=60,60\nSize=400,400\nCollapsed=0\n\n[Window][menu_file_selection]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###60e6b07301184665acfea45ed4d49952]\nPos=962,26\nSize=958,1137\nCollapsed=0\nDockId=0x00000007,0\n\n[Window][###2fb1e22e33594aa3848ef0131382f7aa]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###bbf3e7b68eba4ce392e30cd377492c54]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###1c0861396f3a4956a548cc5b756933bd]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###3770c75d7c97471b9df2f9ad30693c1e]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###c38c1b80c6f3485c8e91e4423efbf1b2]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###e91946be79d044b38cbfffc2f62e324e]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###c182af2b8fc843ae905a7ce69d294d27]\nPos=291,203\nSize=320,240\nCollapsed=0\n\n[Window][###d34ecb0453764d5b85fe38cc031d9ba4]\nPos=260,159\nSize=506,617\nCollapsed=0\n\n[Window][###5e3a8424a7444665a7d186d8941dcd81]\nPos=0,26\nSize=899,1137\nCollapsed=0\nDockId=0x00000008,0\n\n[Window][###c30d2cb26ecd4950a5b449049f23a4c0]\nPos=901,758\nSize=1019,405\nCollapsed=0\nDockId=0x0000000B,0\n\n[Window][###3b7a910f5f3b47fbb706fbba7e94fb6f]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###4b270c73e2024c5bb9acaa6fc5da3ecb]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###ea8da97f11fc44d79f4b2d67d92c112f]\nPos=105,101\nSize=320,240\nCollapsed=0\n\n[Window][###bfef114bc7a648c9b0c77a54941ab63e]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###e4664d5bb44f413894aef022e708e858]\nPos=74,89\nSize=320,240\nCollapsed=0\n\n[Window][###a64ddecc687f45cd90089b3ea7a9983d]\nPos=60,60\nSize=681,563\nCollapsed=0\n\n[Window][###969910ebb0214e4b81c2ce7fea3577d9]\nPos=0,26\nSize=230,574\nCollapsed=0\nDockId=0x0000000A,0\n\n[Window][###aace4a285c2b4ec29b4d83b7519f59ee]\nPos=232,26\nSize=568,574\nCollapsed=0\nDockId=0x0000000D,0\n\n[Window][###1e625f4f631049e89a86494b467f0cbf]\nPos=72,63\nSize=643,521\nCollapsed=0\n\n[Window][###f070e46731554b2a9b0d14887f6c7ae3]\nPos=0,784\nSize=1920,379\nCollapsed=0\nDockId=0x00000010,0\n\n[Window][###e39c9889623e4c2481f5e8afe1d2bd26]\nPos=0,26\nSize=1920,378\nCollapsed=0\nDockId=0x0000000E,1\n\n[Window][###bc4cd0ebce6e4e3e96cd5c183f9d27ea]\nPos=0,26\nSize=1920,378\nCollapsed=0\nDockId=0x0000000E,0\n\n[Window][###c897fc0bd1e84fc5bed6b02522a1de2d]\nPos=60,60\nSize=1117,718\nCollapsed=0\n\n[Window][Select path]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###3ed7fde6828745aba66b071ff496fd7f]\nPos=319,233\nSize=652,510\nCollapsed=0\n\n[Window][###945bb5b6d78743f88fe250be20f5c713]\nPos=0,26\nSize=1920,628\nCollapsed=0\nDockId=0x00000013,0\n\n[Window][###38c92932dd1e4409ae74aaf0f071e98e]\nPos=110,414\nSize=320,240\nCollapsed=0\n\n[Window][###945bb5b6d78743f88fe250be20f5c713velocity]\nPos=0,656\nSize=1920,507\nCollapsed=0\nDockId=0x00000014,0\n\n[Window][###20361a0d7f0a4a7abbf92e52720b9058]\nPos=504,26\nSize=793,1137\nCollapsed=0\nDockId=0x0000003B,1\n\n[Window][###20361a0d7f0a4a7abbf92e52720b9058velocity]\nPos=1299,26\nSize=621,614\nCollapsed=0\nDockId=0x00000017,0\n\n[Window][###20361a0d7f0a4a7abbf92e52720b9058curvature]\nPos=1299,642\nSize=621,521\nCollapsed=0\nDockId=0x00000018,0\n\n[Window][###4e4acd939bd343b6ba1062e739ea9947]\nPos=0,598\nSize=640,565\nCollapsed=0\nDockId=0x00000024,0\n\n[Window][###e12b12766b144cd39b6c3c95dabeb4d2]\nPos=0,929\nSize=574,234\nCollapsed=0\nDockId=0x0000001B,0\n\n[Window][###cc1528c6d51348069e9dd6cc1ce336f2]\nPos=0,26\nSize=471,571\nCollapsed=0\nDockId=0x0000002B,0\n\n[Window][###75d97cd70af84072be27923cc8eb8a6c]\nPos=761,751\nSize=1159,412\nCollapsed=0\nDockId=0x0000001F,0\n\n[Window][###cd86e0fd1e9c4f49b7e0be4ea5851781]\nPos=761,26\nSize=1159,723\nCollapsed=0\nDockId=0x0000003B,0\n\n[Window][###e0946bfb1b8947529107c8e3514b0430]\nPos=761,751\nSize=1159,412\nCollapsed=0\nDockId=0x0000001F,1\n\n[Window][###5d1731846e974bc798632f60e5c0a5d5]\nPos=60,60\nSize=1422,676\nCollapsed=0\nDockId=0x0000001D,0\n\n[Window][###5d1731846e974bc798632f60e5c0a5d5velocity]\nPos=810,60\nSize=672,676\nCollapsed=0\nDockId=0x00000020,0\n\n[Window][###279457dd49e54779be56864d82904dad]\nPos=761,751\nSize=1159,412\nCollapsed=0\nDockId=0x0000001F,2\n\n[Window][###5d1731846e974bc798632f60e5c0a5d5curvature]\nPos=60,60\nSize=1603,717\nCollapsed=0\n\n[Window][###b42f88a406e84cd683b22b9c1c6518f0]\nPos=761,751\nSize=1159,412\nCollapsed=0\nDockId=0x0000001F,3\n\n[Window][###abe86dbf3f2a4ae2876f815324c864ac]\nPos=40,82\nSize=477,374\nCollapsed=0\n\n[Window][###6179af637eb84f598f31be16ce403bc3]\nPos=0,26\nSize=471,571\nCollapsed=0\nDockId=0x0000002B,1\n\n[Window][###97fb7d1181ec44638e46e35ad772161e]\nPos=807,346\nSize=320,240\nCollapsed=0\n\n[Window][###97fb7d1181ec44638e46e35ad772161evelocity]\nPos=376,114\nSize=1001,651\nCollapsed=0\n\n[Window][###173b57fdd2184157b05d158cb45296d2]\nPos=1118,483\nSize=802,355\nCollapsed=0\nDockId=0x00000028,0\n\n[Window][###sel_path_{self.uuid}]\nPos=702,330\nSize=516,502\nCollapsed=0\n\n[Window][###sel_path_6179af637eb84f598f31be16ce403bc3]\nPos=702,330\nSize=516,502\nCollapsed=0\n\n[Window][###sel_path_4e4acd939bd343b6ba1062e739ea9947]\nPos=702,330\nSize=516,502\nCollapsed=0\n\n[Window][###1d51ebd39de248e0aadd6912d5758773]\nPos=176,183\nSize=539,381\nCollapsed=0\n\n[Window][###51971eefc7624406a9936aa4fcf88941]\nPos=60,60\nSize=610,498\nCollapsed=0\n\n[Window][###2e767e25264b427b88abf0361ff5315f]\nPos=60,60\nSize=598,451\nCollapsed=0\n\n[Window][window]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###beec3983a7284c96a8b254230d1b0980]\nPos=796,26\nSize=320,455\nCollapsed=0\nDockId=0x0000002A,0\n\n[Window][###29d5543f0a154ad3bc78dd13fda82c78]\nPos=1118,26\nSize=802,455\nCollapsed=0\nDockId=0x00000027,1\n\n[Window][###fd2c2fee4f3949c79bc1a1c14d50f5b9]\nPos=196,117\nSize=732,567\nCollapsed=0\n\n[Window][###219c9923f87b415f88daa8a5a217c282]\nPos=1293,26\nSize=179,610\nCollapsed=0\nDockId=0x00000027,0\n\n[Window][###6a4ec6801a5a457a9f4acd9bfb86da79]\nPos=0,26\nSize=569,285\nCollapsed=0\nDockId=0x0000002B,2\n\n[Window][###2bfd19e6cac447ec92276e5767b7d1bd]\nPos=1267,590\nSize=562,443\nCollapsed=0\n\n[Window][###6a4ec6801a5a457a9f4acd9bfb86da79velocity]\nPos=0,598\nSize=569,565\nCollapsed=0\nDockId=0x00000024,0\n\n[Window][###6a4ec6801a5a457a9f4acd9bfb86da79curvature]\nPos=566,286\nSize=1300,770\nCollapsed=0\nDockId=0x0000003B,1\n\n[Window][###173f553067424075939cc4a452ff9164]\nPos=498,700\nSize=929,240\nCollapsed=0\n\n[Window][###e36a5ac621fe46c988f14d78853f9671]\nPos=548,329\nSize=740,507\nCollapsed=0\n\n[Window][###13b24d96152a4478be75709ed2c30cfe]\nPos=633,201\nSize=616,681\nCollapsed=0\n\n[Window][Dear ImGui Demo]\nPos=249,257\nSize=702,680\nCollapsed=0\n\n[Window][Select record path]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###4f27475a496949c4866fd83b0b59c25c]\nPos=363,248\nSize=218,610\nCollapsed=0\n\n[Window][###7c5d38c7344e41bda7a81993c81bed20]\nPos=958,758\nSize=962,405\nCollapsed=0\nDockId=0x0000002E,0\n\n[Window][###sel_path_7c5d38c7344e41bda7a81993c81bed20]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][Select map store]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###a88b60b2cc0c4c04b209d72da784b5c3]\nPos=607,418\nSize=1030,646\nCollapsed=0\n\n[Window][###7d432e108bd54d109510a2e44269c148]\nPos=719,164\nSize=521,702\nCollapsed=0\n\n[Window][###0615acfa21164f04a9c69fa1feb68b85]\nPos=65,82\nSize=568,554\nCollapsed=0\n\n[Window][###eb741a6436d14e2a9a3d4d07cdc40796]\nPos=0,597\nSize=569,566\nCollapsed=0\nDockId=0x0000002C,0\n\n[Window][###13f2974fcd3d4c1f8856eba3e68a3e2d]\nPos=0,26\nSize=1920,1137\nCollapsed=0\n\n[Window][###d97b7e9403b047129b15eade066c8021]\nPos=0,26\nSize=1728,767\nCollapsed=0\n\n[Window][###d97b7e9403b047129b15eade066c8021velocity]\nPos=0,795\nSize=947,368\nCollapsed=0\n\n[Window][###d97b7e9403b047129b15eade066c8021curvature]\nPos=0,795\nSize=1728,368\nCollapsed=0\n\n[Window][###0505dc70ae2240ef850d912f10ed81cc]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###080331f8fec8432f8a3fb536519d31c9]\nPos=0,26\nSize=1920,1137\nCollapsed=0\n\n[Window][###10bd3cb140b34b09afdab2f3425e627a]\nPos=0,26\nSize=1920,1137\nCollapsed=0\n\n[Window][###e82dc2250f4c48eea2cbe87bf57e18fb]\nPos=0,26\nSize=831,999\nCollapsed=0\n\n[Window][###8bb9307c87dd4710b45b3ab69a75d6cb]\nPos=1084,26\nSize=836,748\nCollapsed=0\n\n[Window][###b2331b9567de4eea822f5f1a13028814]\nPos=761,751\nSize=1159,412\nCollapsed=0\nDockId=0x0000001F,4\n\n[Window][###b5a4e1e9f5524c7f946e6fee4eeadaae]\nPos=962,26\nSize=958,748\nCollapsed=0\n\n[Window][###e78fda2885904a55b52eb58ed065023d]\nPos=962,26\nSize=958,748\nCollapsed=0\n\n[Window][###eb6a4a86443e4033a55b3c20e5f47bc9]\nPos=962,26\nSize=958,748\nCollapsed=0\n\n[Window][###1491d3ea3dce414b9b3def769f88b78a]\nPos=1108,26\nSize=812,748\nCollapsed=0\n\n[Window][###438eb2a68eb346bdb911be6e20ece2a6]\nPos=972,26\nSize=948,748\nCollapsed=0\n\n[Window][###c8a36ecee8e84984abd014155793134c]\nPos=463,196\nSize=453,521\nCollapsed=0\n\n[Window][###9ee2af4f86934433bfd8353b62e73a5d]\nPos=380,313\nSize=947,525\nCollapsed=0\n\n[Window][###44ce3e333baa4cff9d9d59c69a4ded74]\nPos=60,60\nSize=761,545\nCollapsed=0\n\n[Window][###901ff25e7b154aad92628ee12cc316d1]\nPos=123,143\nSize=717,714\nCollapsed=0\n\n[Window][###f9f023156f7a4efb9ac8650961ef1412]\nPos=345,181\nSize=580,730\nCollapsed=0\n\n[Window][###d25708803d874c0dad9c56ea1efdcb29]\nPos=473,26\nSize=1447,565\nCollapsed=0\nDockId=0x00000025,0\n\n[Window][###986389942a194df9a889f85f6915f04c]\nPos=690,346\nSize=320,240\nCollapsed=0\n\n[Window][###412c755dd8f440929c823f8939914fac]\nPos=127,188\nSize=892,782\nCollapsed=0\n\n[Window][###sel_path_412c755dd8f440929c823f8939914fac]\nPos=702,330\nSize=516,502\nCollapsed=0\n\n[Window][###52f070daa9024f708f490f44c56a5f6f]\nPos=0,26\nSize=720,516\nCollapsed=0\n\n[Window][###d01acb7ca1204f36898a9ea4eb7631a1]\nPos=0,26\nSize=974,646\nCollapsed=0\nDockId=0x0000003B,0\n\n[Window][###ae4e7f6f146842ccbfd079685607408a]\nPos=0,758\nSize=970,405\nCollapsed=0\nDockId=0x0000003D,0\n\n[Window][###e8565c6befb14403a70ecb184fb8d1d6]\nPos=0,674\nSize=974,489\nCollapsed=0\nDockId=0x0000003D,0\n\n[Window][###f72fd3e30fb84551a5b66849549a9c5d]\nPos=0,26\nSize=475,569\nCollapsed=0\nDockId=0x0000002C,0\n\n[Window][###8f9e77a81a4e4512965fb7a12827bb47]\nPos=0,674\nSize=974,489\nCollapsed=0\nDockId=0x0000003D,1\n\n[Window][###ceaa88de46bf475dbc88db277d3b81db]\nPos=60,60\nSize=866,612\nCollapsed=0\n\n[Window][###056e4f5cff234b7e8bf99b8cd4af0478]\nPos=481,624\nSize=646,423\nCollapsed=0\n\n[Window][###aae3fc74d44f4d0794f977e46074feb7]\nPos=1495,26\nSize=353,728\nCollapsed=0\n\n[Window][###f97232cf80324cd597f71719ec9f13d8]\nPos=926,26\nSize=922,728\nCollapsed=0\n\n[Window][###394547ffffec41a39aefc675dc14ce47]\nPos=297,273\nSize=320,240\nCollapsed=0\n\n[Window][###f9194cd0a71044758a14b092777674b0]\nPos=60,60\nSize=650,686\nCollapsed=0\n\n[Window][###21a7ae117f1b4ccc9bbcfb42f7f4e31a]\nPos=997,270\nSize=634,450\nCollapsed=0\n\n[Window][###9e73c91622bc48e1a1c7624d5af7828a]\nPos=773,243\nSize=753,457\nCollapsed=0\n\n[Window][###5c8a8d8fb4a14b949ae656b9962a05e7]\nPos=428,279\nSize=979,585\nCollapsed=0\n\n[Window][###590312ab1d0b4c418d6b15201aacb486]\nPos=1321,26\nSize=599,1137\nCollapsed=0\n\n[Window][###c37cf15f182e4d2b87bf7ff6b2678ae6]\nPos=991,26\nSize=929,1137\nCollapsed=0\n\n[Window][###49339fd5675948c2b01a54337f652fd4]\nPos=0,26\nSize=1728,1023\nCollapsed=0\n\n[Window][###cdfd3d222ac547e88047a077ef30232c]\nPos=0,634\nSize=947,529\nCollapsed=0\n\n[Window][###6de9dde9276a40d68651e71fd1d05b4a]\nPos=0,667\nSize=979,496\nCollapsed=0\nDockId=0x0000003D,3\n\n[Window][###cf8b65d1afe04f759eb39d0afa56b1ce]\nPos=998,477\nSize=529,621\nCollapsed=0\n\n[Window][###6497e429598240e6ad91918a6c11d6f8]\nPos=1023,219\nSize=558,511\nCollapsed=0\n\n[Window][###sel_path_6497e429598240e6ad91918a6c11d6f8]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][Select config]\nPos=743,472\nSize=433,218\nCollapsed=0\n\n[Window][###733596cdadae4d7c94403fddf4bb0d2c]\nPos=866,26\nSize=982,999\nCollapsed=0\n\n[Window][###sel_path_733596cdadae4d7c94403fddf4bb0d2c]\nPos=192,133\nSize=616,530\nCollapsed=0\n\n[Window][###7124309988d242729f0f54e0a016b231]\nPos=866,26\nSize=982,999\nCollapsed=0\n\n[Window][###sel_path_7124309988d242729f0f54e0a016b231]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###53e944b1028c4d7a9256da9d34a4d9bb]\nPos=866,26\nSize=982,999\nCollapsed=0\n\n[Window][###sel_path_53e944b1028c4d7a9256da9d34a4d9bb]\nPos=616,303\nSize=616,530\nCollapsed=0\n\n[Window][###a3a8aeabcd5c4290bd3d74ad110c2c58]\nPos=866,26\nSize=982,999\nCollapsed=0\n\n[Window][###262a84c4ad1a4b4ead08b51ce6bb4c7d]\nPos=976,674\nSize=944,489\nCollapsed=0\nDockId=0x00000033,1\n\n[Window][###58bf3d0dced546d1bcea0edae37698e6]\nPos=976,674\nSize=944,489\nCollapsed=0\nDockId=0x00000033,2\n\n[Window][###f7e5708a526246b08d074e5aa1e21552]\nPos=972,758\nSize=948,405\nCollapsed=0\nDockId=0x00000033,2\n\n[Window][###4dfcb1e7cd3648eeb0359b1ee321049f]\nPos=976,674\nSize=944,489\nCollapsed=0\nDockId=0x00000033,0\n\n[Window][###sel_path_262a84c4ad1a4b4ead08b51ce6bb4c7d]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###5c44d519257c4493b6749d77645c506b]\nPos=0,26\nSize=1920,730\nCollapsed=0\n\n[Window][###sel_path_4dfcb1e7cd3648eeb0359b1ee321049f]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###sel_path_58bf3d0dced546d1bcea0edae37698e6]\nPos=617,303\nSize=616,530\nCollapsed=0\n\n[Window][###a464b31950ca4abab68e6647b7316b40]\nPos=1448,758\nSize=472,405\nCollapsed=0\n\n[Window][###6119547173e349b684b025aa34d22112]\nPos=1448,758\nSize=472,405\nCollapsed=0\n\n[Window][###e0cd4188ae7f4bdf97e89a8deb5e6411]\nPos=1404,758\nSize=516,405\nCollapsed=0\n\n[Window][###4fe2b9f2425749b2b273a9218559b45a]\nPos=1469,758\nSize=451,405\nCollapsed=0\n\n[Window][###1273f34df9ad45838c34bc17d01a60c3]\nPos=1404,731\nSize=446,405\nCollapsed=0\nDockId=0x00000034,0\n\n[Window][Lat. Lon. Position]\nPos=102,100\nSize=1390,871\nCollapsed=1\n\n[Window][Velocity Profile]\nPos=5,68\nSize=750,514\nCollapsed=1\n\n[Window][Traj]\nPos=256,210\nSize=1183,756\nCollapsed=0\n\n[Window][###1ad678227ec5492882a81c476facd764]\nPos=386,677\nSize=480,295\nCollapsed=0\n\n[Window][###c7c7e16ce88b43d5ae56c031ce9969ab]\nPos=1235,26\nSize=685,730\nCollapsed=0\n\n[Window][###f3d06aa56d0442a194663ec816c92675]\nPos=976,26\nSize=944,348\nCollapsed=0\nDockId=0x00000037,0\n\n[Window][###5eda5b3d0ecb4e49b5e15b014ab25199]\nPos=973,26\nSize=947,367\nCollapsed=0\nDockId=0x00000037,1\n\n[Window][Select export path]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###eb8816b90fe44a3d9ae0dfa1c2aa56e8]\nPos=976,376\nSize=944,296\nCollapsed=0\nDockId=0x00000038,0\n\n[Window][###135429f9d4ff4010a9842dc33e40606e]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###65eeef61d2494e9a980e4b1b267d8ee3]\nPos=0,674\nSize=974,489\nCollapsed=0\nDockId=0x0000003D,2\n\n[Window][###7ac9c6097db9411d9903d5fdd98aba10]\nPos=0,26\nSize=1920,1137\nCollapsed=0\n\n[Window][###427d52dd15f4469dbc9ed52503349a48]\nPos=0,26\nSize=1920,1137\nCollapsed=0\n\n[Window][###a2e4ac3652444bd88ba9d70740b0736a]\nPos=0,26\nSize=1665,999\nCollapsed=0\n\n[Window][###a6225d7dfcc6458c894e0c36fea3f643]\nPos=786,355\nSize=320,240\nCollapsed=0\n\n[Window][###sel_path_a6225d7dfcc6458c894e0c36fea3f643]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][positions]\nPos=193,428\nSize=833,577\nCollapsed=0\n\n[Window][###eefd750575df42caaee8ad155b72949c]\nPos=971,26\nSize=949,282\nCollapsed=0\n\n[Window][###5a545138e7e7424db45268a583870193]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###ef39aefc5f9347d5896e49f0346de629]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###4346a35300eb4e19831c63e4013cb9aa]\nPos=1424,26\nSize=496,730\nCollapsed=0\n\n[Window][###9395857197da472daee3d0a662e2f449]\nPos=1003,26\nSize=917,365\nCollapsed=0\n\n[Window][###74fe9685098248f887752123f96060ca]\nPos=0,26\nSize=969,553\nCollapsed=0\n\n[Window][###2701ae48c57f461b97ae6cbbc59f035b]\nPos=972,772\nSize=948,391\nCollapsed=0\n\n[Window][###fffa8082d0ce4a53a93dfd14f8a50c06]\nPos=972,772\nSize=948,391\nCollapsed=0\n\n[Window][###2034a0add2ba4dd7a1131f4270428854]\nPos=971,26\nSize=949,459\nCollapsed=0\n\n[Window][###3d91c3dcb3824a8e9e07134a1e424e0f]\nPos=972,581\nSize=948,582\nCollapsed=0\n\n[Window][###04d3a837b1d54c6b8af45a11d971191e]\nPos=1448,487\nSize=472,283\nCollapsed=0\n\n[Window][###f496d8728b1b4f9499897355b764bc0e]\nPos=1448,487\nSize=472,283\nCollapsed=0\n\n[Window][###65da9e92dd39499eb578c43f7262166b]\nPos=0,772\nSize=970,391\nCollapsed=0\n\n[Window][###fc6ae550041841b29fb153504a1749b7]\nPos=1458,310\nSize=462,269\nCollapsed=0\n\n[Window][###6aec1bf43a0f4267b690856be876b39e]\nPos=0,581\nSize=970,582\nCollapsed=0\n\n[Window][###fa80e8c3afd24829b087f35fd0d762fd]\nPos=0,581\nSize=970,582\nCollapsed=0\n\n[Window][###07aa51cd01e946f1895d4d66d9de32f5]\nPos=0,26\nSize=951,598\nCollapsed=0\nDockId=0x0000003B,1\n\n[Window][###810db05e9d014aa197f76c5e8c48ce92]\nPos=60,60\nSize=552,376\nCollapsed=0\n\n[Window][###b03e1836dfa54efcbc716678b341184b]\nPos=1003,26\nSize=917,462\nCollapsed=0\n\n[Window][###0dd28cc226b04db69e7cc83cc6df1e4f]\nPos=953,26\nSize=967,681\nCollapsed=0\nDockId=0x00000037,2\n\n[Window][###a016aacf9fa945d29494e1af538bee22]\nPos=957,709\nSize=963,454\nCollapsed=0\nDockId=0x00000033,3\n\n[Window][###sel_path_a016aacf9fa945d29494e1af538bee22]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###d2255a43f2af4ccb868c78c7e3d1a9ff]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###a650b20ebee14fc0a4f29030c7c3e657]\nPos=953,26\nSize=967,644\nCollapsed=0\n\n[Window][###96704929c7754e2ca502c9b51daded83]\nPos=875,188\nSize=526,437\nCollapsed=0\n\n[Window][###da354f71663f477db89d0709ad4a0346]\nPos=254,223\nSize=731,554\nCollapsed=0\n\n[Window][###8c9a1b5e833b4ce0ba326719f7e1a311]\nPos=150,261\nSize=906,697\nCollapsed=0\n\n[Window][###aa8db52225fc4f138c60776dd80d31f7]\nPos=60,60\nSize=827,712\nCollapsed=0\n\n[Window][###866686091e2c4c288c3b6c30eaefc88b]\nPos=1154,209\nSize=454,452\nCollapsed=0\n\n[Window][###51bbb12143eb4d56a71a80ed729d586f]\nPos=0,491\nSize=955,672\nCollapsed=0\n\n[Window][###6615e2200cbc4fa4bd0fe5c939b3f1b4]\nPos=60,60\nSize=1234,880\nCollapsed=0\n\n[Window][###d120ef3c7f314e87a7178c9f5a80b815]\nPos=0,691\nSize=955,472\nCollapsed=0\n\n[Window][###edfe818e44b44a918363b4f28485acbf]\nPos=30,152\nSize=320,240\nCollapsed=0\n\n[Window][###5238e7d686b44663a2dd497a7f6d9c06]\nPos=957,26\nSize=963,663\nCollapsed=0\n\n[Window][###78bd12e03bf743c78a11cb86c4345e27]\nPos=555,26\nSize=400,663\nCollapsed=0\n\n[Window][###7628c26bc3cb49cda3ba0e7ea607a35e]\nPos=1694,718\nSize=226,445\nCollapsed=0\n\n[Window][###41d8306321614a93b5add9283e7fa402]\nPos=0,26\nSize=318,757\nCollapsed=0\n\n[Window][###d4cbf3e7301f48ca8e1b3c10f154636c]\nPos=358,396\nSize=802,529\nCollapsed=0\n\n[Window][###9b808aad2af944ac8dab43df6c77f8b2]\nPos=0,679\nSize=933,484\nCollapsed=0\n\n[Window][###1303c2b90183486e95aa72502e572cd4]\nPos=0,679\nSize=933,484\nCollapsed=0\n\n[Window][###7267b0bd67b44a9595ca58ae7c2ad463]\nPos=935,26\nSize=985,651\nCollapsed=0\n\n[Window][###fca950f2825b433aa04c26795ec2b0ee]\nPos=0,774\nSize=933,389\nCollapsed=0\n\n[Window][###d2c66567d86848e48f005cf00ccc50f5]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###c170d7b375ba45bb82ab5b21fa9ee9fc]\nPos=0,679\nSize=933,484\nCollapsed=0\n\n[Window][###627633f94371452b860116562f8df9df]\nPos=0,592\nSize=944,571\nCollapsed=0\n\n[Window][###afd050943fd8443d8a562e16f25b45b9]\nPos=0,26\nSize=944,564\nCollapsed=0\n\n[Window][###0413e267d7594549888489135b35ab88]\nPos=946,592\nSize=974,571\nCollapsed=0\n\n[Window][###9294150b42df498bb18d1e54751b1716]\nPos=946,26\nSize=974,1023\nCollapsed=0\n\n[Window][Delete config]\nPos=709,521\nSize=501,120\nCollapsed=0\n\n[Window][###055cfdfd408b48c198e85b6fa251d088]\nPos=1022,369\nSize=898,338\nCollapsed=0\n\n[Window][###b1e4297dc6bd4de8babeb69ac1f1f5f4]\nPos=942,26\nSize=978,329\nCollapsed=0\n\n[Window][###2efae2f7eff24c5eb772e084d9df2bee]\nPos=0,679\nSize=939,484\nCollapsed=0\n\n[Window][###9a751ee6c33b4b95900839225a54779b]\nPos=942,26\nSize=978,651\nCollapsed=0\n\n[Window][###81ec6d5a0be9412697b4ae4bc950f6a6]\nPos=0,41\nSize=1095,773\nCollapsed=0\n\n[Window][###aafa9626891d4a6fbd77d88d1de93fb6]\nPos=0,500\nSize=920,400\nCollapsed=0\n\n[Window][###b052c8c837124fd7946bc24a8b7a1d5d]\nPos=922,500\nSize=928,400\nCollapsed=0\n\n[Window][Config name]\nPos=771,530\nSize=378,102\nCollapsed=0\n\n[Window][###0a34e0a9a256438e84d3810019e92af4]\nPos=484,324\nSize=476,300\nCollapsed=0\n\n[Window][Map Editor - Recording]\nPos=0,438\nSize=463,334\nCollapsed=0\n\n[Window][Map Editor - Maps]\nPos=0,26\nSize=463,410\nCollapsed=0\n\n[Window][###a8b17db502a14f2180bf3a42e7eb21e9]\nPos=1156,387\nSize=622,562\nCollapsed=0\n\n[Window][Select source]\nPos=480,290\nSize=960,581\nCollapsed=0\n\n[Window][###62736bcd858848549ffc3ff9c81cc6ff]\nPos=0,26\nSize=319,681\nCollapsed=0\n\n[Window][###5460e7eaa8ee4ace97383a7cfca85aae]\nPos=362,26\nSize=1558,1137\nCollapsed=0\n\n[Window][###77c4ea93557346a198898a3b14666ba4]\nPos=0,557\nSize=1022,606\nCollapsed=0\n\n[Window][###1a9a9b5a16904a5e8f4dee20203e6440]\nPos=294,310\nSize=1415,337\nCollapsed=0\n\n[Window][###e8b907681dbb412ea6744b288d7f13be]\nPos=493,197\nSize=895,567\nCollapsed=0\n\n[Window][###1b38a19ac1f548cc8a54fdeeb0858713]\nPos=710,26\nSize=705,681\nCollapsed=0\n\n[Window][###45bc603e7cd141ef9505674108ec5590]\nPos=976,674\nSize=944,489\nCollapsed=0\nDockId=0x00000033,3\n\n[Window][###b89a5cfca1084c52bce8aa7c2e09c12e]\nPos=934,26\nSize=481,681\nCollapsed=0\nDockId=0x0000003A,0\n\n[Window][###sel_path_45bc603e7cd141ef9505674108ec5590]\nPos=652,316\nSize=616,530\nCollapsed=0\n\n[Window][###75aedd373dc5446194306a7b2b2a902f]\nPos=246,130\nSize=320,240\nCollapsed=0\n\n[Window][###d704eb7982ef4c86a8a50a73c5ba3b82]\nPos=420,26\nSize=559,639\nCollapsed=0\nDockId=0x0000003C,0\n\n[Window][###2b071fae88c94a64bbcdcb67f45bb432]\nPos=336,26\nSize=1584,775\nCollapsed=0\n\n[Window][###2b071fae88c94a64bbcdcb67f45bb432velocity]\nPos=0,803\nSize=999,360\nCollapsed=0\n\n[Window][###2b071fae88c94a64bbcdcb67f45bb432curvature]\nPos=1001,803\nSize=919,360\nCollapsed=0\n\n[Window][###9daf2366fe4b425684049d79ef13b26d]\nPos=60,60\nSize=320,240\nCollapsed=0\n\n[Window][###199810dd743f4a12b83ee1e17af86ff5]\nPos=0,26\nSize=1920,1137\nCollapsed=0\n\n[Window][###35628e17b59e4fd7b60ddd398940c932]\nPos=536,26\nSize=1384,1137\nCollapsed=0\n\n[Window][###8168d684e75946d6be75bde9d2c5b0b9]\nPos=283,26\nSize=1637,1137\nCollapsed=0\n\n[Window][###62e9ac0b22ca4011aad3779fd51b88a5]\nPos=383,26\nSize=1537,1137\nCollapsed=0\n\n[Window][###62e9ac0b22ca4011aad3779fd51b88a5velocity]\nPos=0,806\nSize=956,357\nCollapsed=0\n\n[Window][###62e9ac0b22ca4011aad3779fd51b88a5curvature]\nPos=958,806\nSize=962,357\nCollapsed=0\n\n[Window][###6b71940a1f934fbba8d47944a0b5a4a6]\nPos=333,26\nSize=1517,746\nCollapsed=0\n\n[Window][###6b71940a1f934fbba8d47944a0b5a4a6velocity]\nPos=0,774\nSize=916,362\nCollapsed=0\n\n[Window][###6b71940a1f934fbba8d47944a0b5a4a6curvature]\nPos=0,774\nSize=1665,362\nCollapsed=0\n\n[Window][###efef371c597a4075b57bb5a87ea163e3]\nPos=492,667\nSize=487,496\nCollapsed=0\nDockId=0x0000003E,0\n\n[Window][###5b2e93493f9b4a7bb832a673aeb8c4a7]\nPos=0,674\nSize=974,489\nCollapsed=0\nDockId=0x0000003D,3\n\n[Window][###2530f49294f5470fad3c7d3601efbb6b]\nPos=0,26\nSize=800,574\nCollapsed=0\n\n[Window][###69692756ca7d40e195c531366152305e]\nPos=0,436\nSize=1387,406\nCollapsed=0\n\n[Window][select_file_source_dialog]\nPos=385,156\nSize=616,530\nCollapsed=0\n\n[Window][###713181da357549a5ae5e4b78726bb372]\nPos=104,71\nSize=320,240\nCollapsed=0\n\n[Window][###d9443353cba4412b97e8f3e2af405fdf]\nPos=60,60\nSize=855,464\nCollapsed=0\n\n[Window][###4c13194cd7284bb583373aefdaebda18]\nPos=606,26\nSize=781,734\nCollapsed=0\n\n[Table][0xC9935533,3]\nColumn 0  Weight=1.0112\nColumn 1  Weight=0.9631\nColumn 2  Weight=1.0257\n\n[Table][0xE7E78A9B,3]\nRefScale=20\nColumn 0  Weight=1.9905\nColumn 1  Width=54\nColumn 2  Weight=0.5391\n\n[Table][0x861D378E,3]\nColumn 0  Weight=1.0000\nColumn 1  Weight=1.0000\nColumn 2  Weight=1.0000\n\n[Table][0x1F146634,3]\nRefScale=20\nColumn 0  Width=59\nColumn 1  Width=59\nColumn 2  Width=59\n\n[Table][0x49F8DCEA,3]\nRefScale=20\nColumn 0  Weight=1.0000\nColumn 1  Width=108\nColumn 2  Width=162\n\n[Table][0xE0773582,3]\nColumn 0  Weight=1.0000\nColumn 1  Weight=1.0000\nColumn 2  Weight=1.0000\n\n[Table][0x45A0E60D,7]\nRefScale=20\nColumn 0  Width=48\nColumn 1  Width=108\nColumn 2  Width=108\nColumn 3  Width=108\nColumn 4  Width=108\nColumn 5  Width=108\nColumn 6  Width=108\n\n[Table][0x20DF7A63,4]\nRefScale=20\nColumn 0  Width=32\nColumn 1  Width=57\nColumn 2  Width=44\nColumn 3  Weight=1.0000 Sort=0v\n\n[Table][0xDA36A7E0,6]\nRefScale=20\nColumn 0  Width=32 Sort=0^\nColumn 1  Width=75\nColumn 2  Width=82\nColumn 3  Width=76\nColumn 4  Weight=1.0000\nColumn 5  Width=-1\n\n[Table][0x82CBB907,3]\nColumn 0  Weight=1.0000\nColumn 1  Weight=1.0000\nColumn 2  Weight=1.0000\n\n[Table][0x49D11DC0,3]\nRefScale=20\nColumn 0  Width=73\nColumn 1  Width=73\nColumn 2  Width=73\n\n[Docking][Data]\nDockSpace                                     ID=0x00000001 Window=0x70D0451F Pos=0,26 Size=1920,1137 Split=Y Selected=0x8B814D52\n  DockNode                                    ID=0x0000002F Parent=0x00000001 SizeRef=1920,619 Split=X\n    DockNode                                  ID=0x00000019 Parent=0x0000002F SizeRef=475,1137 Split=Y Selected=0x0F76B94D\n      DockNode                                ID=0x00000012 Parent=0x00000019 SizeRef=427,901 Split=Y Selected=0xDAC5D019\n        DockNode                              ID=0x00000023 Parent=0x00000012 SizeRef=394,570 Split=Y Selected=0xDCA5BA19\n          DockNode                            ID=0x0000002B Parent=0x00000023 SizeRef=576,571 Selected=0xDCA5BA19\n          DockNode                            ID=0x0000002C Parent=0x00000023 SizeRef=576,564 Selected=0xD33C0B3A\n        DockNode                              ID=0x00000024 Parent=0x00000012 SizeRef=394,565 Selected=0x42F596C6\n      DockNode                                ID=0x0000001B Parent=0x00000019 SizeRef=427,234 Selected=0x6236FEDF\n    DockNode                                  ID=0x0000001A Parent=0x0000002F SizeRef=1371,1137 Split=Y\n      DockNode                                ID=0x0000000E Parent=0x0000001A SizeRef=800,378 Selected=0xC68F5A37\n      DockNode                                ID=0x00000011 Parent=0x0000001A SizeRef=800,382 Split=Y\n        DockNode                              ID=0x0000000F Parent=0x00000011 SizeRef=800,381 Split=X\n          DockNode                            ID=0x0000000C Parent=0x0000000F SizeRef=230,574 Split=X\n            DockNode                          ID=0x00000002 Parent=0x0000000C SizeRef=1059,600 Split=Y Selected=0xFD380CCE\n              DockNode                        ID=0x00000004 Parent=0x00000002 SizeRef=400,200 Selected=0xE2D752EF\n              DockNode                        ID=0x00000005 Parent=0x00000002 SizeRef=400,400 Selected=0xC2DD5553\n            DockNode                          ID=0x00000003 Parent=0x0000000C SizeRef=859,600 Split=X Selected=0xC8722D40\n              DockNode                        ID=0x00000006 Parent=0x00000003 SizeRef=960,1137 Split=X\n                DockNode                      ID=0x00000008 Parent=0x00000006 SizeRef=899,1137 Selected=0x916C6D72\n                DockNode                      ID=0x00000009 Parent=0x00000006 SizeRef=1019,1137 Split=Y\n                  DockNode                    ID=0x0000000A Parent=0x00000009 SizeRef=0,0 Split=Y Selected=0xC8722D40\n                    DockNode                  ID=0x00000013 Parent=0x0000000A SizeRef=0,0 Split=X Selected=0x06497B50\n                      DockNode                ID=0x00000015 Parent=0x00000013 SizeRef=793,579 Split=Y Selected=0xA18F48D3\n                        DockNode              ID=0x0000001E Parent=0x00000015 SizeRef=793,723 Split=X Selected=0x935A310A\n                          DockNode            ID=0x00000021 Parent=0x0000001E SizeRef=858,580 Split=X Selected=0x935A310A\n                            DockNode          ID=0x00000029 Parent=0x00000021 SizeRef=374,455 Split=Y Selected=0x935A310A\n                              DockNode        ID=0x00000025 Parent=0x00000029 SizeRef=1447,565 Selected=0x161D649C\n                              DockNode        ID=0x00000026 Parent=0x00000029 SizeRef=1447,570 Split=X Selected=0xD610D43C\n                                DockNode      ID=0x00000035 Parent=0x00000026 SizeRef=974,730 Split=X Selected=0xD610D43C\n                                  DockNode    ID=0x00000039 Parent=0x00000035 SizeRef=932,681 Split=X Selected=0xD610D43C\n                                    DockNode  ID=0x0000003B Parent=0x00000039 SizeRef=462,681 CentralNode=1 Selected=0xD610D43C\n                                    DockNode  ID=0x0000003C Parent=0x00000039 SizeRef=559,681 Selected=0xFA56A82F\n                                  DockNode    ID=0x0000003A Parent=0x00000035 SizeRef=481,681 Selected=0xAA0D2E9A\n                                DockNode      ID=0x00000036 Parent=0x00000026 SizeRef=944,730 Split=Y Selected=0xB3D909EC\n                                  DockNode    ID=0x00000037 Parent=0x00000036 SizeRef=499,333 Selected=0xB3D909EC\n                                  DockNode    ID=0x00000038 Parent=0x00000036 SizeRef=499,284 Selected=0x5ECB3E28\n                            DockNode          ID=0x0000002A Parent=0x00000021 SizeRef=320,455 Selected=0xA569CDA5\n                          DockNode            ID=0x00000022 Parent=0x0000001E SizeRef=482,580 Split=Y Selected=0x0F76B94D\n                            DockNode          ID=0x00000027 Parent=0x00000022 SizeRef=462,455 Selected=0x1003946B\n                            DockNode          ID=0x00000028 Parent=0x00000022 SizeRef=462,355 Selected=0xBBC98472\n                        DockNode              ID=0x0000001F Parent=0x00000015 SizeRef=793,412 Selected=0x4C3928F5\n                      DockNode                ID=0x00000016 Parent=0x00000013 SizeRef=621,579 Split=Y Selected=0x306D6AB4\n                        DockNode              ID=0x00000017 Parent=0x00000016 SizeRef=455,373 Selected=0x306D6AB4\n                        DockNode              ID=0x00000018 Parent=0x00000016 SizeRef=455,317 Selected=0x1184988B\n                    DockNode                  ID=0x00000014 Parent=0x0000000A SizeRef=1045,507 Selected=0x71E4E96D\n                  DockNode                    ID=0x0000000B Parent=0x00000009 SizeRef=1019,405 Selected=0x7C5F56A7\n              DockNode                        ID=0x00000007 Parent=0x00000003 SizeRef=958,1137 Selected=0xAFDBA4CD\n          DockNode                            ID=0x0000000D Parent=0x0000000F SizeRef=568,574 Selected=0x467162B7\n        DockNode                              ID=0x00000010 Parent=0x00000011 SizeRef=800,379 Selected=0x31BF09D1\n  DockNode                                    ID=0x00000030 Parent=0x00000001 SizeRef=1920,489 Split=X Selected=0xADAFC569\n    DockNode                                  ID=0x0000002D Parent=0x00000030 SizeRef=956,566 Split=X Selected=0xD812FEE1\n      DockNode                                ID=0x00000031 Parent=0x0000002D SizeRef=974,405 Split=X Selected=0xB9804B8E\n        DockNode                              ID=0x0000003D Parent=0x00000031 SizeRef=490,496 Selected=0x42566C25\n        DockNode                              ID=0x0000003E Parent=0x00000031 SizeRef=487,496 Selected=0x11176BC8\n      DockNode                                ID=0x00000032 Parent=0x0000002D SizeRef=944,405 Split=X Selected=0x8F404F02\n        DockNode                              ID=0x00000033 Parent=0x00000032 SizeRef=483,405 Selected=0xE9697EA2\n        DockNode                              ID=0x00000034 Parent=0x00000032 SizeRef=463,405 Selected=0x84FB2A73\n    DockNode                                  ID=0x0000002E Parent=0x00000030 SizeRef=962,566 Selected=0x6ABFB3DF\nDockNode                                      ID=0x0000001C Pos=60,60 Size=1422,676 Split=X\n  DockNode                                    ID=0x0000001D Parent=0x0000001C SizeRef=446,676 Selected=0x4BB85658\n  DockNode                                    ID=0x00000020 Parent=0x0000001C SizeRef=401,676 Selected=0x72C6FCC0\n\n",
+  "imported_config_hash": "fe996e579ebcab33d93a3ebc9cf3aae2fb1a75b9",
+  "screenshot_countdown": -1,
+  "paused": 0,
+  "vsync": 1,
+  "powersave": 0,
+  "autosave": 1,
+  "use_light_theme": 0,
+  "font_size": 20.0,
+  "views": {
+    "d01acb7ca1204f36898a9ea4eb7631a1": {
+      "uuid": "d01acb7ca1204f36898a9ea4eb7631a1",
+      "show": 1,
+      "destroyed": 0,
+      "plot_settings": {
+        "title": "Map",
+        "x_label": "utm east in m",
+        "y_label": "utm north in m",
+        "flags": 261,
+        "plot_limits": [
+          570731.2664598677,
+          5364390.508570696,
+          570879.138155689,
+          5364486.338043474
+        ],
+        "auto_fit_x": 0,
+        "auto_fit_y": 0,
+        "lock_axis_x": 0,
+        "lock_axis_y": 0,
+        "auto_fit_padding_x": 1.0,
+        "auto_fit_padding_y": 1.0,
+        "show_axis_x": 1,
+        "show_axis_y": 1,
+        "__class__": "imdash.views.view_2d.PlotSettings"
+      },
+      "components": [
+        {
+          "uuid": "1a34350606384073bac09ff77d93223e",
+          "label": "map_paths",
+          "hide_on_error": 0,
+          "no_fit": 1,
+          "tpl_env": {
+            "path": "{/structstores/tpl_env}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "show_all": 1,
+          "color_default": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.20000000298023224,
+                0.20000000298023224,
+                0.20000000298023224
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "color_selected": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.5,
+                0.5,
+                0.5
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "tpl.gui.components.map_paths_component.MapPathsComponent"
+        },
+        {
+          "uuid": "231d5b4d270e4036b53d453a4dd21d3f",
+          "label": "trajectory",
+          "hide_on_error": 0,
+          "no_fit": 1,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/trajectory/x}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/trajectory/y}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-o",
+          "line_weight": 1.0,
+          "marker_size": 2.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.9252669215202332,
+                0.6736809611320496,
+                0.29964160919189453,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        },
+        {
+          "uuid": "46a554ade9b9476180359a83f8836359",
+          "label": "control_trajectory",
+          "hide_on_error": 0,
+          "no_fit": 1,
+          "x_source": {
+            "path": "{/structstores/tpl_control/control_trajectory/x}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_control/control_trajectory/y}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-o",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.05693948268890381,
+                1.0,
+                0.0,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        },
+        {
+          "uuid": "81d60eafc45a43379618d5a30213c0e1",
+          "label": "lidar_front",
+          "hide_on_error": 1,
+          "no_fit": 1,
+          "point_cloud_source": {
+            "path": "{/ros2/topics/lidar/lidar_front/no_ground_points}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "target_frame": "utm",
+          "subsample": 8,
+          "marker_size": 0.2,
+          "use_intensity_as_color": 0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.4234875440597534,
+                0.4234875440597534,
+                0.4234875440597534
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "opacity": 1.0,
+          "__class__": "imdash.components.view_2d.point_cloud.PointCloud2DComp"
+        },
+        {
+          "uuid": "b9b29aa193164662a0530b45ced4e54b",
+          "label": "vehicle",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "vehicle": {
+            "path": "{/structstores/tpl_env/vehicle_state}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "show_imu_state": 1,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": [
+              0.0,
+              0.699999988079071,
+              1.0,
+              1.0
+            ],
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "tpl.gui.components.vehicle_component.VehicleComponent"
+        },
+        {
+          "uuid": "2c6391c68ff242f68fd0c6f5b218e731",
+          "label": "tracks",
+          "hide_on_error": 0,
+          "no_fit": 1,
+          "dyn_objs": {
+            "path": "{/structstores/tpl_env/predicted}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "line_weight": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": [
+              1.0,
+              1.0,
+              0.0,
+              1.0
+            ],
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "show_vel_line": 1,
+          "show_predictions": 0,
+          "__class__": "tpl.gui.components.dynamic_objects_component.DynamicObjectsComponent"
+        },
+        {
+          "uuid": "e47cb45873e14a9096414908c476d84a",
+          "label": "map_objects",
+          "hide_on_error": 0,
+          "no_fit": 1,
+          "show_all": 0,
+          "tpl_env": {
+            "path": "{/structstores/tpl_env}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "__class__": "tpl.gui.components.map_objects_component.MapObjectsComponent"
+        },
+        {
+          "uuid": "7571d67f20db46b4b33c94022adecaad",
+          "label": "simulation",
+          "hide_on_error": 1,
+          "no_fit": 1,
+          "sim_source": {
+            "path": "{/structstores/tpl_sim}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "__class__": "tpl.gui.components.simulation_component.SimulationComponent"
+        },
+        {
+          "uuid": "977c230b11f24a289ae2777401cf8bbc",
+          "label": "path_upper_ref",
+          "hide_on_error": 1,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/path_vel_decomp_planner/debug/path_upper_ref}[:, 0]",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/path_vel_decomp_planner/debug/path_upper_ref}[:, 1]",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                1.0,
+                1.0,
+                0.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        },
+        {
+          "uuid": "f7cbadc0bc5c41a99292ed4e01d10578",
+          "label": "path_lower_constr",
+          "hide_on_error": 1,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/path_vel_decomp_planner/debug/path_lower_ref}[:, 0]",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/path_vel_decomp_planner/debug/path_lower_ref}[:, 1]",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                1.0,
+                1.0,
+                0.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        }
+      ],
+      "__class__": "imdash.views.view_2d.View2D"
+    },
+    "e8565c6befb14403a70ecb184fb8d1d6": {
+      "uuid": "e8565c6befb14403a70ecb184fb8d1d6",
+      "show": 1,
+      "destroyed": 0,
+      "plot_settings": {
+        "title": "Runtime",
+        "x_label": "time in s",
+        "y_label": "runtime in ms",
+        "flags": 5,
+        "plot_limits": [
+          3.0407886034247524,
+          -11.097231204021293,
+          23.63921139657548,
+          23.01828320463762
+        ],
+        "auto_fit_x": 1,
+        "auto_fit_y": 1,
+        "lock_axis_x": 0,
+        "lock_axis_y": 0,
+        "auto_fit_padding_x": 1.6105100000000008,
+        "auto_fit_padding_y": 3.138428376721003,
+        "show_axis_x": 1,
+        "show_axis_y": 1,
+        "__class__": "imdash.views.view_2d.PlotSettings"
+      },
+      "components": [
+        {
+          "uuid": "1a6797a2fe074a9689a9a6ec212c9b97",
+          "label": "runtime_planning",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_env/t}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/runtime} * 1000",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                1.0,
+                0.6405693888664246,
+                0.0,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "history_length": 3000,
+          "paused": 0,
+          "__class__": "imdash.components.view_2d.history.History2DComp"
+        },
+        {
+          "uuid": "5a0991eef5604791805518588d461153",
+          "label": "runtime_control",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_env/t}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_control/runtime} * 1000",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.0,
+                0.3686274588108063,
+                1.0,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "history_length": 3000,
+          "paused": 0,
+          "__class__": "imdash.components.view_2d.history.History2DComp"
+        }
+      ],
+      "__class__": "imdash.views.view_2d.View2D"
+    },
+    "8f9e77a81a4e4512965fb7a12827bb47": {
+      "uuid": "8f9e77a81a4e4512965fb7a12827bb47",
+      "show": 1,
+      "destroyed": 0,
+      "plot_settings": {
+        "title": "Velocity Profile",
+        "x_label": "s in m",
+        "y_label": "velocity in m/s",
+        "flags": 5,
+        "plot_limits": [
+          -217.6440217902974,
+          -2.186554227970974,
+          255.26377377834092,
+          20.936600301155302
+        ],
+        "auto_fit_x": 0,
+        "auto_fit_y": 0,
+        "lock_axis_x": 0,
+        "lock_axis_y": 1,
+        "auto_fit_padding_x": 1.0,
+        "auto_fit_padding_y": 1.0,
+        "show_axis_x": 1,
+        "show_axis_y": 1,
+        "__class__": "imdash.views.view_2d.PlotSettings"
+      },
+      "components": [
+        {
+          "uuid": "9208e0e770894528b71b83999e523e73",
+          "label": "v",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/trajectory/s}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/trajectory/velocity}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.0,
+                0.37010669708251953,
+                1.0,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        },
+        {
+          "uuid": "04531d09740c4d3abf3fb0dc62b540b9",
+          "label": "v_max",
+          "hide_on_error": 0,
+          "no_fit": 1,
+          "x_source": {
+            "path": "{/structstores/tpl_env/local_map/path}[:, 3]",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_env/local_map/path}[:, 5]",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        },
+        {
+          "uuid": "f71b95545e364e9f8a39cb2b295c2382",
+          "label": "leader",
+          "hide_on_error": 0,
+          "no_fit": 1,
+          "pos": {
+            "path": "{/structstores/tpl_planning/path_vel_decomp_planner/debug/s_leader}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "orienation": {
+            "options": [
+              "horizontal",
+              "vertical"
+            ],
+            "index": 1,
+            "__class__": "imviz.common.Selection"
+          },
+          "prev_orientation": 1,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "width": 1.0,
+          "__class__": "imdash.components.view_2d.inf_line.InfLine2DComp"
+        }
+      ],
+      "__class__": "imdash.views.view_2d.View2D"
+    },
+    "262a84c4ad1a4b4ead08b51ce6bb4c7d": {
+      "uuid": "262a84c4ad1a4b4ead08b51ce6bb4c7d",
+      "show": 1,
+      "destroyed": 0,
+      "title": "Environment",
+      "source": {
+        "path": "{/structstores/tpl_env}",
+        "new_path": null,
+        "use_expr": 1,
+        "allow_expr": 1,
+        "__class__": "imdash.utils.DataSource"
+      },
+      "readwrite": 1,
+      "file_path_id": null,
+      "__class__": "imdash.views.view_object.ViewObject"
+    },
+    "58bf3d0dced546d1bcea0edae37698e6": {
+      "uuid": "58bf3d0dced546d1bcea0edae37698e6",
+      "show": 1,
+      "destroyed": 0,
+      "title": "Planning",
+      "source": {
+        "path": "{/structstores/tpl_planning}",
+        "new_path": null,
+        "use_expr": 1,
+        "allow_expr": 1,
+        "__class__": "imdash.utils.DataSource"
+      },
+      "readwrite": 1,
+      "file_path_id": null,
+      "__class__": "imdash.views.view_object.ViewObject"
+    },
+    "4dfcb1e7cd3648eeb0359b1ee321049f": {
+      "uuid": "4dfcb1e7cd3648eeb0359b1ee321049f",
+      "show": 1,
+      "destroyed": 0,
+      "title": "Control",
+      "source": {
+        "path": "{/structstores/tpl_control}",
+        "new_path": null,
+        "use_expr": 1,
+        "allow_expr": 1,
+        "__class__": "imdash.utils.DataSource"
+      },
+      "readwrite": 1,
+      "file_path_id": null,
+      "__class__": "imdash.views.view_object.ViewObject"
+    },
+    "f3d06aa56d0442a194663ec816c92675": {
+      "uuid": "f3d06aa56d0442a194663ec816c92675",
+      "show": 1,
+      "destroyed": 0,
+      "plot_settings": {
+        "title": "Vehicle Velocity",
+        "x_label": "t in s ",
+        "y_label": "v in m/s",
+        "flags": 5,
+        "plot_limits": [
+          88.46499999999203,
+          -1.6367381192454813,
+          105.2099999999768,
+          22.63476634145048
+        ],
+        "auto_fit_x": 1,
+        "auto_fit_y": 0,
+        "lock_axis_x": 0,
+        "lock_axis_y": 1,
+        "auto_fit_padding_x": 1.0,
+        "auto_fit_padding_y": 2.5937424601000023,
+        "show_axis_x": 1,
+        "show_axis_y": 1,
+        "__class__": "imdash.views.view_2d.PlotSettings"
+      },
+      "components": [
+        {
+          "uuid": "7fcc21274ff648d49e657bad21620cf9",
+          "label": "velocity",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_env/t}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_env/vehicle_state/v}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.0,
+                0.19928836822509766,
+                1.0,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "history_length": 1000,
+          "paused": 0,
+          "__class__": "imdash.components.view_2d.history.History2DComp"
+        }
+      ],
+      "__class__": "imdash.views.view_2d.View2D"
+    },
+    "eb8816b90fe44a3d9ae0dfa1c2aa56e8": {
+      "uuid": "eb8816b90fe44a3d9ae0dfa1c2aa56e8",
+      "show": 1,
+      "destroyed": 0,
+      "plot_settings": {
+        "title": "Vehicle Acceleration",
+        "x_label": "t in s",
+        "y_label": "a in m/s^2",
+        "flags": 5,
+        "plot_limits": [
+          88.47499999999202,
+          -3.299376457443813,
+          105.2099999999768,
+          3.5442199868832502
+        ],
+        "auto_fit_x": 1,
+        "auto_fit_y": 0,
+        "lock_axis_x": 0,
+        "lock_axis_y": 1,
+        "auto_fit_padding_x": 1.0,
+        "auto_fit_padding_y": 1.6105100000000008,
+        "show_axis_x": 1,
+        "show_axis_y": 1,
+        "__class__": "imdash.views.view_2d.PlotSettings"
+      },
+      "components": [
+        {
+          "uuid": "2f2c7ee76df145db96ff573f5ae6bd18",
+          "label": "acceleration",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_env/t}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_env/vehicle_state/a}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.43772244453430176,
+                0.9459733963012695,
+                1.0,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "history_length": 1000,
+          "paused": 0,
+          "__class__": "imdash.components.view_2d.history.History2DComp"
+        }
+      ],
+      "__class__": "imdash.views.view_2d.View2D"
+    },
+    "65eeef61d2494e9a980e4b1b267d8ee3": {
+      "uuid": "65eeef61d2494e9a980e4b1b267d8ee3",
+      "show": 1,
+      "destroyed": 0,
+      "plot_settings": {
+        "title": "Acceleration Trajectory",
+        "x_label": "time in t",
+        "y_label": "a in m/s^2",
+        "flags": 5,
+        "plot_limits": [
+          119.97499999996337,
+          -3.403710136096871,
+          138.1649297671909,
+          3.5769117225118032
+        ],
+        "auto_fit_x": 1,
+        "auto_fit_y": 1,
+        "lock_axis_x": 0,
+        "lock_axis_y": 1,
+        "auto_fit_padding_x": 1.0,
+        "auto_fit_padding_y": 1.0,
+        "show_axis_x": 1,
+        "show_axis_y": 1,
+        "__class__": "imdash.views.view_2d.PlotSettings"
+      },
+      "components": [
+        {
+          "uuid": "c9704cffc9e340d18014708d0e2912fa",
+          "label": "a",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/trajectory/time}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/trajectory/acceleration}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.0,
+                1.0,
+                0.7758007049560547,
+                1.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        }
+      ],
+      "__class__": "imdash.views.view_2d.View2D"
+    },
+    "45bc603e7cd141ef9505674108ec5590": {
+      "uuid": "45bc603e7cd141ef9505674108ec5590",
+      "show": 1,
+      "destroyed": 0,
+      "title": "Simulation",
+      "source": {
+        "path": "{/structstores/tpl_sim}",
+        "new_path": null,
+        "use_expr": 1,
+        "allow_expr": 1,
+        "__class__": "imdash.utils.DataSource"
+      },
+      "readwrite": 1,
+      "file_path_id": null,
+      "__class__": "imdash.views.view_object.ViewObject"
+    },
+    "5b2e93493f9b4a7bb832a673aeb8c4a7": {
+      "uuid": "5b2e93493f9b4a7bb832a673aeb8c4a7",
+      "show": 1,
+      "destroyed": 0,
+      "plot_settings": {
+        "title": "Lateral Profile",
+        "x_label": "s in m",
+        "y_label": "d in m",
+        "flags": 5,
+        "plot_limits": [
+          0.0,
+          -1.3113604471631868,
+          124.5,
+          1.5437818178353717
+        ],
+        "auto_fit_x": 1,
+        "auto_fit_y": 0,
+        "lock_axis_x": 0,
+        "lock_axis_y": 0,
+        "auto_fit_padding_x": 1.0,
+        "auto_fit_padding_y": 2.853116706110003,
+        "show_axis_x": 1,
+        "show_axis_y": 1,
+        "__class__": "imdash.views.view_2d.PlotSettings"
+      },
+      "components": [
+        {
+          "uuid": "b86201a216484da2ac45ae2b00221242",
+          "label": "d_upper_constr",
+          "hide_on_error": 0,
+          "no_fit": 1,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/trajectory/s}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "-{/structstores/tpl_planning/path_vel_decomp_planner/debug/d_upper_constr}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                1.0,
+                0.0,
+                0.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        },
+        {
+          "uuid": "3223244b7c8449b096a69ff8ab27d90f",
+          "label": "d_lower_constr",
+          "hide_on_error": 0,
+          "no_fit": 1,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/trajectory/s}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/path_vel_decomp_planner/debug/d_lower_constr}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                1.0,
+                0.0,
+                0.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        },
+        {
+          "uuid": "b7f00964e63a410f886f0348d9ba250d",
+          "label": "d_lower_ref",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/trajectory/s}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/path_vel_decomp_planner/debug/d_lower_ref}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                1.0,
+                1.0,
+                0.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        },
+        {
+          "uuid": "84cce2d14f4b4087a29286052c55a3c3",
+          "label": "d_upper_ref",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/trajectory/s}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/path_vel_decomp_planner/debug/d_upper_ref}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                1.0,
+                1.0,
+                0.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        },
+        {
+          "uuid": "88abe36ca7ac4d30b7b07f65b67a3521",
+          "label": "d_opt",
+          "hide_on_error": 0,
+          "no_fit": 0,
+          "x_source": {
+            "path": "{/structstores/tpl_planning/trajectory/s}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "y_source": {
+            "path": "{/structstores/tpl_planning/path_vel_decomp_planner/debug/d_opt}",
+            "new_path": null,
+            "use_expr": 1,
+            "allow_expr": 1,
+            "__class__": "imdash.utils.DataSource"
+          },
+          "format": "-",
+          "line_weight": 1.0,
+          "marker_size": 3.0,
+          "color": {
+            "path": "",
+            "new_path": null,
+            "use_expr": 0,
+            "alt_val": {
+              "__class__": "numpy.ndarray",
+              "dtype": "float32",
+              "data": [
+                0.20640575885772705,
+                1.0,
+                0.0
+              ]
+            },
+            "allow_expr": 0,
+            "__class__": "imdash.utils.ColorEdit"
+          },
+          "__class__": "imdash.components.view_2d.value.Value2DComp"
+        }
+      ],
+      "__class__": "imdash.views.view_2d.View2D"
+    },
+    "__class__": "dict"
+  },
+  "save_needed": 0,
+  "__class__": "imdash.main.Main"
+}

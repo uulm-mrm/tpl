@@ -1,0 +1,104 @@
+{
+  "t": 0.0,
+  "finished": 0,
+  "map_store_path": "iv_2023",
+  "selected_map": "9c25601a39ab45799169be18a5f494de",
+  "init_env_params": "default",
+  "init_planning_params": "iv_2023",
+  "init_control_params": "iv_2023",
+  "ego": {
+    "x": 571598.6432673831,
+    "y": 5364796.993314686,
+    "yaw": 0.2343689361248087,
+    "v": 9.0,
+    "a": 1.7342208837621882,
+    "min_v": 0.0,
+    "max_v": 100.0,
+    "steer_angle": -0.026932069406204857,
+    "max_steer_angle": 0.7148868616168774,
+    "acc_dead_time": 0.0,
+    "steer_dead_time": 0.0,
+    "control_acc": -0.20910362301711416,
+    "control_steer": -0.04883335812652782,
+    "width": 1.89,
+    "length": 5.1,
+    "wheel_base": 3.165,
+    "cog_axes_ratio": 0.5,
+    "rear_to_rear_axis": 1.0825,
+    "front_to_front_axis": 0.6475,
+    "track_width": 1.6,
+    "v_ch": 32.0,
+    "__class__": "tpl.simulation.state.SimEgo"
+  },
+  "cars": [
+    {
+      "uuid": "ab125ebc332f441e929562b251f46a20",
+      "map_uuid": "1aae32b429d14369a4d0a06bd652a491",
+      "x": 571650.0431533766,
+      "y": 5364861.898268768,
+      "yaw": -1.560012,
+      "width": 2.0,
+      "length": 4.0,
+      "v": 11.11111111111,
+      "target_v": 11.11111111111,
+      "use_route_velocity": 0,
+      "react_to_curvature": 0,
+      "noise_x": 0.0,
+      "noise_y": 0.0,
+      "noise_yaw": 0.0,
+      "noise_v": 0.0,
+      "noise_hull": 0.0,
+      "measure_as_track": 1,
+      "measure_as_blob": 0,
+      "evade": "",
+      "__class__": "tpl.simulation.state.SimCar"
+    }
+  ],
+  "traffic_lights": [
+    {
+      "uuid": "35300e2268f34c0080f72cb4de36cf64",
+      "x": 571707.0495258627,
+      "y": 5364785.628626558,
+      "state": 2,
+      "__class__": "tpl.simulation.state.SimTrafficLight"
+    }
+  ],
+  "time_constraints": [
+    {
+      "uuid": "7b3a2ddda01b439c85049ecb73ac0ad6",
+      "x": 571653.2328869918,
+      "y": 5364806.822456583,
+      "t_min": 5.75,
+      "t_max": 10000000000.0,
+      "__class__": "tpl.simulation.state.SimTimeConstraint"
+    },
+    {
+      "uuid": "3d6b73bffc914d7fb33dd644f5d9980d",
+      "x": 571707.5592651983,
+      "y": 5364789.369100172,
+      "t_min": 0.0,
+      "t_max": 14.0,
+      "__class__": "tpl.simulation.state.SimTimeConstraint"
+    }
+  ],
+  "rule_checker": {
+    "off_road_dist_limit": 1.0,
+    "v_max_tol": 1.0,
+    "__class__": "tpl.simulation.state.SimRuleChecker"
+  },
+  "settings": {
+    "running": 0,
+    "reload_requested": 0,
+    "single_step_requested": 0,
+    "reload_if_finished": 0,
+    "update_env_time": 1,
+    "update_env_vehicle_state": 1,
+    "update_env_dynamic_objects": 1,
+    "update_env_dynamic_objects_dt": 0.01,
+    "int_step": 0.005,
+    "use_real_time": 1,
+    "fixed_time_step": 0.01,
+    "__class__": "tpl.simulation.state.SimSettings"
+  },
+  "__class__": "tpl.simulation.state.SimState"
+}

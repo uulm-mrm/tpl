@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import argparse
+
+from tpl.simulation import SimStandalone, SimAttach, SimReplay
+
+import minireload as mr
+
+
+def main():
+
+    parser = argparse.ArgumentParser(
+            prog="tplsim",
+            description="tpl integrated simulation environment")
+    parser.add_argument("mode", default=None, choices=["run", "attach", "replay"])
+    parser.add_argument("--scenario", default=None)
+    parser.add_argument("--control_params", default=None)
+    parser.add_argument("--planning_params", default=None)
+    parser.add_argument("--recording", default=None)
+    parser.add_argument("--app_id", default="")
+    parser.add_argument("--no-reload", default=False, action="store_true")
+
+    args = parser.parse_args()
+
+    try:
+        if args.mode == "run":
+            sim = SimStandalone(
+                    args.app_id,
+                    args.scenario,
+                    None,
+                    args.planning_params,
+                    args.control_params)
+        elif args.mode == "attach":
+            sim = SimAttach(args.app_id, scenario_path=args.scenario)
+        elif args.mode == "replay":
+            sim = SimReplay(args.app_id, recording_path=args.recording)
+
+        if args.no_reload:
+            update_func = sim.update
+        else:
+            update_func = mr.WrappingReloader(sim.update)
+        while True:
+            update_func()
+    except KeyboardInterrupt:
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()

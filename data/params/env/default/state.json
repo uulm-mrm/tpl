@@ -1,7 +1,5 @@
 {
-  "map_store_path": "../../../maps/ulm",
+  "map_store_path": "ulm",
   "selected_map": "9c25601a39ab45799169be18a5f494de",
-  "use_dynamic_map": 0,
-  "ref_line_association_dist": 1.0,
   "__class__": "objtoolbox.utils.bundle"
 }

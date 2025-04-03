@@ -30,6 +30,7 @@ class PathSmoothing:
 
         self.opt_path = np.zeros((1, 6))
 
+        self.reset_counter = 0
         self.reset_required = False
 
     @runtime
@@ -56,20 +57,22 @@ class PathSmoothing:
 
         index_shift = local_map.shift_idx_start_ref
 
-        if env.reset_required or self.reset_required or not 0 <= index_shift < path_len:
+        self.reset_required |= self.reset_counter != env.reset_counter
+        self.reset_counter = env.reset_counter
+
+        if self.reset_required or not 0 <= index_shift < path_len:
             # initialize from reference line
             opt.x[0, :] = path[0, :3]
             opt.u[:] = path[:path_len, 4]
         else:
             # can reinitialize optimizer by shifting
             opt.shift(index_shift)
+
         self.reset_required = False
 
         # copy data to optimizer and update
 
         opt.update()
-
-        print(opt.runtime)
 
         # build optimized path structure
 

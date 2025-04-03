@@ -20,7 +20,7 @@ class SimulationComponent(View2DComponent):
 
         self.label = "simulation"
 
-        self.sim_source = utils.DataSource()
+        self.sim_source = utils.DataSource(path="{/structstores/tpl_sim}")
 
     @contextmanager
     def locked_sim(self):
@@ -181,6 +181,9 @@ class SimulationComponent(View2DComponent):
             return
 
         for ke in viz.get_key_events():
+            if ke.action != viz.RELEASE and ke.key == viz.KEY_RIGHT:
+                with self.locked_sim() as sim:
+                    sim.settings.single_step_requested = True
             if ke.action == viz.PRESS and ke.key == viz.KEY_SPACE:
                 with self.locked_sim() as sim:
                     sim.settings.running = not sim.settings.running

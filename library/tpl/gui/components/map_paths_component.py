@@ -16,7 +16,7 @@ class MapPathsComponent(View2DComponent):
 
         self.label = "map_paths"
 
-        self.tpl_env = DataSource()
+        self.tpl_env = DataSource(path="{/structstores/tpl_env}")
 
         self.format = "-"
         self.line_weight = 1.0

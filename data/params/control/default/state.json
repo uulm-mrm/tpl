@@ -1,22 +1,46 @@
 {
   "active_controller": "model_predictive_controller",
+  "direct_controller": {
+    "params": {
+      "a_max": 3.0,
+      "a_min": -3.0,
+      "steer_rate_max_abs": 1.0,
+      "__class__": "types.SimpleNamespace"
+    },
+    "__class__": "objtoolbox.utils.bundle"
+  },
   "feedforward_controller": {
     "params": {
-      "k_p_lon": 1.0,
-      "k_i_lon": 0.02,
+      "k_p_s_lon": 1.0,
+      "k_i_s_lon": 0.01,
+      "k_p_v_lon": 2.0,
+      "k_i_v_lon": 0.02,
       "k_p_lat": 2.0,
-      "k_p_heading": 10.0,
+      "k_p_heading": 1.0,
       "k_stan_lat": 2.0,
-      "use_stanley_law": 0,
+      "use_stanley_law": 1,
       "a_max": 3.0,
       "a_min": -3.0,
       "steer_rate_max": 1.0,
-      "err_lat_max": 0.2,
-      "err_int_lon_max": 2.0,
-      "dead_time": 0.18,
+      "err_lat_max": 1.0,
+      "err_int_lon_max_s": 2.0,
+      "err_int_lon_max_v": 2.0,
       "v_ch": 32.0,
       "step_comp_dead_time": 0.005,
-      "__class__": "structstore._structstore_bindings.StructStore"
+      "__class__": "types.SimpleNamespace"
+    },
+    "__class__": "objtoolbox.utils.bundle"
+  },
+  "flat_controller": {
+    "params": {
+      "k_pos": 10.0,
+      "k_vel": 5.0,
+      "ki_pos": 0.01,
+      "a_max": 3.0,
+      "a_min": -3.0,
+      "steer_rate_max_abs": 1.0,
+      "step_comp_dead_time": 0.005,
+      "__class__": "types.SimpleNamespace"
     },
     "__class__": "objtoolbox.utils.bundle"
   },
@@ -25,8 +49,6 @@
       "horizon": 60,
       "step": 0.05,
       "max_iterations": 20,
-      "dead_time": 0.185,
-      "cycle_time": 0.01,
       "acc_min": -3.0,
       "acc_max": 2.0,
       "jerk_min": -3.0,
@@ -46,7 +68,48 @@
         "p_phi_ref_dot_diff": 0.01,
         "pa": 2.0,
         "pj": 0.5,
-        "__class__": "structstore._structstore_bindings.StructStore"
+        "__class__": "types.SimpleNamespace"
+      },
+      "idle_comp": {
+        "active": 1,
+        "min_acc": -2.0,
+        "jerk": -1.0,
+        "veh_thresh": 0.5,
+        "traj_thresh": 0.1,
+        "traj_look_ahead_steps": 5,
+        "__class__": "types.SimpleNamespace"
+      },
+      "__class__": "types.SimpleNamespace"
+    },
+    "__class__": "objtoolbox.utils.bundle"
+  },
+  "model_predictive_controller_time": {
+    "params": {
+      "horizon": 40,
+      "step": 0.05,
+      "max_iterations": 20,
+      "cycle_time": 0.01,
+      "acc_min": -3.0,
+      "acc_max": 3.0,
+      "jerk_min": -3.0,
+      "jerk_max": 1.5,
+      "steer_rate_min": -1.0,
+      "steer_rate_max": 1.0,
+      "cog_pos": 0.5,
+      "ref_dt": 0.1,
+      "cost_function": {
+        "pd": 5.0,
+        "pv": 5.0,
+        "pdelta": 0.0,
+        "min_pdelta_dot": 0.1,
+        "pdelta_dot": 0.1,
+        "min_p_phi_dot": 0.0,
+        "p_phi_dot": 0.0,
+        "p_phi": 0.0,
+        "p_phi_ref_dot_diff": 0.0,
+        "pa": 2.0,
+        "pj": 0.5,
+        "__class__": "types.SimpleNamespace"
       },
       "idle_comp": {
         "active": 0,
@@ -55,9 +118,9 @@
         "veh_thresh": 0.5,
         "traj_thresh": 0.1,
         "traj_look_ahead_steps": 5,
-        "__class__": "structstore._structstore_bindings.StructStore"
+        "__class__": "types.SimpleNamespace"
       },
-      "__class__": "structstore._structstore_bindings.StructStore"
+      "__class__": "types.SimpleNamespace"
     },
     "__class__": "objtoolbox.utils.bundle"
   },

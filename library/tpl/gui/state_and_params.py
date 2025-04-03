@@ -15,10 +15,10 @@ from tpl.simulation import save_sim_state, load_sim_state
 def sub_path_selector(name, base_path, path):
 
     paths = list(pathlib.Path(base_path).glob("**"))
-    paths = [p for p in paths
-             if (p / "extern").exists() and (p / "state.json").exists()]
+    paths = [p for p in paths if (p / "state.json").exists()]
     paths = [str(p.relative_to(base_path)) for p in paths]
     paths = [p for p in paths if p != "."]
+    paths = sorted(paths)
 
     try:
         active_idx = paths.index(path)
@@ -65,16 +65,18 @@ def render_environment(env, name, ctx, **kwargs):
 
     active_idx = viz.combo("selected_map", names, active_idx)
     if viz.mod():
-        env.reset_required = True
+        env.reset_counter += 1
         env.selected_map = uuids[active_idx]
 
     viz.separator()
 
-    env.reset_required = ctx.render(env.reset_required, "reset_required")
+    if viz.button(f"Reset [{env.reset_counter}]###reset_button"):
+        env.reset_counter += 1
 
     ctx.render(env.maps, "maps")
     ctx.render(env.local_map, "local_map")
     ctx.render(env.vehicle_state, "vehicle_state")
+    ctx.render(env.tl_dets, "tl_dets")
     ctx.render(env.ir_pc_dets, "ir_pc_dets")
     ctx.render(env.tracks, "tracks")
     ctx.render(env.predicted, "predicted")
@@ -168,7 +170,6 @@ def render_simulation(sh_sim, name, ctx, **kwargs):
             "scenario",
             util.PATH_SCENARIOS,
             sh_sim.__storage__)
-    abs_scenario_path = osp.join(util.PATH_SCENARIOS, sh_sim.__storage__)
     if viz.mod():
         sh_sim.sim.settings.reload_requested = True
 

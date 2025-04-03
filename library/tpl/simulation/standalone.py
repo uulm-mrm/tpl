@@ -37,19 +37,13 @@ class SimStandalone:
 
     def update(self):
 
-        with self.control_app.sh_controllers.lock():
-            controls = copy.deepcopy(self.control_app.sh_controllers.controls)
-
-        with self.core.sh_state.lock():
-            sim = self.core.sh_state.sim
-            sim.ego.control_acc = controls[0]
-            sim.ego.control_steer = controls[1]
+        sim = self.core.get_next_sim_state(
+                self.env_app.env,
+                self.planning_app.sh_planners,
+                self.control_app.sh_controllers)
+        self.core.write_sim_state(sim)
 
         with self.env_app.env.lock():
-            sim = self.core.get_next_sim_state(
-                    self.env_app.env,
-                    self.planning_app.sh_planners,
-                    self.control_app.sh_controllers)
             self.env_app.update(sim.t)
             veh = copy.deepcopy(self.env_app.env.vehicle_state)
 
@@ -65,4 +59,10 @@ class SimStandalone:
 
         self.control_app.update()
 
-        self.core.write_sim_state(sim)
+        with self.control_app.sh_controllers.lock():
+            controls = copy.deepcopy(self.control_app.sh_controllers.controls)
+
+        with self.core.sh_state.lock():
+            sim = self.core.sh_state.sim
+            sim.ego.control_acc = controls[0]
+            sim.ego.control_steer = controls[1]

@@ -2,6 +2,8 @@ import os
 import copy
 import time
 import uuid
+import traceback
+
 import numpy as np
 import imviz as viz
 import objtoolbox as otb
@@ -16,7 +18,6 @@ from tpl.environment import (
         CrossWalk,
         TurnIndPoint,
         MapSwitchPoint,
-        Checkpoint,
         IntersectionPath
     )
 
@@ -42,6 +43,9 @@ class MapEditor(View2D):
         self.selected_map = None
 
         self.show_velocity = True
+        self.show_d_left = True
+        self.show_d_right = True
+        self.show_altitude = True
         self.show_curvature = True
         self.show_all_paths = True
 
@@ -50,16 +54,20 @@ class MapEditor(View2D):
         self.menu_file_path_needed = False
 
         self.path_editor_reset()
+        self.path_editor_focused = False
 
         self.show_as_kph = False
         self.vel_set_value = 0.0
+
+        self.set_value = 0.0
 
         self.recording = False
         self.recorded_len = 0.0
         self.recorded_path = []
         self.rec_x_source = utils.DataSource()
         self.rec_y_source = utils.DataSource()
-        self.rec_sources_ok = False
+        self.rec_z_source = utils.DataSource()
+        self.rec_sources_err = ""
 
         self.save_req = False
         self.save_req_time = 0.0
@@ -115,7 +123,8 @@ class MapEditor(View2D):
         self.map_store_path = path
 
         if self.map_store_path is not None:
-            self.maps = map_module.load_map_store(self.map_store_path)
+            self.maps = map_module.load_map_store(
+                    self.map_store_path, mmap_arrays=True)
 
     def cmap(self):
 
@@ -135,8 +144,14 @@ class MapEditor(View2D):
         route = tpl_utils.load_route_from_csv(file_path)
 
         new_map = Map()
-        new_map.name = os.path.basename(path).split(".")[0]
-        new_map.route = route
+        new_map.name = os.path.basename(file_path).split(".")[0]
+        new_map.control_points = np.zeros((len(route), 5))
+        new_map.control_points[:, 0] = route[:, 0]
+        new_map.control_points[:, 1] = route[:, 1]
+        new_map.control_points[:, 2] = 2.0
+        new_map.control_points[:, 3] = 2.0
+        new_map.control_points[:, 4] = route[:, 5]
+        map_module.reinit_map(new_map)
 
         self.maps[new_map.uuid] = new_map
 
@@ -206,6 +221,7 @@ class MapEditor(View2D):
         has_cmap = cmap is not None
 
         if viz.begin_menu("Create"):
+            viz.separator()
             if viz.menu_item("Map point", shortcut="A", enabled=has_cmap):
                 self.insert_point()
             if viz.menu_item("Velocity limit", enabled=has_cmap):
@@ -235,14 +251,9 @@ class MapEditor(View2D):
                 vl = MapSwitchPoint()
                 vl.pos = pp
                 cmap.map_switch_points.append(vl)
-            if viz.menu_item("Checkpoint", enabled=has_cmap):
-                vl = Checkpoint()
-                vl.pos = pp
-                cmap.velocity_limits.append(vl)
             if viz.menu_item("Intersection path", enabled=has_cmap):
                 ip = IntersectionPath(pp)
                 cmap.intersection_paths.append(ip)
-            viz.separator()
             viz.end_menu()
 
     def render_menu_bar(self):
@@ -277,9 +288,17 @@ class MapEditor(View2D):
                 if viz.menu_item("Delete view"):
                     self.destroyed = True
                 viz.end_menu()
+            if viz.begin_menu("Edit"):
+                if viz.menu_item("Reverse map direction"):
+                    self.reverse_map_direction(self.cmap())
+                viz.end_menu()
             if viz.begin_menu("Show"):
                 if viz.menu_item("Velocity", selected=self.show_velocity):
                     self.show_velocity = not self.show_velocity
+                if viz.menu_item("Right border", selected=self.show_d_right):
+                    self.show_d_right = not self.show_d_right
+                if viz.menu_item("Left border", selected=self.show_d_left):
+                    self.show_d_left = not self.show_d_left
                 if viz.menu_item("Curvature", selected=self.show_curvature):
                     self.show_curvature = not self.show_curvature
                 if viz.menu_item("All paths", selected=self.show_all_paths):
@@ -294,23 +313,30 @@ class MapEditor(View2D):
             self.render_create_menu(pp)
         viz.end_plot_popup()
 
+    def reverse_map_direction(self, cmap):
+
+        cmap.control_points = cmap.control_points[::-1]
+        map_module.reinit_map(cmap)
+        viz.set_mod(True)
+
     def record_map_data(self):
 
         try:
             x = self.rec_x_source()
             y = self.rec_y_source()
+            z = self.rec_z_source()
             if self.recording:
                 if self.recorded_path == []:
-                    self.recorded_path.append([x, y])
+                    self.recorded_path.append([x, y, z])
                 else:
-                    l = np.linalg.norm(np.array(self.recorded_path[-1])
+                    l = np.linalg.norm(np.array(self.recorded_path[-1])[:2]
                                        - np.array([x, y]))
                     if l > 0.5:
-                        self.recorded_path.append([x, y])
+                        self.recorded_path.append([x, y, z])
                         self.recorded_len += l
-            self.rec_sources_ok = True
-        except:
-            self.rec_sources_ok = False
+            self.rec_sources_err = ""
+        except Exception as e:
+            self.rec_sources_err = traceback.format_exc()
 
     def render_recording_window(self, sources):
 
@@ -322,18 +348,27 @@ class MapEditor(View2D):
 
             viz.autogui(self.rec_x_source, "x", sources=sources)
             viz.autogui(self.rec_y_source, "y", sources=sources)
+            viz.autogui(self.rec_z_source, "z", sources=sources)
 
             if not self.recording:
-                viz.begin_disabled(not self.rec_sources_ok)
-                if viz.button("record"):
-                    self.recording = True
-                viz.end_disabled()
+                if self.rec_sources_err == "":
+                    if viz.button("record"):
+                        self.recording = True
+                else:
+                    viz.text("Error", color="red")
+                    if viz.is_item_hovered():
+                        viz.begin_tooltip()
+                        viz.text(self.rec_sources_err)
+                        viz.end_tooltip()
             else:
-                if viz.button("save###rec_save"):
-                    control_points = np.zeros((len(self.recorded_path), 5))
-                    control_points[:, :2] = np.array(self.recorded_path)
+                if viz.button("save to new###rec_save_new"):
+                    rec_path_np = np.array(self.recorded_path)
+                    control_points = np.zeros((len(self.recorded_path), 6))
+                    control_points[:, :2] = rec_path_np[:, :2]
                     control_points[:, 2] = 2.0
                     control_points[:, 3] = 2.0
+                    control_points[:, 4] = 0.0
+                    control_points[:, 5] = rec_path_np[:, 2]
 
                     m = Map()
                     m.control_points = control_points
@@ -347,7 +382,29 @@ class MapEditor(View2D):
                     self.path_editor_reset()
 
                     viz.set_mod(True)
+
                 viz.same_line()
+
+                cmap = self.cmap()
+                if cmap is not None:
+                    if viz.button("save to current###rec_save_current"):
+                        rec_path_np = np.array(self.recorded_path)
+                        control_points = np.zeros((len(self.recorded_path), 6))
+                        control_points[:, :2] = rec_path_np[:, :2]
+                        control_points[:, 2] = 2.0
+                        control_points[:, 3] = 2.0
+                        control_points[:, 4] = 0.0
+                        control_points[:, 5] = rec_path_np[:, 2]
+                        cmap.control_points = control_points
+                        map_module.reinit_map(cmap)
+
+                        self.recorded_path = []
+                        self.recorded_len = 0.0
+                        self.recording = False
+                        self.path_editor_reset()
+
+                viz.same_line()
+
                 if viz.button("cancel###rec_cancel"):
                     self.recorded_path = []
                     self.recorded_len = 0.0
@@ -355,12 +412,14 @@ class MapEditor(View2D):
 
         viz.end_window()
 
-    def render_path_editor(self):
+    def setup_plot(self):
 
         viz.setup_axes("utm_east [m]", "utm_north [m]")
 
         if viz.plot_selection_ended():
             viz.hard_cancel_plot_selection()
+
+    def render_path_editor(self):
 
         x_min, y_min, x_max, y_max = viz.get_plot_limits()
         subsample_step = min(x_max - x_min, y_max - y_min) / 30
@@ -378,7 +437,7 @@ class MapEditor(View2D):
             return
 
         if cmap.control_points.shape[0] == 0:
-            cmap.control_points = np.zeros((0, 5))
+            cmap.control_points = np.zeros((0, 6))
         
         indices = np.array(range(len(cmap.control_points))).reshape((-1, 1))
         points = np.concatenate([indices, cmap.control_points], axis=1)
@@ -394,6 +453,7 @@ class MapEditor(View2D):
 
             pos_plot_mouse = viz.get_plot_mouse_pos()
             proj = tpl_utils.project(points[:, 1:3], pos_plot_mouse)
+            focused = viz.is_window_focused()
 
             if (viz.get_mouse_drag_delta() == 0.0).all():
                 self.proj_point_idx = max(0, min(len(points) - 1, proj.index))
@@ -404,8 +464,12 @@ class MapEditor(View2D):
                         & (points[:, 2] >= sel[1])
                         & (points[:, 1] <= sel[2])
                         & (points[:, 2] <= sel[3])]
-            elif len(points) > 0 and len(self.selection) < 2:
+            elif len(points) > 0 and len(self.selection) < 2 and focused:
                 self.selection = points[np.newaxis, self.proj_point_idx]
+            else:
+                if not focused and self.path_editor_focused:
+                    self.path_editor_reset()
+            self.path_editor_hovered = focused
 
             # positional drag points
 
@@ -424,39 +488,6 @@ class MapEditor(View2D):
             if (diff != 0.0).any():
                 self.selection[:, 1:3] += diff
                 cmap.control_points[np.array(idx), 0:2] = self.selection[:, 1:3]
-
-            # boundary drag points
-
-            proj = tpl_utils.project(cmap.path[:, :2], points[self.proj_point_idx, 1:3])
-
-            if np.isnan(proj.angle):
-                ortho = np.array([0.0, 1.0])
-            else:
-                a = proj.angle + np.pi / 2
-                ortho = np.array([np.cos(a), np.sin(a)])
-
-            p = points[self.proj_point_idx].copy()
-
-            p_left = p[1:3] + ortho * p[3]
-            p_right = p[1:3] - ortho * p[4]
-
-            new_p_left = viz.drag_point(
-                    "sel_point_boundary_left",
-                    p_left,
-                    color=(1.0, 1.0, 0.0),
-                    flags=viz.PlotDragToolFlags.DELAYED)
-            if viz.mod():
-                diff_left = np.linalg.norm(p[1:3] - new_p_left) - p[3]
-                cmap.control_points[np.array(idx), 2] += diff_left
-
-            new_p_right = viz.drag_point(
-                    "sel_point_boundary_right",
-                    p_right,
-                    color=(1.0, 1.0, 0.0),
-                    flags=viz.PlotDragToolFlags.DELAYED)
-            if viz.mod():
-                diff_right = np.linalg.norm(p[1:3] - new_p_right) - p[4]
-                cmap.control_points[np.array(idx), 3] += diff_right
 
         # keyboard bindings
 
@@ -500,7 +531,7 @@ class MapEditor(View2D):
 
                 if ke.key == viz.KEY_BACKSPACE or ke.key == viz.KEY_DELETE:
                     cmap.control_points = np.delete(cmap.control_points, idx.reshape(-1), axis=0)
-                    self.selection = []
+                    self.selection = np.zeros((0, cmap.control_points.shape[1]))
                     viz.set_mod(True)
 
         if viz.mod_any():
@@ -626,8 +657,108 @@ class MapEditor(View2D):
 
                     if ke.key == viz.KEY_BACKSPACE or ke.key == viz.KEY_DELETE:
                         cmap.control_points = np.delete(cmap.control_points, idx.reshape(-1), axis=0)
-                        self.selection = []
+                        self.selection = np.zeros((0, cmap.control_points.shape[1]))
                         viz.set_mod(True)
+
+    def render_val_toolbar(self, idx_val):
+
+        viz.push_mod_any()
+
+        cmap = self.cmap()
+
+        set_to = False
+
+        if viz.button("set to"):
+            set_to = True
+        viz.same_line()
+
+        self.set_value = viz.drag("value", self.set_value)
+
+        if len(self.selection) > 0 and (set_to or viz.mod()):
+            idx = list(self.selection[:, 0].astype("int"))
+            cmap.control_points[idx, idx_val] = self.set_value
+            viz.set_mod(True)
+        elif set_to:
+            cmap.control_points[:, idx_val] = self.set_value
+            viz.set_mod(True)
+
+        if viz.pop_mod_any():
+            map_module.reinit_map(cmap)
+            map_module.reinit_map_items(cmap, self.maps)
+
+    def render_val_editor(self, label, idx_val):
+
+        cmap = self.cmap()
+        if cmap is None:
+            return
+
+        if viz.plot_selection_ended():
+            viz.hard_cancel_plot_selection()
+
+        viz.setup_axes("s [m]", label)
+
+        if len(cmap.control_points) > 0:
+
+            indices = np.array(range(len(cmap.control_points))).reshape((-1, 1))
+            points = np.concatenate([indices, cmap.control_points], axis=1)
+
+            dists = np.linalg.norm(np.diff(cmap.control_points[:, :2], axis=0), axis=1)
+            dists_cum = np.array([0.0, *np.cumsum(dists)])
+
+            viz.plot(dists_cum,
+                     points[:, idx_val+1],
+                     color=(0.2, 0.6, 0.8),
+                     fmt="-o",
+                     label=label)
+            sel = viz.get_plot_selection()
+
+            if np.sum(sel) != 0.0:
+                self.selection = points[
+                        (dists_cum >= sel[0])
+                        & (points[:, idx_val+1] >= sel[1])
+                        & (dists_cum <= sel[2])
+                        & (points[:, idx_val+1] <= sel[3])]
+
+        if len(self.selection) > 0:
+
+            viz.push_mod_any()
+
+            idx = self.selection[:, 0].astype("int")
+
+            self.selection[:, 1:] = cmap.control_points[idx]
+
+            diff = 0.0
+            for i, p in enumerate(self.selection):
+                new_pos = viz.drag_point(
+                        f"{i}_sel_point", (dists_cum[int(p[0])], p[idx_val+1]), color=(1.0, 1.0, 0.0))
+                if viz.mod():
+                    diff = new_pos[1] - p[idx_val+1]
+
+            if diff != 0.0:
+                self.selection[:, idx_val+1] += diff
+                cmap.control_points[idx, idx_val] = self.selection[:, idx_val+1]
+
+            if viz.is_window_focused():
+                for ke in viz.get_key_events():
+                    if ke.action == viz.RELEASE:
+                        continue
+                    if ke.key == viz.KEY_DOWN:
+                        self.selection[:, idx_val+1] -= 1.0
+                        cmap.control_points[idx, idx_val] = self.selection[:, idx_val+1]
+                        viz.set_mod(True)
+                    if ke.key == viz.KEY_UP:
+                        self.selection[:, idx_val+1] += 1.0
+                        cmap.control_points[idx, idx_val] = self.selection[:, idx_val+1]
+                        viz.set_mod(True)
+
+                    if ke.key == viz.KEY_BACKSPACE or ke.key == viz.KEY_DELETE:
+                        cmap.control_points = np.delete(cmap.control_points, idx.reshape(-1), axis=0)
+                        self.selection = np.zeros((0, cmap.control_points.shape[1]))
+                        viz.set_mod(True)
+
+            if viz.pop_mod_any():
+                map_module.reinit_map(cmap)
+                map_module.reinit_map_items(cmap, self.maps)
 
     def render_velocity_context_menu(self):
 
@@ -766,9 +897,10 @@ class MapEditor(View2D):
                                 flags=viz.PlotFlags.EQUAL 
                                       | viz.PlotFlags.NO_TITLE
                                       | viz.PlotFlags.NONE):
+                self.setup_plot()
+                self.render_components(sources)
                 self.render_path_editor()
                 self.render_context_menu()
-                self.render_components(sources)
                 self.render_map_objects()
                 self.render_recorded_path()
                 self.render_maps_window()
@@ -787,6 +919,45 @@ class MapEditor(View2D):
                                           | viz.PlotFlags.NONE):
                     self.render_velocity_editor()
                     self.render_velocity_context_menu()
+                viz.end_figure()
+            viz.end_window()
+
+        if self.show_d_left:
+            window_open = viz.begin_window(
+                    f"{self.title} - Left Border###{self.uuid}d_left")
+            self.show_d_left = viz.get_window_open()
+            if window_open:
+                self.render_val_toolbar(2)
+                if viz.begin_figure(f"{self.title} - Left Border###{self.uuid}d_left",
+                                    flags=viz.PlotFlags.NO_TITLE
+                                          | viz.PlotFlags.NONE):
+                    self.render_val_editor("d_left [m]", 2)
+                viz.end_figure()
+            viz.end_window()
+
+        if self.show_d_right:
+            window_open = viz.begin_window(
+                    f"{self.title} - Right Border###{self.uuid}d_right")
+            self.show_d_right = viz.get_window_open()
+            if window_open:
+                self.render_val_toolbar(3)
+                if viz.begin_figure(f"{self.title} - Right Border###{self.uuid}d_right",
+                                    flags=viz.PlotFlags.NO_TITLE
+                                          | viz.PlotFlags.NONE):
+                    self.render_val_editor("d_right [m]", 3)
+                viz.end_figure()
+            viz.end_window()
+
+        if self.show_altitude:
+            window_open = viz.begin_window(
+                    f"{self.title} - Altitude###{self.uuid}altitude")
+            self.show_altitude = viz.get_window_open()
+            if window_open:
+                self.render_val_toolbar(5)
+                if viz.begin_figure(f"{self.title} - Altitude###{self.uuid}altitude",
+                                    flags=viz.PlotFlags.NO_TITLE
+                                          | viz.PlotFlags.NONE):
+                    self.render_val_editor("altitude [m]", 5)
                 viz.end_figure()
             viz.end_window()
 
@@ -811,5 +982,5 @@ class MapEditor(View2D):
         if self.save_req and time.time() - self.save_req_time > 0.5:
             # throttled saving
             if self.map_store_path is not None:
-                otb.save(self.maps, self.map_store_path)
+                otb.save(self.maps, self.map_store_path, mmap_arrays=True)
             self.save_req = False

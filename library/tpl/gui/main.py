@@ -39,9 +39,12 @@ def main():
     parser.add_argument("--dev", action="store_true")
     args = parser.parse_args()
 
-    if args.dev:
-        viz.dev.launch(GuiMain, "update")
-    else:
-        gm = GuiMain()
-        while True:
-            gm.update()
+    try:
+        if args.dev:
+            viz.dev.launch(GuiMain, "update")
+        else:
+            gm = GuiMain()
+            while True:
+                gm.update()
+    except KeyboardInterrupt:
+        pass

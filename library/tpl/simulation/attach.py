@@ -8,14 +8,7 @@ class SimAttach:
 
     def __init__(self, sh_env_path, scenario_path=None):
 
-        self.core = SimCore(scenario_path)
-
-        with self.core.sh_state.lock():
-            sim = self.core.sh_state.sim
-            settings = sim.settings
-            settings.update_env_time = False
-            settings.update_env_maps = False
-            settings.update_env_vehicle_state = False
+        self.core = SimCore(app_id="", scenario_path=scenario_path)
 
         self.sh_env_path = sh_env_path
         self.sh_env = sts.StructStoreShared(sh_env_path)

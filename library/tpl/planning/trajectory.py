@@ -14,5 +14,4 @@ class Trajectory:
         self.velocity = np.zeros((1,))
         self.acceleration = np.zeros((1,))
 
-        self.detail = None
-        """This can be used to store additional trajectory information."""
+        self.emergency = False

@@ -67,13 +67,15 @@ class PlanningApp:
                 do_update = False
             self.last_time = self.env.t
 
+        do_update = True
+
         with self.sh_planners.lock():
             active_planner = self.sh_planners.active_planner
             do_update = do_update or not hasattr(self.sh_planners, "has_new_traj")
 
         if self.last_active_planner != active_planner:
             with self.env.lock():
-                self.env.reset_required = True
+                self.env.reset()
         self.last_active_planner = active_planner
 
         try:
@@ -93,18 +95,8 @@ class PlanningApp:
             self.sh_planners.runtime = runtime
             if not do_update:
                 return
-            self.sh_planners.trajectory.time = trajectory.time
-            self.sh_planners.trajectory.s = trajectory.s
-            self.sh_planners.trajectory.x = trajectory.x
-            self.sh_planners.trajectory.y = trajectory.y
-            self.sh_planners.trajectory.orientation = trajectory.orientation
-            self.sh_planners.trajectory.velocity = trajectory.velocity
-            self.sh_planners.trajectory.curvature = trajectory.curvature
-            self.sh_planners.trajectory.acceleration = trajectory.acceleration
+            self.sh_planners.trajectory = trajectory
             self.sh_planners.has_new_traj = True
-
-        with self.env.lock():
-            self.env.reset_required = False
 
 
 def load_planning_params(sh_planners, path=None):
@@ -126,7 +118,7 @@ def save_planning_params(sh_planners):
         planner_state = getattr(sh_planners, pn)
         if hasattr(planner_state, "params"):
             ps = otb.bundle()
-            ps.params = getattr(planner_state, "params")
+            ps.params = getattr(planner_state, "params").deepcopy()
             params[pn] = ps
 
     abs_path = osp.join(PATH_PARAMS, "planning", sh_planners.__storage__)

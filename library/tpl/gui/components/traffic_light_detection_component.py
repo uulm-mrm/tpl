@@ -17,7 +17,7 @@ class TrafficLightDetectionComponent(View2DComponent):
 
         self.label = "traffic_light_detection"
 
-        self.tpl_env = DataSource()
+        self.tpl_env = DataSource(path="{/structstores/tpl_env}")
 
         self.line_weight = 3.0
 

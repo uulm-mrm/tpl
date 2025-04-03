@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include "tplcpp/binding_helpers.hpp"
+#include "tplcpp/python/binding_helpers.hpp"
 #include "tplcpp/utils.hpp"
 
 namespace py = pybind11;

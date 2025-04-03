@@ -5,14 +5,9 @@ from scipy.interpolate import interp1d
 from tpl import util
 from tpl.util import runtime
 from tpl.optim import optimizers as opts
+from tpl.environment import map_module
 
-from tpl.planning.utils import (
-        rampify_profile,
-        curv_to_vel_profile,
-        zero_after_first_zero,
-        add_vel_constraint,
-        apply_velocity_limits
-    )
+from tpl.planning.utils import rampify_profile
 
 
 class TimeConstr:
@@ -50,7 +45,7 @@ class Params:
 
         self.d_lat_leader_safe = 1.0
 
-        self.leader_reaction_exp = 1.0
+        self.dt_safe = 1.5
         self.min_d_safe = 1.0
         self.min_v_profile = 1.0
 
@@ -83,6 +78,11 @@ class VelocityOptim:
         self.s_leader = 10**6
         self.v_leader = 0.0
 
+        self.reset_counter = 0
+
+        self.man_max_time_cons = []
+        self.man_min_time_cons = []
+
     def update_shifts(self, path, params):
 
         self.ss = np.arange(0.0, params.horizon * params.step, params.step)
@@ -112,8 +112,9 @@ class VelocityOptim:
         d_lat_assoc = veh.width / 2.0 + params.d_lat_leader_safe
         veh_proj = util.project(path[:, :2], (veh.x, veh.y))
 
-        for o in env.predicted:
+        for o in env.get_all_tracks():
             # fast, approximative check
+
             proj = util.project(path[:, :2], o.pos)
             if abs(proj.distance) - o.hull_radius >= d_lat_assoc:
                 continue
@@ -129,11 +130,13 @@ class VelocityOptim:
                 if min_dist > d_lat_assoc:
                     continue
 
-            d_lon_leader = np.min([p.arc_len for p in projs_hull]) - veh_proj.arc_len
+            d_lon_leader = np.min([p.arc_len for p in projs_hull])
             if d_lon_leader >= self.s_leader:
                 continue
             self.s_leader = d_lon_leader
-            self.v_leader = o.v * np.cos(proj.angle - o.yaw)
+            self.v_leader = max(0.0, o.v * np.cos(proj.angle - o.yaw))
+            if self.v_leader > 0.5:
+                self.s_leader -= veh_proj.arc_len
 
     @runtime
     def update(self, path, env, params):
@@ -142,9 +145,13 @@ class VelocityOptim:
         veh = env.vehicle_state
         cmap = env.local_map
 
+        reset_required = self.reset_counter != env.reset_counter
+        self.reset_counter = env.reset_counter
+
         params.horizon = min(len(path), params.horizon)
 
         opt = self.opt
+        opt.integrator_type = opt.EULER
         opt.horizon = params.horizon
         opt.step = params.step
         opt.params.ref_step = params.ref_step
@@ -166,41 +173,22 @@ class VelocityOptim:
         # compute reference velocity from maximum allowed
         # velocity, lateral acceleration, and path curvature
 
-        safety_dist = int((params.min_d_safe + veh.rear_axis_to_front) / opt.step)
-
-        lim_v = curv_to_vel_profile(path[:, 4], path[:, 5], params.max_lat_acc)
-        apply_velocity_limits(lim_v, cmap, safety_dist)
+        lim_v = path[:, 5].copy()
 
         # add leader vehicle to velocity profile
 
-        ld_safety_dist = max(0.1, int(self.v_leader / opt.step)) + safety_dist
+        safety_dist = veh.rear_axis_to_front + params.min_d_safe
+        ld_safety_dist = self.v_leader * params.dt_safe + safety_dist
 
-        add_vel_constraint(
+        v_rel = min(4.0, self.v_leader / max(0.01, veh.v))
+        dist_rel = self.s_leader / ld_safety_dist
+        dist_rel = dist_rel * v_rel
+
+        map_module.add_vel_constraint(
             lim_v,
-            (self.s_leader / params.step - ld_safety_dist),
-            self.v_leader * min(1.0, self.s_leader / (ld_safety_dist * params.step)),
+            int((self.s_leader - ld_safety_dist) / opt.step),
+            self.v_leader * dist_rel,
             length=20)
-
-        # add intersection path constraints
-
-        for ip in env.local_map.intersection_paths:
-            if (not ip.stop_proj.in_bounds 
-                    or abs(ip.stop_proj.distance) > 1.0
-                    or ip.stop_proj.arc_len < veh.rear_axis_to_front):
-                continue
-            if ip.stop:
-                add_vel_constraint(
-                    lim_v,
-                    ip.stop_proj.index - safety_dist,
-                    max_vel=0.0,
-                    length=10)
-            if not ip.stopped:
-                add_vel_constraint(
-                    lim_v,
-                    ip.stop_proj.index - safety_dist,
-                    max_vel=ip.v_max_approach,
-                    length=10,
-                    shift=-10)
 
         # add velocity constraints from maneuver to lim_v
 
@@ -208,7 +196,7 @@ class VelocityOptim:
             proj1 = util.project(opt_path[:, :2], pos1)
             proj2 = util.project(opt_path[:, :2], pos2)
 
-            add_vel_constraint(
+            map_module.add_vel_constraint(
                 lim_v,
                 proj1.index,
                 cons_v,
@@ -222,7 +210,7 @@ class VelocityOptim:
             v_ref_new[0] = self.v_ref[0]
             self.v_ref = v_ref_new
 
-        if env.reset_required:
+        if reset_required:
             self.v_ref[0, 0] = lim_v[0]
             self.v_ref[0, 1] = 0.0
         else:
@@ -235,9 +223,9 @@ class VelocityOptim:
                                      params.min_v_profile,
                                      opt.step)
 
-        # set optimizer velocity contraints
+        # set optimizer velocity constraints
 
-        if env.reset_required:
+        if reset_required:
             opt.x[0, 0] = veh.v
             opt.x[0, 1] = veh.a
 
@@ -263,14 +251,14 @@ class VelocityOptim:
         time_at_traj_start = t - t_at_veh
 
         # consider time constraints from maneuvers
-        man_min_time_cons = [
+        self.man_min_time_cons = [
             TimeConstr(pos=pos, t=t_min)
             for pos, t_min, t_max in env.man_time_cons]
-        man_max_time_cons = [
+        self.man_max_time_cons = [
             TimeConstr(pos=pos, t=t_max)
             for pos, t_min, t_max in env.man_time_cons]
 
-        for tc in man_min_time_cons:
+        for tc in self.man_min_time_cons:
 
             tc.proj = util.project(path[:, :2], tc.pos)
             idx = tc.proj.index
@@ -287,7 +275,7 @@ class VelocityOptim:
                     opt.params.ref_v_weight, 
                     ((ss - rel_wp) * params.time_constr_beta)**2)
 
-        for tc in man_max_time_cons:
+        for tc in self.man_max_time_cons:
 
             tc.proj = util.project(path[:, :2], tc.pos)
             idx = tc.proj.index
@@ -306,7 +294,7 @@ class VelocityOptim:
         self.stop_mask = (lim_v >= params.min_v_profile) \
                     * ((opt.params.ref_t_min - opt.x[:-1, 1] <= 0.0) 
                         | (opt.x[:-1, 0] > params.min_v_profile * 1.1))
-        self.stop_mask = zero_after_first_zero(self.stop_mask.astype(float))
+        self.stop_mask = map_module.zero_after_first_zero(self.stop_mask.astype(float))
 
         self.v_lim = lim_v
         self.v_opt = opt.x[:-1, 0].copy() * self.stop_mask

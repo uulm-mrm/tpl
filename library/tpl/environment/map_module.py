@@ -2,12 +2,11 @@ import os
 import uuid
 import traceback
 
+import numba
 import numpy as np 
 import objtoolbox as otb
 
 from tpl import util
-
-from scipy.interpolate import UnivariateSpline, splrep, splev
 
 
 class VelocityLimit:
@@ -36,10 +35,10 @@ class VelocityLimit:
 
 class TrafficLight(VelocityLimit):
 
-    UNKNOWN = -1
     RED = 0
     YELLOW = 1
     GREEN = 2
+    NONE = 3
 
     def __init__(self):
 
@@ -51,8 +50,9 @@ class TrafficLight(VelocityLimit):
         self.light_pos = np.array([0.0, 0.0])
         self.detection_radius = 1.0
 
-        self.state = TrafficLight.UNKNOWN
-        self.t_last_det = 0.0
+        self.t = 0.0
+        self.state = TrafficLight.NONE
+        self.can_stop = False
 
     def __savestate__(self):
 
@@ -73,7 +73,7 @@ class CrossWalk(VelocityLimit):
         self.uuid = uuid.uuid4().hex
 
         self.corners = np.zeros((0,))
-        self.limit = 10.0
+        self.free_limit = 10.0
 
     def __savestate__(self):
 
@@ -86,8 +86,9 @@ class CrossWalk(VelocityLimit):
 class TurnIndPoint:
 
     OFF = 0
-    RIGHT = 1
+    RIGHT = -1
     LEFT = 1
+    HAZARD = 2
 
     def __init__(self):
 
@@ -96,26 +97,8 @@ class TurnIndPoint:
 
         self.pos = np.array([0.0, 0.0])
         self.dir = TurnIndPoint.OFF
-        """off: 0, right: -1, left: 1"""
 
         self.activation_radius = 2.0
-
-
-class Checkpoint(VelocityLimit):
-
-    def __init__(self):
-
-        super().__init__()
-
-        self.__tag__ = "checkpoint"
-        self.uuid = uuid.uuid4().hex
-
-        self.length = 10.0
-        self.active = False
-
-        self.name = ""
-        self.pos = np.array([0.0, 0.0])
-        self.activation_radius = 5.0
 
 
 class MapSwitchPoint:
@@ -145,7 +128,7 @@ class MapSwitchPoint:
 
 class IntersectionPath:
 
-    def __init__(self, pos=np.zeros((2,)), edit_path=False):
+    def __init__(self, pos=np.zeros((2,))):
 
         self.__tag__ = "intersection_path"
         self.uuid = uuid.uuid4().hex
@@ -160,24 +143,17 @@ class IntersectionPath:
         self.offset_path_begin = -20
         self.offset_path_end = 20
 
-        self.t_min = float("inf")
-        self.gap_acceptance = 5.0
-        self.gap_hysteresis = 2.0
-
         self.stop = True
-        self.v_max_approach = 3.0
-        self.stop_always = False
-        self.stop_for_any  = False
-        self.d_min_stopped = 5.0
-        self.stopped = False
+
+        self.d_decision = 30.0
+        self.gap_acceptance = 5.0
+        self.gap_rejection = 3.0
 
     def __savestate__(self):
 
         d = self.__dict__.copy()
-        del d["t_min"]
         del d["map_segment"]
         del d["stop"]
-        del d["stopped"]
 
         return d
 
@@ -196,15 +172,14 @@ class Map:
         self.map_switch_points = []
         self.intersection_paths = []
 
-        # dims: x, y, d_left, d_right, speed_limit
-        self.control_points = np.zeros((0, 5))
-        self.spline_degree = 1
+        # dims: x, y, d_left, d_right, speed_limit, altitude
+        self.control_points = np.zeros((0, 6))
         self.smoothing = 0.0
         # step size for discretization
         self.step_size_discr = 0.5
         self.closed_path = False
 
-        # these arrays are calculated with update_map_path(...):
+        # these arrays are calculated with reinit_map(...)
 
         # discretized ref path, dims: x, y, orientation, s, curvature, speed_limit
         self.path = None
@@ -216,6 +191,8 @@ class Map:
         self.d_left = None
         # discretized absolute distance to right boundary, dims: d_right
         self.d_right = None
+        # discretized altitude values
+        self.altitude = None
 
         # DEPRECATED
         self.route = None
@@ -228,6 +205,7 @@ class Map:
         del d["boundary_right"]
         del d["d_left"]
         del d["d_right"]
+        del d["altitude"]
         del d["route"]
 
         return d
@@ -252,10 +230,17 @@ class LocalMap(Map):
         # the previous shift of the start index on the global map
         self.shift_idx_start_ref = 0
 
+        # by how much vel. constraints should be shifted
+        self.shift_vel_lim = 0
+        # if set the intersection path heuristic will be applied
+        self.update_inters_paths = False
+        # by how many indices the ref_line is shifted to follow the ego vehicle
+        self.step_shift_idx = 2
+        # at which vehicle position on the local map the vehicle should be
+        self.position_vehicle = 0.0
+
 
 def copy_map_segment(dst_map, src_map, step_size, steps, start_idx):
-
-    steps = min(len(src_map.path), steps)
 
     try:
         resample_info = util.resample(src_map.path[:, :2],
@@ -321,63 +306,48 @@ def reinit_map(cmap):
         cmap.d_right = cmap.control_points[0, 3].reshape((1, 1))
         return
 
-    # determine usable spline degree
-
-    k = max(1, min(5, cmap.spline_degree))
-
-    if len(cmap.control_points) < 5:
-        k = min(1, k)
-    elif len(cmap.control_points) < 7:
-        k = min(3, k)
-
-    # fit splines to generate path
+    # resample path into finer steps for smoothing
 
     if cmap.closed_path:
         cps = np.vstack([cmap.control_points, cmap.control_points[0, :]])
     else:
         cps = cmap.control_points
 
-    dists = np.linalg.norm(np.diff(cps[:, :2], axis=0), axis=1)
-    dists_cum = np.array([0.0, *np.cumsum(dists)])
-
-    smoothing = max(0.0, cmap.smoothing)
-
-    xs = splrep(dists_cum, cps[:, 0], s=smoothing, k=k, per=cmap.closed_path)
-    ys = splrep(dists_cum, cps[:, 1], s=smoothing, k=k, per=cmap.closed_path)
-    vs = splrep(dists_cum, cps[:, 4], k=1, per=cmap.closed_path)
-
     step_size = max(0.1, min(5.0, cmap.step_size_discr))
-
-    len_path_cp = dists_cum[-1]
-
-    steps = np.arange(
-            0.0,
-            len_path_cp,
-            step_size)
-
-    path = np.zeros((len(steps), 6))
-    path[:, 0] = splev(steps, xs)
-    path[:, 1] = splev(steps, ys)
-    path[:, 2] = np.arctan2(splev(steps, ys, der=1), splev(steps, xs, der=1))
-    path[:, 3] = steps
-    path[:, 5] = splev(steps, vs)
-
-    # convert path into standard shape
-
-    len_path = np.sum(np.linalg.norm(np.diff(path[:, :2], axis=0), axis=1))
-    resample_steps = round(len_path / step_size)
-
-    # resample path in equidistant steps
+    len_path = np.sum(np.linalg.norm(np.diff(cps[:, :2], axis=0), axis=1))
+    resample_steps = int(len_path / step_size)
 
     try:
-        resample_info = util.resample(path[:, :2],
+        resample_info = util.resample(cps[:, :2],
                                       step_size,
                                       resample_steps,
-                                      cmap.closed_path)
+                                      closed=cmap.closed_path)
     except RuntimeError as e:
         return
 
-    cmap.path = util.interp_resampled_path(
+    alpha = resample_info[:, 2]
+    alpha_inv = 1.0 - resample_info[:, 2]
+    idx_prev = resample_info[:, 3].astype('int')
+    idx_next = resample_info[:, 4].astype('int')
+
+    cmap.d_left = cps[idx_prev, 2] * alpha_inv + cps[idx_next, 2] * alpha
+    cmap.d_right = cps[idx_prev, 3] * alpha_inv + cps[idx_next, 3] * alpha
+    cmap.altitude = cps[idx_prev, 5] * alpha_inv + cps[idx_next, 5] * alpha
+
+    diffs = np.diff(cps[:, :2], axis=0)
+    angles = np.zeros((cps.shape[0],))
+    angles[:-1] = np.arctan2(diffs[:, 1], diffs[:, 0])
+    if cmap.closed_path:
+        angles[-1] = angles[0]
+    else:
+        angles[-1] = angles[-2]
+
+    path = np.zeros((cps.shape[0], 6))
+    path[:, :2] = cps[:, :2]
+    path[:, 2] = angles
+    path[:, 5] = cps[:, 4]
+
+    path = util.interp_resampled_path(
             path,
             resample_info,
             step_size,
@@ -385,21 +355,60 @@ def reinit_map(cmap):
             False,
             cmap.closed_path)
 
-    # compute boundaries
+    if cmap.smoothing > 1e-5:
+        xys = util.smooth_path(
+                resample_info[:, :2],
+                step_size,
+                0.0,
+                10.0 * cmap.smoothing,
+                1000.0 * cmap.smoothing,
+                cmap.closed_path)
 
-    ds_left = splrep(dists_cum, cps[:, 2], k=1, per=cmap.closed_path)
-    ds_right = splrep(dists_cum, cps[:, 3], k=1, per=cmap.closed_path)
+        len_path = np.sum(np.linalg.norm(np.diff(xys, axis=0), axis=1))
+        resample_steps = int(len_path / step_size)
 
-    ds_left_sampled = splev(steps, ds_left)
-    ds_right_sampled = splev(steps, ds_right)
+        try:
+            resample_info = util.resample(
+                    xys,
+                    step_size,
+                    resample_steps,
+                    closed=cmap.closed_path)
+        except RuntimeError as e:
+            return
 
-    alpha = resample_info[:, 2]
-    alpha_inv = 1.0 - resample_info[:, 2]
-    idx_prev = resample_info[:, 3].astype('int')
-    idx_next = resample_info[:, 4].astype('int')
+        alpha = resample_info[:, 2]
+        alpha_inv = 1.0 - resample_info[:, 2]
+        idx_prev = resample_info[:, 3].astype('int')
+        idx_next = resample_info[:, 4].astype('int')
 
-    cmap.d_left = ds_left_sampled[idx_prev] * alpha_inv + ds_left_sampled[idx_next] * alpha
-    cmap.d_right = ds_right_sampled[idx_prev] * alpha_inv + ds_right_sampled[idx_next] * alpha
+        cmap.d_left = cmap.d_left[idx_prev] * alpha_inv + cmap.d_left[idx_next] * alpha
+        cmap.d_right = cmap.d_right[idx_prev] * alpha_inv + cmap.d_right[idx_next] * alpha
+        cmap.altitude = cmap.altitude[idx_prev] * alpha_inv + cmap.altitude[idx_next] * alpha
+
+        diffs = np.diff(xys[:, :2], axis=0)
+        angles = np.zeros((xys.shape[0],))
+        angles[:-1] = np.arctan2(diffs[:, 1], diffs[:, 0])
+        if cmap.closed_path:
+            angles[-1] = angles[0]
+        else:
+            angles[-1] = angles[-2]
+
+        prev_path = path
+
+        path = np.zeros((xys.shape[0], 6))
+        path[:, :2] = xys
+        path[:, 2] = angles
+        path[:, 5] = prev_path[:, 5]
+
+        path = util.interp_resampled_path(
+                path,
+                resample_info,
+                step_size,
+                resample_steps,
+                False,
+                cmap.closed_path)
+
+    cmap.path = path
 
     cos_cmap_orth = np.cos(cmap.path[:, 2] + np.pi/2)
     sin_cmap_orth = np.sin(cmap.path[:, 2] + np.pi/2)
@@ -417,28 +426,37 @@ def reinit_map_items(cmap, map_store):
     maps = otb.get_obj_dict(map_store)
 
     for ip in cmap.intersection_paths:
-
         if ip.intersection_map_uuid not in maps:
             continue
 
+        reinit_intersection_path(ip, cmap, maps)
+
+
+def reinit_intersection_path(ip, cmap, maps):
+
+    ip.map_segment_step_size = max(0.1, ip.map_segment_step_size)
+
+    src_map = maps[ip.intersection_map_uuid]
+    proj = util.project(src_map.path[:, :2], ip.pos)
+
+    if src_map.closed_path:
+        steps = (ip.offset_path_end - ip.offset_path_begin) % len(src_map.path)
+    else:
         ip.offset_path_end = max(ip.offset_path_begin+1, ip.offset_path_end)
-        ip.map_segment_step_size = max(0.1, ip.map_segment_step_size)
+        steps = ip.offset_path_end - ip.offset_path_begin
 
-        src_map = maps[ip.intersection_map_uuid]
+    f = src_map.step_size_discr / ip.map_segment_step_size
+    steps = max(1, int(abs(steps) * f))
+    start_idx = proj.index + ip.offset_path_begin
 
-        proj = util.project(src_map.path[:, :2], ip.pos)
+    ip.map_segment = Map()
+    ip.map_segment.name = src_map.name
 
-        f = src_map.step_size_discr / ip.map_segment_step_size
-        steps = max(1, int(abs(ip.offset_path_end - ip.offset_path_begin) * f))
-        start_idx = proj.index + ip.offset_path_begin
-
-        ip.map_segment = Map()
-
-        copy_map_segment(ip.map_segment,
-                         src_map,
-                         ip.map_segment_step_size,
-                         steps,
-                         start_idx)
+    copy_map_segment(ip.map_segment,
+                     src_map,
+                     ip.map_segment_step_size,
+                     steps,
+                     start_idx)
 
 
 def update_local_map(env):
@@ -453,12 +471,14 @@ def update_local_map(env):
     if env.local_map is None:
         proj_path_ref = None
         env.local_map = LocalMap()
+        env.local_map_behind = Map()
+        env.local_map_behind.name = "local_map_behind"
         on_map = False
     else:
         proj_path_ref = util.project(env.local_map.path[:, :2], (veh.x, veh.y))
         d_r = -env.local_map.d_right[proj_path_ref.index]
         d_l = env.local_map.d_left[proj_path_ref.index]
-        on_map = d_r <= proj_path_ref.distance <= d_l
+        on_map = (d_r <= proj_path_ref.distance <= d_l) & proj_path_ref.in_bounds
 
     local_map = env.local_map
     local_map.velocity_limits = cmap.velocity_limits
@@ -468,14 +488,16 @@ def update_local_map(env):
 
     # ensures that path_ref does not overlap anywhere
     local_map.shift_idx_start_ref = 0
+    local_map_vehicle_pos_steps = int(local_map.position_vehicle // local_map.step_size_ref)
 
     if not on_map:
         proj_route = util.project(cmap.path[:, :2], (veh.x, veh.y))
         local_map.idx_start_ref = proj_route.start
-        env.reset_required = True
-    elif proj_path_ref.start > 0:
-        local_map.shift_idx_start_ref = proj_path_ref.start
-        local_map.idx_start_ref += proj_path_ref.start
+        env.reset_counter += 1
+    elif abs(proj_path_ref.start - local_map_vehicle_pos_steps) > local_map.step_shift_idx:
+        shift = ((proj_path_ref.start - local_map_vehicle_pos_steps) // local_map.step_shift_idx)
+        local_map.shift_idx_start_ref = shift * local_map.step_shift_idx
+        local_map.idx_start_ref += shift * local_map.step_shift_idx
         if cmap.closed_path:
             local_map.idx_start_ref %= len(cmap.path)
         else:
@@ -490,19 +512,132 @@ def update_local_map(env):
     if not copy_success:
         return
 
+    idx_start_ref_behind = local_map.idx_start_ref - local_map.steps_ref
+    if cmap.closed_path:
+        idx_start_ref_behind %= len(cmap.path)
+    else:
+        idx_start_ref_behind = max(0, min(len(cmap.path), idx_start_ref_behind))
+
+    copy_success = copy_map_segment(env.local_map_behind,
+                                    cmap,
+                                    env.local_map.step_size_ref,
+                                    env.local_map.steps_ref*2,
+                                    idx_start_ref_behind)
+
+    if not copy_success:
+        return
+
     local_map.steps_ref = len(local_map.path)
+
+
+@numba.njit(cache=True, fastmath=True)
+def curv_to_vel_profile(k, lim_v, a_lat_max, k_eps=1e-6):
+
+    out = np.zeros(len(lim_v))
+    abs_k = np.abs(k)
+    for i in range(len(abs_k)):
+        k = abs_k[i]
+        if abs(k) > k_eps:
+            out[i] = min(lim_v[i], np.sqrt(a_lat_max / k))
+        else:
+            out[i] = lim_v[i]
+
+    return out
+
+
+@numba.njit(cache=True, fastmath=True)
+def zero_after_first_zero(vel_profile):
+
+    con_vp = np.zeros_like(vel_profile)
+    for i in range(len(vel_profile)):
+        if not vel_profile[i]:
+            break
+        con_vp[i] = 1.0
+
+    return con_vp
+
+
+def add_vel_constraint(lim_v, index, max_vel=0.0, length=10, shift=0):
+
+    # let's use variable names, which look very similar
+
+    i = int(index + shift)
+    l = min(len(lim_v) - i, int(length))
+    j = max(0, i + l)
+    l = max(0, min(j, l))
+    i = max(0, i)
+
+    lim_v[i:j] = np.minimum(lim_v[i:j], np.ones((l,)) * max_vel)
+
+
+def update_local_map_velocity(env):
+    
+    cmap = env.local_map
+    if cmap is None:
+        return
+
+    v_lim = curv_to_vel_profile(cmap.path[:, 4],
+                                cmap.path[:, 5],
+                                env.vehicle_state.a_lat_max)
+
+    for vl in cmap.velocity_limits:
+
+        if not vl.active:
+            continue
+        if not vl.proj.in_bounds:
+            continue
+        if abs(vl.proj.distance) > vl.min_distance:
+            continue
+
+        add_vel_constraint(
+                v_lim,
+                vl.proj.start,
+                vl.limit,
+                vl.length,
+                cmap.shift_vel_lim)
+
+    cmap.path[:, 5] = v_lim
+
+
+def update_local_map_inters_paths(env):
+
+    cmap = env.local_map
+    if cmap is None:
+        return
+
+    v_lim = cmap.path[:, 5]
+
+    if not cmap.update_inters_paths:
+        return
+
+    for ip in env.local_map.intersection_paths:
+
+        if not ip.stop_proj.in_bounds:
+            continue
+        if abs(ip.stop_proj.distance) > 1.0:
+            continue
+        if not ip.stop:
+            continue
+
+        add_vel_constraint(
+            v_lim,
+            ip.stop_proj.start,
+            max_vel=0.0,
+            length=10,
+            shift=cmap.shift_vel_lim)
+
+    cmap.path[:, 5] = v_lim
 
 
 def update_map_items(env):
 
-    cmap = env.get_current_map()
+    cmap = env.local_map
     if cmap is None:
-        return
-    if env.local_map is None:
         return
 
     veh = env.vehicle_state
     veh_pos = np.array([veh.x, veh.y])
+    proj_veh = util.project(env.local_map.path[:, :2], veh_pos)
 
     # handle map switch points
 
@@ -512,7 +647,7 @@ def update_map_items(env):
                 msp.triggers += 1
                 if msp.triggers % msp.trigger_divisor == 0:
                     env.selected_map = msp.target_uuid
-                    env.reset_required = True
+                    env.reset_counter += 1
             msp.in_radius = True
         else:
             msp.in_radius = False
@@ -522,7 +657,7 @@ def update_map_items(env):
     veh.turn_indicator = 0
     for tip in cmap.turn_ind_points:
         if np.linalg.norm(tip.pos - veh_pos) < tip.activation_radius:
-            veh.turn_indicator = tip.dir.selected()
+            veh.turn_indicator = tip.dir
 
     # update velocity limits
 
@@ -542,38 +677,81 @@ def update_map_items(env):
             if not on_ref_path:
                 vl.active = True
 
-        elif vl.__tag__ == "traffic_light":
-
-            if abs(env.t - vl.t_last_det) > 1.0:
-                vl.state = TrafficLight.UNKNOWN
+        elif vl.__tag__ == "cross_walk":
 
             if not on_ref_path:
                 continue
 
-            min_proj = None
-            min_det = None
+            stop = False
+            only_stationary = True
+            for tr in list(env.get_all_tracks()):
+                if tr.object_class != "pedestrian":
+                    continue
+                if util.intersect_polygons(tr.hull, vl.corners):
+                    stop = True
+                only_stationary &= tr.stationary
+
+            if stop:
+                if only_stationary:
+                    vl.limit = 3.0
+                else:
+                    vl.limit = 0.0
+            else:
+                vl.limit = vl.free_limit
+
+        elif vl.__tag__ == "traffic_light":
+
+            if abs(env.t - vl.t) > 3.0:
+                vl.state = TrafficLight.RED
+                vl.can_stop = True
+
+            if not on_ref_path:
+                continue
 
             all_tds = []
             for src in list(env.tl_dets.__slots__):
                 all_tds += getattr(env.tl_dets, src)
 
-            # project points on traffic light detection
-            # rays and find ray with smallest distance
+            # associate detections with traffic light
+            assoc_dets = []
             for det in all_tds:
-                a = np.array([det.near_point[:2], det.far_point[:2]])
+                if det.confidence < 0.25:
+                    # filter out low confidence detections
+                    continue
+                a = np.array([det.near_point, det.far_point])
+                ray = a[1] - a[0]
+                angle = np.arctan2(ray[1], ray[0])
+                angle_dist = abs(np.degrees(util.short_angle_dist(vl.proj.angle, angle)))
+                if angle_dist > 35.0:
+                    # filter out detections with too high angle
+                    continue
                 p = util.project(a, vl.light_pos)
-                if min_proj is None or abs(p.distance) < abs(min_proj.distance):
-                    min_proj = p
-                    min_det = det
+                if abs(p.distance) <= vl.detection_radius:
+                    assoc_dets.append((det, p))
 
-            if min_det is None:
-                continue
+            if len(assoc_dets) > 0:
 
-            if abs(min_proj.distance) > vl.detection_radius:
-                continue
+                # compute the detection state with weighted voting
+                vote = np.zeros((4,))
+                for det, p in assoc_dets:
+                    w = (vl.detection_radius - abs(p.distance)) / vl.detection_radius
+                    if det.state == TrafficLight.NONE:
+                        w *= 0.1
+                    vote[det.state] += w
+                det_state = int(np.argmax(vote))
 
-            vl.t_last_det = min_det.t
-            vl.state = min_det.state
+                # check if we can still stop
+                if (vl.state in [TrafficLight.GREEN, TrafficLight.NONE]
+                        and det_state not in [TrafficLight.GREEN, TrafficLight.NONE]):
+                    d_to_tl = vl.proj.arc_len - proj_veh.arc_len
+                    d_stop = veh.v**2 / (2 * 2.75)
+                    vl.can_stop = d_to_tl >= d_stop
+
+                vl.t = env.t
+                vl.state = det_state
+
+            vl.active = vl.state in [TrafficLight.RED, TrafficLight.YELLOW]
+            vl.active &= vl.can_stop
 
     # deactivate next velocity_limit on button press
 
@@ -584,40 +762,53 @@ def update_map_items(env):
     # update intersection paths
 
     for ip in cmap.intersection_paths:
-
         ip.stop_proj = util.project(env.local_map.path[:, :2], ip.stop_pos)
         if not ip.stop_proj.in_bounds:
-            ip.t_min = float("inf")
-            ip.stop = False
-            ip.stopped = False
-            continue
-
-        if np.linalg.norm(ip.stop_pos - veh_pos) < ip.d_min_stopped:
-            if veh.v < 0.1:
-                ip.stopped = True
-        if ip.stop_always and not ip.stopped:
             ip.stop = True
             continue
+
+        dist_veh_to_stop_line = (np.linalg.norm(ip.stop_pos - veh_pos) 
+                                 - veh.rear_axis_to_front)
+        time_veh_to_stop_line = max(0.0, dist_veh_to_stop_line / max(2.0, veh.v))
+
+        if dist_veh_to_stop_line > ip.d_decision:
+            continue
+
+        pos_critical = (ip.map_segment.path[-1, 3] * abs(ip.offset_path_begin)
+                    / (ip.offset_path_end - ip.offset_path_begin))
 
         t_min = float("inf")
         for tr in env.predicted:
+            if tr.stationary:
+                continue
             for pred in tr.predictions:
                 if ip.map_segment.uuid != pred.uuid_assoc_map:
                     continue
-                dists = np.linalg.norm(pred.states[:, 1:3] - ip.pos[np.newaxis, :], axis=1)
-                idx_closest = np.argmin(dists)
-                t_closest = pred.states[idx_closest, 0]
-                t_min = min(t_min, t_closest)
+                if pred.cos_angle_dist < 0.0:
+                    continue
+                t_inters = ((5.0 + pos_critical - pred.proj_assoc_map.arc_len)
+                            / max(5.0, tr.v * pred.cos_angle_dist))
+                if t_inters < 0.0:
+                    continue
+                t_min = min(t_min, t_inters)
 
-        if ip.stop_for_any and t_min < float("inf"):
-            ip.stop = True
-            continue
+        if t_min - time_veh_to_stop_line > ip.gap_acceptance:
+            ip.stop = False
+        elif not ip.stop:
+            if t_min < ip.gap_rejection:
+                stop_acc = 6.0
+                dist_break_to_stop = (veh.v**2) / (2 * stop_acc)
+                if dist_veh_to_stop_line > dist_break_to_stop:
+                    # can still stop, abort mission
+                    ip.stop = True
 
-        if t_min - ip.t_min > ip.gap_hysteresis:
-            ip.t_min = t_min
-        elif t_min < ip.t_min:
-            ip.t_min = t_min
-        ip.stop = bool(ip.t_min < ip.gap_acceptance)
+    # synchronize with global map object
+
+    mmap = env.get_current_map()
+    mmap.velocity_limits = cmap.velocity_limits
+    mmap.turn_ind_points = cmap.turn_ind_points
+    mmap.map_switch_points = cmap.map_switch_points
+    mmap.intersection_paths = cmap.intersection_paths
 
 
 def get_map_boundary_polygon(cmap):
@@ -628,23 +819,27 @@ def get_map_boundary_polygon(cmap):
         cmap.boundary_right[np.newaxis, 0]])
 
 
-def load_map_store(file_path):
+def load_map_store(file_path, mmap_arrays=False):
 
     file_path = os.path.join(util.PATH_MAPS, file_path)
 
     try:
         map_store = {}
-        if not otb.load(map_store, file_path):
+        if not otb.load(map_store, file_path, mmap_arrays=mmap_arrays):
             return otb.bundle()
         for cmap in map_store.values():
             if len(cmap.control_points) == 0 and cmap.route is not None and len(cmap.route) > 0:
                 # TODO: remove if all maps have been converted
-                cmap.control_points = np.zeros((len(cmap.route), 5))
+                cmap.control_points = np.zeros((len(cmap.route), 6))
                 cmap.control_points[:, 0] = cmap.route[:, 0]
                 cmap.control_points[:, 1] = cmap.route[:, 1]
                 cmap.control_points[:, 2] = 2.0
                 cmap.control_points[:, 3] = 2.0
                 cmap.control_points[:, 4] = cmap.route[:, 5]
+            if cmap.control_points.shape[1] < 6:
+                control_points = np.zeros((len(cmap.control_points), 6))
+                control_points[:, :5] = cmap.control_points
+                cmap.control_points = control_points
             reinit_map(cmap)
         map_store = otb.bundle(map_store)
         for cmap in map_store.values():

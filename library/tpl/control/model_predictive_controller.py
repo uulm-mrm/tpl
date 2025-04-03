@@ -46,8 +46,6 @@ class Params:
         self.step = 0.05
         self.max_iterations = 20
 
-        self.dead_time = 0.185
-        self.cycle_time = 0.01
         self.acc_min = -3.0
         self.acc_max = 3.0
         self.jerk_min = -3.0
@@ -86,6 +84,9 @@ class ModelPredictiveController(BaseController):
         self.last_update_time = 0.0
         self.ctrl_vars_history = []
         self.idle_comp_acc = 0.0
+        self.idle_comp_steer = 0.0
+
+        self.cycle_time_estimate = 0.01
 
         # shared state initialization
         with self.lock_shared():
@@ -101,12 +102,17 @@ class ModelPredictiveController(BaseController):
         opt = self.opt
 
         delta_time = t - self.last_update_time
-        if delta_time < 0.0:
+        if delta_time < 0.0 or delta_time > 1.0:
             self.ctrl_vars_history = []
+        else:
+            self.cycle_time_estimate = self.cycle_time_estimate * 0.95 + delta_time * 0.05
 
         # get params
         with self.lock_shared():
             params = self.shared.params.deepcopy()
+
+        if len(traj.time) < 2:
+            return self.controls, self.con_traj
 
         traj_arr = np.vstack([traj.x,
                               traj.y,
@@ -164,19 +170,19 @@ class ModelPredictiveController(BaseController):
             veh.a
         ])
 
-        x0s = []
-        rt = t
-
-        dead_time_index = int(params.dead_time / params.cycle_time + 1e-5)
-        for acc, delta in self.ctrl_vars_history[-dead_time_index:]:
+        if veh.dead_time_steer > 0.0:
+            x0s = []
+            rt = t
+            dead_time_index = int(veh.dead_time_steer / self.cycle_time_estimate + 1e-5)
+            for acc, delta in self.ctrl_vars_history[-dead_time_index:]:
+                x0s.append(np.array([rt, *x0]))
+                u = np.array([0.0, 0.0])
+                x0[3] = delta
+                x0[6] = acc
+                x0 = opt.dynamics(x0, u, 0, self.cycle_time_estimate)
+                rt += self.cycle_time_estimate
             x0s.append(np.array([rt, *x0]))
-            u = np.array([0.0, 0.0])
-            x0[3] = delta
-            x0[6] = acc
-            x0 = opt.dynamics(x0, u, 0, params.cycle_time)
-            rt += params.cycle_time
-        x0s.append(np.array([rt, *x0]))
-        self.dead_time_trajectory = np.array(x0s)
+            self.dead_time_trajectory = np.array(x0s)
 
         # update projection on trajectory
         proj = util.project(traj[:, :2], x0[:2])
@@ -193,6 +199,7 @@ class ModelPredictiveController(BaseController):
         acc = (1.0 - j) * opt.x[0][6] + j * opt.x[1][6] 
         acc = min(params.acc_max, max(params.acc_min, acc))
 
+        # store values for deadtime compensation
         if delta_time > 0.0:
             self.ctrl_vars_history.append((acc, steering_angle))
         if len(self.ctrl_vars_history) > 100:
@@ -206,7 +213,9 @@ class ModelPredictiveController(BaseController):
         if params.idle_comp.active and (veh.v < params.idle_comp.veh_thresh
                 and traj[params.idle_comp.traj_look_ahead_steps, vel_idx] < params.idle_comp.traj_thresh):
             self.idle_comp_acc += params.idle_comp.jerk * delta_time
+            steering_angle = self.idle_comp_steer
         else:
+            self.idle_comp_steer = steering_angle
             self.idle_comp_acc = 0.0
         self.idle_comp_acc = min(0.0, max(params.idle_comp.min_acc, self.idle_comp_acc))
         acc += self.idle_comp_acc

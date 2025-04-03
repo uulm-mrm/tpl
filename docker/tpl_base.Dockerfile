@@ -32,14 +32,13 @@ RUN wget "https://github.com/Kitware/CMake/releases/download/v3.29.2/cmake-3.29.
 
 RUN python3 -m pip install --upgrade pip==24.0
 RUN python3 -m pip install \
-    git+https://github.com/uulm-mrm/imdash@f9dfd2495eba9b88fa2ec1d0af4540f40dc6895a \
-    'structstore==0.1.9' \
-    'objtoolbox==0.0.10' \
-    'imviz==0.2.7' \
-    matplotlib \
+    git+https://github.com/uulm-mrm/imdash@fe3a46ffc2711f807b734a6aea8bfa1ba3d38740 \
     ranger-fm \
     pytest \
-    parameterized
+    parameterized \
+    'imviz==0.2.12' \
+    'structstore==0.1.9' \
+    'carla==0.9.15'
 
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
 

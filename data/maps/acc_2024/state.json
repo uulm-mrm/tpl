@@ -10,7 +10,6 @@
       "__class__": "__extern__",
       "path": "sc3.control_points"
     },
-    "spline_degree": 1,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,
@@ -27,7 +26,6 @@
       "__class__": "__extern__",
       "path": "lehr.control_points"
     },
-    "spline_degree": 5,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 1,
@@ -44,7 +42,6 @@
       "__class__": "__extern__",
       "path": "overtaking_route_left.control_points"
     },
-    "spline_degree": 1,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,
@@ -61,7 +58,6 @@
       "__class__": "__extern__",
       "path": "overtaking_route_right.control_points"
     },
-    "spline_degree": 1,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,

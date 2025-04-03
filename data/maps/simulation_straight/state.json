@@ -1,0 +1,68 @@
+{
+  "5e84dd1a2e6f4619895c98977210c1b5": {
+    "name": "straight_east_to_west",
+    "uuid": "5e84dd1a2e6f4619895c98977210c1b5",
+    "velocity_limits": [],
+    "turn_ind_points": [],
+    "map_switch_points": [],
+    "intersection_paths": [],
+    "control_points": {
+      "__class__": "__extern__",
+      "path": "5e84dd1a2e6f4619895c98977210c1b5.control_points"
+    },
+    "smoothing": 0.0,
+    "step_size_discr": 0.5,
+    "closed_path": 0,
+    "__class__": "tpl.environment.map_module.Map"
+  },
+  "31f7b223b1b846048c12ea1e34047614": {
+    "name": "straight_west_to_east",
+    "uuid": "31f7b223b1b846048c12ea1e34047614",
+    "velocity_limits": [],
+    "turn_ind_points": [],
+    "map_switch_points": [],
+    "intersection_paths": [],
+    "control_points": {
+      "__class__": "__extern__",
+      "path": "31f7b223b1b846048c12ea1e34047614.control_points"
+    },
+    "smoothing": 0.0,
+    "step_size_discr": 0.5,
+    "closed_path": 0,
+    "__class__": "tpl.environment.map_module.Map"
+  },
+  "a0b89d182b944db6b5bd90fdda4f6db2": {
+    "name": "ramp_west_to_east",
+    "uuid": "a0b89d182b944db6b5bd90fdda4f6db2",
+    "velocity_limits": [],
+    "turn_ind_points": [],
+    "map_switch_points": [
+      {
+        "uuid": "dc909063cd2d4ca08557e0f1a6a31b68",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -305.95119625409586,
+            -4.200970296719252
+          ]
+        },
+        "trigger_divisor": 1,
+        "triggers": 0,
+        "activation_radius": 1.7,
+        "target_uuid": "31f7b223b1b846048c12ea1e34047614",
+        "__class__": "tpl.environment.map_module.MapSwitchPoint"
+      }
+    ],
+    "intersection_paths": [],
+    "control_points": {
+      "__class__": "__extern__",
+      "path": "a0b89d182b944db6b5bd90fdda4f6db2.control_points"
+    },
+    "smoothing": 5.0,
+    "step_size_discr": 0.5,
+    "closed_path": 0,
+    "__class__": "tpl.environment.map_module.Map"
+  },
+  "__class__": "objtoolbox.utils.bundle"
+}

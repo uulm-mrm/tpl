@@ -1,5 +1,6 @@
 import os
 import copy
+import glob
 import uuid
 import random
 import unittest
@@ -16,30 +17,47 @@ from tpl.simulation import SimStandalone, SimState, state_from_shstate
 @parameterized_class([
     {
         "scenario_path": "acc_2024/cv_3o",
+        "planning_params_path": "acc_2024",
+        "control_params_path": "acc_2024"
     },
     {
         "scenario_path": "acc_2024/ot_2o",
+        "planning_params_path": "acc_2024",
+        "control_params_path": "acc_2024"
     },
     {
         "scenario_path": "acc_2024/rb_3o",
+        "planning_params_path": "acc_2024",
+        "control_params_path": "acc_2024"
     },
     {
         "scenario_path": "acc_2024/cv_3o",
-        "active_planner": "poly_sampling_planner"
+        "planning_params_path": "acc_2024",
+        "control_params_path": "acc_2024",
+        "active_planner": "dp_lat_lon_planner"
     },
     {
         "scenario_path": "acc_2024/ot_2o",
-        "active_planner": "poly_sampling_planner"
+        "planning_params_path": "acc_2024",
+        "control_params_path": "acc_2024",
+        "active_planner": "dp_lat_lon_planner"
     },
     {
         "scenario_path": "acc_2024/rb_3o",
-        "active_planner": "poly_sampling_planner"
+        "planning_params_path": "acc_2024",
+        "control_params_path": "acc_2024",
+        "active_planner": "dp_lat_lon_planner"
     }
 ])
 class TestSimScenarios(unittest.TestCase):
 
     scenario_path = ""
     active_planner = "path_vel_decomp_planner"
+    planning_params_path = None
+    control_params_path = None
+
+    # create random app id to reduce interference with other instances
+    app_id = uuid.uuid4().hex
 
     def setUp(self):
 
@@ -88,13 +106,30 @@ class TestSimScenarios(unittest.TestCase):
 
     def create_standalone(self):
 
-        # create random app id to reduce interference with other instances
-        #app_id = uuid.uuid4().hex
-        app_id = ""
+        scenario_path = osp.join(
+                self.base_path,
+                "scenarios",
+                self.scenario_path)
+        planning_params = None
+        if self.planning_params_path is not None:
+            planning_params = osp.join(
+                    self.base_path,
+                    "params",
+                    "planning",
+                    self.planning_params_path)
+        control_params = None
+        if self.control_params_path is not None:
+            control_params = osp.join(
+                    self.base_path,
+                    "params",
+                    "control",
+                    self.control_params_path)
 
         standalone = SimStandalone(
-                app_id=app_id,
-                scenario_path=self.scenario_path)
+                app_id=self.app_id,
+                scenario_path=scenario_path,
+                planning_params=planning_params,
+                control_params=control_params)
 
         with standalone.core.sh_state.lock():
             sim = standalone.core.sh_state.sim
@@ -107,10 +142,7 @@ class TestSimScenarios(unittest.TestCase):
 
         rc = sim.rule_checker
 
-        self.assertEqual(list(rc.collisions), [], "scenario was not collision free")
-        self.assertEqual(rc.off_road, False, "vehicle went off road")
-        self.assertEqual(rc.wrong_way, False, "vehicle went the wrong way")
-        self.assertEqual(rc.v_max_violation, 0.0, "violated route velocity limit")
+        self.assertEqual(list(rc.violations), [], "rule violation occured")
 
     def test_scenario(self):
 

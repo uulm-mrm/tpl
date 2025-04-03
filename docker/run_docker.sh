@@ -31,7 +31,6 @@ DOCKER_ARGS+=(
     --device /dev/dri
     --name "$CONTAINER_NAME"
     --workdir "/workspace/tpl"
-    -v /tmp:/tmp:rw
     -v /tmp/.X11-unix:/tmp/.X11-unix:rw
     -v $TPL_DIR:/workspace/tpl
     -v /etc/group:/etc/group:ro

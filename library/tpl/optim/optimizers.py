@@ -38,7 +38,6 @@ def config_trajectory_tracking_mpc():
     ref_k = spx.ArraySymbol("ref_k")
     ref_v = spx.ArraySymbol("ref_v")
     ref_step = sp.Symbol("ref_step")
-    ref_v_t_offset = sp.Symbol("ref_v_t_offset")
 
     l = sp.Symbol("l")
     v_ch = sp.Symbol("v_ch")
@@ -116,6 +115,120 @@ def config_trajectory_tracking_mpc():
              p_phi_dot, p_phi, p_phi_ref_dot_diff, pa, pj,
              l, v_ch,
              ref_x, ref_y, ref_phi, ref_k, ref_v, ref_step,
+             max_delta, max_acc, min_acc,
+             a_offset],
+            dynamics,
+            costs,
+            end_costs=0.0,
+            constraints=[delta_constr_max, delta_constr_min, acc_constr_max, acc_constr_min],
+            use_cache=True)
+
+    return config
+
+
+def config_trajectory_tracking_mpc_time():
+
+    t = sp.Symbol("t")
+    T = sp.Symbol("T")
+    dt = sp.Symbol("dt")
+
+    # states
+
+    x = sp.Symbol("x")
+    y = sp.Symbol("y")
+    phi = sp.Symbol("phi")
+    delta = sp.Symbol("delta")
+    v = sp.Symbol("v")
+    a = sp.Symbol("a")
+
+    # actions
+
+    j = sp.Symbol("j")
+    delta_dot = sp.Symbol("delta_dot")
+
+    # reference traj arrays
+
+    ref_x = spx.ArraySymbol("ref_x")
+    ref_y = spx.ArraySymbol("ref_y")
+    ref_phi = spx.ArraySymbol("ref_phi")
+    ref_v = spx.ArraySymbol("ref_v")
+    ref_dt = sp.Symbol("ref_dt")
+    ref_t_offset = sp.Symbol("ref_t_offset")
+
+    l = sp.Symbol("l")
+    v_ch = sp.Symbol("v_ch")
+    max_delta = sp.Symbol("max_delta")
+    max_acc = sp.Symbol("max_acc")
+    min_acc = sp.Symbol("min_acc")
+    a_offset = sp.Symbol("a_offset")
+
+    cog_pos = sp.Symbol("cog_pos")
+
+    # time constants
+
+    rt = ref_t_offset + dt * t
+
+    # dynamics function
+
+    r_x = spx.lerp(0.0, ref_dt, rt, ref_x)
+    r_y = spx.lerp(0.0, ref_dt, rt, ref_y)
+    r_phi = spx.lerp_angle(0.0, ref_dt, rt, ref_phi)
+    v_trg = spx.lerp(0.0, ref_dt, rt, ref_v)
+
+    beta = sp.atan(sp.tan(delta) * cog_pos)
+
+    phi_dot = v * sp.tan(delta) * sp.cos(beta) / (l*(1 + (v/v_ch)**2))
+
+    dynamics = sp.Matrix([
+            v * sp.cos(phi + beta),
+            v * sp.sin(phi + beta),
+            phi_dot,
+            delta_dot,
+            a + a_offset,
+            j
+        ])
+
+    # penalty coefficients
+
+    pd = sp.Symbol("pd")
+    pv = sp.Symbol("pv")
+    pdelta = sp.Symbol("pdelta")
+    pdelta_dot = sp.Symbol("pdelta_dot")
+    p_phi_dot = sp.Symbol("p_phi_dot")
+    min_p_phi_dot = sp.Symbol("min_p_phi_dot")
+    min_pdelta_dot = sp.Symbol("min_pdelta_dot")
+    p_phi = sp.Symbol("p_phi")
+    pa = sp.Symbol("pa")
+    pj = sp.Symbol("pj")
+
+    # cost function definition
+
+    costs = 0.0
+    costs += (min_pdelta_dot + pdelta_dot * v**2) * delta_dot**2
+    costs += (min_p_phi_dot + p_phi_dot * v**2) * phi_dot**2
+    costs += pa * a**2
+    costs += pj * j**2
+    costs += pv * (v - v_trg)**2
+    costs += pd * (x - r_x)**2 + pd * (y - r_y)**2
+    costs += p_phi * (1.0 - sp.cos(phi - r_phi))
+
+    # constraints
+
+    delta_constr_max = delta - max_delta
+    delta_constr_min = -max_delta - delta
+
+    acc_constr_max = a - max_acc
+    acc_constr_min = min_acc - a
+
+    # build controller
+
+    config = genopt.Config(
+            [x, y, phi, delta, v, a],
+            [j, delta_dot],
+            [pd, pv, pdelta, min_pdelta_dot, pdelta_dot, min_p_phi_dot,
+             p_phi_dot, p_phi, pa, pj,
+             l, v_ch, cog_pos,
+             ref_x, ref_y, ref_phi, ref_v, ref_dt, ref_t_offset,
              max_delta, max_acc, min_acc,
              a_offset],
             dynamics,
@@ -444,10 +557,11 @@ def config_ref_line_smoother_dk():
     return config
 
 
-def build_optimizers():
+def build_optimizers(force_rebuild=False):
 
     config_functions = [
             config_trajectory_tracking_mpc,
+            config_trajectory_tracking_mpc_time,
             config_lateral_profile,
             config_velocity_profile_space,
             config_ref_line_smoother_k,
@@ -456,6 +570,12 @@ def build_optimizers():
 
     configs = [f() for f in config_functions]
     names = ["_".join(f.__name__.split("_")[1:]) for f in config_functions]
+
+    if not force_rebuild:
+        configs = [c for c, n in zip(configs, names) if n not in globals()]
+
+    if len(configs) == 0:
+        return
 
     opt_classes = genopt.build_parallel(configs)
 

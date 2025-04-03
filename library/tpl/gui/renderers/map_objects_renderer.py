@@ -5,7 +5,7 @@ import imviz as viz
 import numpy as np
 
 from imdash.utils import begin_context_drag_item
-from tpl.environment.map_module import TrafficLight
+from tpl.environment.map_module import TrafficLight, TurnIndPoint
 
 
 class MapObjectsRenderer:
@@ -15,9 +15,29 @@ class MapObjectsRenderer:
         self.no_fit = no_fit
         self.show_all = show_all
 
+        self.show_velocity_limits = True
+        self.show_traffic_lights = True
+        self.show_intersection_paths = True
+        self.show_cross_walks = True
+        self.show_indicator_points = True
+        self.show_map_switch_points = True
+
         self.map_store = None
 
         self.update_flags()
+
+    def __getstate__(self):
+
+        return self.__savestate__()
+
+    def __savestate__(self):
+
+        d = self.__dict__.copy()
+        del d["map_store"]
+        del d["line_flags"]
+        del d["drag_tool_flags"]
+
+        return d
 
     def update_flags(self):
 
@@ -57,11 +77,16 @@ class MapObjectsRenderer:
 
         try:
             if hasattr(self, menu_func_name):
-                getattr(self, menu_func_name)(obj)
+                menu_func = getattr(self, menu_func_name)
             elif hasattr(obj, "__tag__"):
-                getattr(self, "menu_" + obj.__tag__)(obj)
+                menu_func = getattr(self, "menu_" + obj.__tag__)
         except AttributeError:
+            menu_func = None
+
+        if menu_func is None:
             viz.autogui(obj)
+        else:
+            menu_func(obj)
 
     def map_selector(self, label, selected_map):
 
@@ -137,6 +162,9 @@ class MapObjectsRenderer:
 
     def render_traffic_light(self, obj):
 
+        if not self.show_traffic_lights:
+            return
+
         if obj.state == TrafficLight.RED:
             light_col = (1.0, 0.0, 0.0)
         elif obj.state == TrafficLight.YELLOW:
@@ -145,6 +173,12 @@ class MapObjectsRenderer:
             light_col = (0.0, 1.0, 0.0)
         else:
             light_col = (0.2, 0.2, 0.2)
+
+        viz.plot([obj.pos[0], obj.light_pos[0]],
+                 [obj.pos[1], obj.light_pos[1]],
+                 "-",
+                 color=(1.0, 1.0, 1.0),
+                 flags=self.line_flags)
 
         viz.plot([obj.pos[0], obj.light_pos[0]],
                  [obj.pos[1], obj.light_pos[1]],
@@ -167,12 +201,15 @@ class MapObjectsRenderer:
 
     def render_cross_walk(self, obj):
 
+        if not self.show_cross_walks:
+            return
+
         xs = [*obj.corners[:, 0], obj.corners[0, 0]]
         ys = [*obj.corners[:, 1], obj.corners[0, 1]]
         
         col = (1.0, 1.0, 1.0)
 
-        viz.plot(xs, ys, color=col)
+        viz.plot(xs, ys, color=col, flags=self.line_flags)
         viz.plot([obj.pos[0], np.mean(obj.corners[:, 0])],
                  [obj.pos[1], np.mean(obj.corners[:, 1])],
                  "-o",
@@ -187,6 +224,9 @@ class MapObjectsRenderer:
 
     def render_velocity_limit(self, obj):
 
+        if not self.show_velocity_limits:
+            return
+
         if obj.active:
             col = (1.0, 0.0, 0.0)
         else:
@@ -195,6 +235,9 @@ class MapObjectsRenderer:
         self.base_point(obj, col=col)
 
     def render_turn_ind_point(self, obj):
+
+        if not self.show_indicator_points:
+            return
 
         viz.plot_circle(obj.pos,
                         obj.activation_radius,
@@ -206,6 +249,9 @@ class MapObjectsRenderer:
 
     def render_map_switch_point(self, obj):
 
+        if not self.show_map_switch_points:
+            return
+
         viz.plot_circle(obj.pos,
                         obj.activation_radius,
                         color=(1.0, 0.0, 0.5),
@@ -213,6 +259,16 @@ class MapObjectsRenderer:
                         flags=self.line_flags)
 
         self.base_point(obj, col=(1.0, 0.0, 0.5))
+
+    def menu_turn_ind_point(self, obj):
+
+        obj.pos = viz.autogui(obj.pos, "pos")
+        obj.activation_radius = viz.autogui(obj.activation_radius, "activation_radius")
+        turn_ind_states = [TurnIndPoint.OFF, TurnIndPoint.LEFT, TurnIndPoint.RIGHT, TurnIndPoint.HAZARD]
+        turn_ind_names = ["off", "left", "right", "hazard"]
+        idx = turn_ind_states.index(obj.dir)
+        idx = viz.combo("indicator", turn_ind_names, idx)
+        obj.dir = turn_ind_states[idx]
 
     def menu_map_switch_point(self, obj):
 
@@ -222,16 +278,6 @@ class MapObjectsRenderer:
         obj.activation_radius = viz.autogui(obj.activation_radius, "activation_radius")
         obj.in_radius = viz.autogui(obj.triggers, "in_radius")
         obj.target_uuid = self.map_selector("target_map", obj.target_uuid)
-
-    def render_checkpoint(self, obj):
-
-        viz.plot_circle(obj.pos,
-                        obj.activation_radius,
-                        color=(1.0, 1.0, 0.0),
-                        line_weight=1.0,
-                        flags=self.line_flags)
-
-        self.base_point(obj, col=(1.0, 1.0, 0.0))
 
     def render_dynamic_object(self, obj):
 
@@ -243,6 +289,9 @@ class MapObjectsRenderer:
 
     def render_intersection_path(self, obj):
 
+        if not self.show_intersection_paths:
+            return
+
         if obj.stop:
             col_stop = (1.0, 0.0, 0.0)
         else:
@@ -251,7 +300,8 @@ class MapObjectsRenderer:
         viz.plot([obj.pos[0], obj.stop_pos[0]],
                  [obj.pos[1], obj.stop_pos[1]],
                  fmt="-",
-                 color=col_stop)
+                 color=col_stop,
+                 flags=self.line_flags)
 
         self.base_point(obj, col=(1.0, 1.0, 1.0))
 
@@ -259,14 +309,16 @@ class MapObjectsRenderer:
                 f"{obj.uuid}_stop",
                 obj.stop_pos,
                 radius=6.0,
-                color=col_stop))
+                color=col_stop,
+                flags=self.drag_tool_flags))
 
         if obj.map_segment is not None:
             viz.plot(obj.map_segment.path[:, 0],
                      obj.map_segment.path[:, 1],
                      fmt="-",
                      line_weight=5.0,
-                     color="white")
+                     color="white",
+                     flags=self.line_flags)
 
     def menu_intersection_path(self, obj):
 
@@ -276,8 +328,6 @@ class MapObjectsRenderer:
         obj.offset_path_end = viz.autogui(obj.offset_path_end, "offset_path_end")
         obj.intersection_map_uuid = self.map_selector("intersection_map", obj.intersection_map_uuid)
         obj.map_segment_step_size = viz.autogui(obj.map_segment_step_size, "map_segment_step_size")
-        obj.v_max_approach = viz.autogui(obj.v_max_approach, "v_max_approach")
-        obj.stop_always = viz.autogui(obj.stop_always, "stop_always")
-        obj.stop_for_any = viz.autogui(obj.stop_for_any, "stop_for_any")
+        obj.d_decision = viz.autogui(obj.d_decision, "d_decision")
         obj.gap_acceptance = viz.autogui(obj.gap_acceptance, "gap_acceptance")
-        obj.gap_hysteresis = viz.autogui(obj.gap_hysteresis, "gap_hysteresis")
+        obj.gap_rejection = viz.autogui(obj.gap_rejection, "gap_rejection")

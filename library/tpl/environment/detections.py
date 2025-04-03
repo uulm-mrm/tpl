@@ -11,7 +11,10 @@ class TrafficLightDetection:
 
         self.near_point = np.array([0.0, 0.0])
         self.far_point = np.array([0.0, 0.0])
-        self.state = TrafficLight.UNKNOWN
+
+        self.state = TrafficLight.NONE
+
+        self.confidence = 0.0
 
 
 class DynamicObject:
@@ -33,6 +36,9 @@ class DynamicObject:
         # velocity in direction of yaw
         self.v = None
 
+        # acceleration in the direction of yaw
+        self.a = None
+
         # 2D points of the convex object hull in UTM
         self.hull = np.zeros((0, 2))
 
@@ -50,6 +56,12 @@ class DynamicObject:
         # list of multiple possible predictions 
         self.predictions = []
 
+        # covariance matrix from tracking
+        self.covar = np.eye(4)
+
+        # if true the object did not move for a while
+        self.stationary = False
+
 
 class Prediction:
 
@@ -57,5 +69,7 @@ class Prediction:
 
         self.proj_assoc_map = None
         self.uuid_assoc_map = None
+        # the current cosine angle distance to the associated map
+        self.cos_angle_dist = 0.0
         # array with dims: t, x, y, yaw, v
-        self.states = np.array((0, 5))
+        self.states = np.zeros((0, 5))

@@ -33,8 +33,6 @@ class Params:
 
         self.poly_params = PolySamplingParams()
 
-        self.dist_reset = 2.0
-
 
 class PolySamplingPlanner(BasePlanner):
 
@@ -87,7 +85,7 @@ class PolySamplingPlanner(BasePlanner):
 
         cmap = env.local_map
         if cmap is None:
-            return self.trajectory
+            return
 
         poly_params.rear_axis_to_rear = veh.rear_axis_to_rear
         poly_params.rear_axis_to_front = veh.rear_axis_to_front
@@ -95,7 +93,7 @@ class PolySamplingPlanner(BasePlanner):
         
         dt_replan = env.t - self.last_update_time
 
-        if dt_replan >= poly_params.dt or dt_replan < 0.0:
+        if dt_replan >= poly_params.dt:
 
             start_time = time.perf_counter()
 
@@ -126,14 +124,7 @@ class PolySamplingPlanner(BasePlanner):
                         do.evade,
                         do.hull)
 
-            path_traj = np.vstack([self.trajectory.x, self.trajectory.y]).T
-            path_proj = util.project(path_traj, (veh.x, veh.y))
-
-            do_reset = env.reset_required
-            do_reset |= abs(path_proj.distance) > params.dist_reset
-            do_reset |= self.poly_traj is None
-
-            if do_reset:
+            if self.poly_traj is None:
                 start_tp = PolySamplingTrajPoint()
                 start_tp.s = 0.0
                 start_tp.d = ref_proj.distance

@@ -11,7 +11,14 @@ from scipy.interpolate import interp1d
 from tpl.control import BaseController
 from tpl.planning import Trajectory
 from tpl.environment import VehicleState
-from tpl.util import PATH_PARAMS, get_subclasses_recursive, to_snake_case, project, short_angle_dist, StructStoreRegistry
+from tpl.util import (
+        PATH_PARAMS, 
+        get_subclasses_recursive, 
+        to_snake_case, 
+        project,
+        short_angle_dist,
+        StructStoreRegistry
+    )
 
 
 class ControlInput:
@@ -109,12 +116,15 @@ class ControlApp:
         with self.sh_input.lock():
             con_input = self.sh_input.deepcopy()
 
-        with self.sh_controllers.lock():
-            active_controller = self.sh_controllers.active_controller
-        try:
-            controller = self.controllers[active_controller]
-        except KeyError:
-            controller = self.controllers["base_controller"]
+        if con_input.trajectory.emergency:
+            controller = self.controllers["const_acc_controller"]
+        else:
+            with self.sh_controllers.lock():
+                active_controller = self.sh_controllers.active_controller
+            try:
+                controller = self.controllers[active_controller]
+            except KeyError:
+                controller = self.controllers["base_controller"]
 
         controls, control_traj = controller.update(con_input)
 
@@ -148,7 +158,7 @@ def save_control_params(sh_controllers):
         controller_state = getattr(sh_controllers, cn)
         if hasattr(controller_state, "params"):
             cs = otb.bundle()
-            cs.params = getattr(controller_state, "params")
+            cs.params = getattr(controller_state, "params").deepcopy()
             params[cn] = cs
 
     abs_path = osp.join(PATH_PARAMS, "control", sh_controllers.__storage__)

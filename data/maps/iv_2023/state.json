@@ -24,6 +24,8 @@
             5363765.357252162
           ]
         },
+        "detection_dir": 0.0,
+        "detection_dir_range": 120.0,
         "detection_radius": 2.0,
         "state": -1,
         "t_last_det": 0.0,
@@ -50,6 +52,8 @@
             5363848.874652932
           ]
         },
+        "detection_dir": 0.0,
+        "detection_dir_range": 120.0,
         "detection_radius": 1.0,
         "state": -1,
         "t_last_det": 0.0,
@@ -76,6 +80,8 @@
             5363883.702165557
           ]
         },
+        "detection_dir": 0.0,
+        "detection_dir_range": 120.0,
         "detection_radius": 1.0,
         "state": -1,
         "t_last_det": 0.0,
@@ -102,6 +108,8 @@
             5363918.916663636
           ]
         },
+        "detection_dir": 0.0,
+        "detection_dir_range": 120.0,
         "detection_radius": 1.0,
         "state": -1,
         "t_last_det": 0.0,
@@ -128,6 +136,8 @@
             5363904.374881597
           ]
         },
+        "detection_dir": 0.0,
+        "detection_dir_range": 120.0,
         "detection_radius": 1.0,
         "state": -1,
         "t_last_det": 0.0,
@@ -154,6 +164,8 @@
             5363868.621511649
           ]
         },
+        "detection_dir": 0.0,
+        "detection_dir_range": 120.0,
         "detection_radius": 1.0,
         "state": -1,
         "t_last_det": 0.0,
@@ -180,6 +192,8 @@
             5363799.28020991
           ]
         },
+        "detection_dir": 0.0,
+        "detection_dir_range": 120.0,
         "detection_radius": 1.0,
         "state": -1,
         "t_last_det": 0.0,
@@ -224,6 +238,8 @@
             5364785.604797487
           ]
         },
+        "detection_dir": 0.0,
+        "detection_dir_range": 120.0,
         "detection_radius": 1.0,
         "state": -1,
         "t_last_det": 0.0,

@@ -64,6 +64,82 @@
     },
     "__class__": "objtoolbox.utils.bundle"
   },
+  "lattice_planner": {
+    "params": {
+      "update_always": 0,
+      "use_lat_sampling_planner": 0,
+      "a_lat_max": 3.0,
+      "d_reinit_lat": 0.5,
+      "reinit_time": 1.0,
+      "write_debug_data": 1,
+      "dyn_prog": {
+        "s_min": 0.0,
+        "s_max": 200.0,
+        "v_min": 0.0,
+        "v_max": 36.0,
+        "a_min": -3.0,
+        "a_max": 3.0,
+        "t_steps": 10,
+        "s_steps": 201,
+        "v_steps": 37,
+        "a_steps": 7,
+        "dt": 1.0,
+        "dt_start": 1.0,
+        "w_v_diff": 0.3,
+        "w_a": 0.6,
+        "w_j": 0.4,
+        "w_safety_dist": 1.0,
+        "path_step_size": 0.5,
+        "path_steps": 0,
+        "width_veh": 2.0,
+        "length_veh": 6.0,
+        "__class__": "structstore._structstore_bindings.StructStore"
+      },
+      "dyn_prog_env": {
+        "t_min": 0.0,
+        "t_max": 10.0,
+        "l_min": -5.0,
+        "l_max": 5.0,
+        "s_min": 0.0,
+        "s_max": 200.0,
+        "dilation_l": 1,
+        "dilation_s": 1,
+        "dilation_path_l": 1,
+        "dilation_path_s": 1,
+        "t_steps": 10,
+        "l_steps": 21,
+        "s_steps": 201,
+        "ref_line_step_size": 0.5,
+        "ref_line_steps": 401,
+        "__class__": "structstore._structstore_bindings.StructStore"
+      },
+      "lat_sampling": {
+        "l_min": -5.0,
+        "l_max": 5.0,
+        "s_min": 0.0,
+        "s_max": 200.0,
+        "s_steps": 201,
+        "l_dst_min": -5.0,
+        "l_dst_max": 5.0,
+        "s_dst_min": 10.0,
+        "s_dst_max": 70.0,
+        "l_dst_steps": 21,
+        "s_dst_steps": 13,
+        "l_trg": 0.0,
+        "w_l": 1.0,
+        "w_k": 0.10000000149011612,
+        "w_dl": 1.0,
+        "w_right": 0.0,
+        "k_abs_max": 1.0,
+        "a_lat_abs_max": 2.5,
+        "width_veh": 2.0,
+        "length_veh": 2.0,
+        "__class__": "structstore._structstore_bindings.StructStore"
+      },
+      "__class__": "structstore._structstore_bindings.StructStore"
+    },
+    "__class__": "objtoolbox.utils.bundle"
+  },
   "poly_sampling_planner": {
     "params": {
       "a_min": -2.5,
@@ -97,7 +173,6 @@
         "width_ego": 0.0,
         "__class__": "structstore._structstore_bindings.StructStore"
       },
-      "dist_reset": 2.0,
       "__class__": "structstore._structstore_bindings.StructStore"
     },
     "__class__": "objtoolbox.utils.bundle"

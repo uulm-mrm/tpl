@@ -20,7 +20,7 @@ class EnvironmentApp:
                  env_params_path=None):
 
         self.app_id = app_id
-        self.last_time = 0.0
+        self.last_time = -1.0
 
         self.env = SharedEnvironmentState.fromparams(
                 f"/{self.app_id}tpl_env",
@@ -37,25 +37,23 @@ class EnvironmentApp:
     def update(self, t):
 
         with self.env.lock():
-            map_module.update_local_map(self.env)
-
-        with self.env.lock():
-            if self.last_time == t:
-                # only update if time changed
-                time.sleep(0.001)
-                return
-            elif t < self.last_time:
+            if t < self.last_time:
                 # reinit if time jumps backwards
                 self.tracking_module = TrackingModule()
                 self.prediction_module = PredictionModule()
                 self.last_time = 0.0
-            self.last_time = t
 
         with self.env.lock():
             self.env.t = t
-            self.tracking_module.update(self.env)
-            self.prediction_module.update(self.env)
+            map_module.update_local_map(self.env)
+            if self.last_time != t:
+                self.tracking_module.update(self.env)
+                self.prediction_module.update(self.env)
             map_module.update_map_items(self.env)
+            map_module.update_local_map_velocity(self.env)
+            map_module.update_local_map_inters_paths(self.env)
+
+        self.last_time = t
 
 
 def load_env_params(sh_env, path=None):
@@ -85,5 +83,5 @@ def save_env_params(sh_env):
     params.map_store_path = sh_env.map_store_path
     params.selected_map = sh_env.selected_map
 
-    abs_path = osp.join(PATH_PARAMS, "env", sh_env.__storage__)
+    abs_path = osp.join(util.PATH_PARAMS, "env", sh_env.__storage__)
     otb.save(params, abs_path)

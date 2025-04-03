@@ -10,7 +10,6 @@
       "__class__": "__extern__",
       "path": "5e84dd1a2e6f4619895c98977210c1b5.control_points"
     },
-    "spline_degree": 1,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,
@@ -42,8 +41,9 @@
           ]
         },
         "detection_radius": 1.0,
+        "t": 0.0,
         "state": -1,
-        "t_last_det": 0.0,
+        "can_stop": 0,
         "__class__": "tpl.environment.map_module.TrafficLight"
       }
     ],
@@ -51,21 +51,21 @@
     "map_switch_points": [],
     "intersection_paths": [
       {
-        "uuid": "b291ee282e0d43e88c7216d467e2c423",
+        "uuid": "6b173328e0044a428c7d2cecda9acf11",
         "pos": {
           "__class__": "numpy.ndarray",
           "dtype": "float64",
           "data": [
-            -1.9318711173356107,
-            3.9987418750086086
+            -1.9937070598645956,
+            -0.012674099537529848
           ]
         },
         "stop_pos": {
           "__class__": "numpy.ndarray",
           "dtype": "float64",
           "data": [
-            -4.9702183918193406,
-            0.4053119253788129
+            -3.996768676538359,
+            0.150438221928753
           ]
         },
         "stop_proj": {
@@ -97,32 +97,35 @@
         },
         "intersection_map_uuid": "c9d4d429fd1245898b5c4159644d8f4b",
         "map_segment_step_size": 2.0,
-        "offset_path_begin": -100,
-        "offset_path_end": 15,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          1991,
+          2000,
+          26,
+          31
+        ],
+        "d_decision": 30.0,
         "gap_acceptance": 5.0,
-        "gap_hysteresis": 2.0,
-        "v_max_approach": 3.0,
-        "stop_always": 0,
-        "stop_for_any": 0,
-        "d_min_stopped": 5.0,
+        "gap_rejection": 3.0,
         "__class__": "tpl.environment.map_module.IntersectionPath"
       },
       {
-        "uuid": "bf2947dc54e449ada69cc959adfcd9b9",
+        "uuid": "327dccbb772e416b8cf76f88e5987b61",
         "pos": {
           "__class__": "numpy.ndarray",
           "dtype": "float64",
           "data": [
-            2.025547315483152,
-            -1.986681872598469
+            2.0,
+            0.0
           ]
         },
         "stop_pos": {
           "__class__": "numpy.ndarray",
           "dtype": "float64",
           "data": [
-            -5.013287986977226,
-            -0.47519521698182876
+            -3.996768676538359,
+            -0.17967371637479562
           ]
         },
         "stop_proj": {
@@ -154,14 +157,197 @@
         },
         "intersection_map_uuid": "29a91bc17002424d8ca83912896e118b",
         "map_segment_step_size": 2.0,
-        "offset_path_begin": -100,
-        "offset_path_end": 15,
-        "gap_acceptance": 8.0,
-        "gap_hysteresis": 2.0,
-        "v_max_approach": 3.0,
-        "stop_always": 0,
-        "stop_for_any": 0,
-        "d_min_stopped": 5.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          1999,
+          2008,
+          28,
+          34
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "0a2cfb9936824ddf95e34fadc90aeccc",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -315.0513440730907,
+            -3.959581404422913
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -315.5,
+            0.0
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "a0b89d182b944db6b5bd90fdda4f6db2",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          1341,
+          1386,
+          23,
+          34
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "7fa7d2e11c3d47928d43c7bc8649ab3f",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            97.99427939005062,
+            0.006369825250021055
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            94.97812227240372,
+            0.14324846215062315
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "a47834d4a7064097afd2b8df41a1c0cb",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          2191,
+          2200,
+          26,
+          31
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "3f69028c042b4534ae240b9e779bf4b3",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            102.0,
+            0.0
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            94.9972770515498,
+            -0.17280539375985526
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "3bf8a6a66f99448d9f29030e02726c82",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          2199,
+          2208,
+          28,
+          34
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
         "__class__": "tpl.environment.map_module.IntersectionPath"
       }
     ],
@@ -169,7 +355,351 @@
       "__class__": "__extern__",
       "path": "31f7b223b1b846048c12ea1e34047614.control_points"
     },
-    "spline_degree": 1,
+    "smoothing": 0.0,
+    "step_size_discr": 0.5,
+    "closed_path": 0,
+    "__class__": "tpl.environment.map_module.Map"
+  },
+  "701f035d8b6840ef928a4d38013c25a0": {
+    "name": "turn_west_to_north",
+    "uuid": "701f035d8b6840ef928a4d38013c25a0",
+    "velocity_limits": [
+      {
+        "uuid": "ae19d11d9ab44e93a1c692f391e946d6",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            94.97978556046951,
+            -0.033106598960382705
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "light_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            93.97120110797962,
+            -4.006318078466096
+          ]
+        },
+        "detection_radius": 1.0,
+        "t": 0.0,
+        "state": -1,
+        "can_stop": 0,
+        "__class__": "tpl.environment.map_module.TrafficLight"
+      }
+    ],
+    "turn_ind_points": [],
+    "map_switch_points": [],
+    "intersection_paths": [
+      {
+        "uuid": "0c1dcdfbfa184007bee70bbe40c6382c",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -999.0,
+            4.0
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -999.0000000000005,
+            0.0
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "5e84dd1a2e6f4619895c98977210c1b5",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          0,
+          122,
+          0,
+          31
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "f7085c916533407ab79ec242f65e62b9",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -2.963068402377303,
+            3.9419388889297737
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -5.000000000000455,
+            3.807352111530919e-15
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "5e84dd1a2e6f4619895c98977210c1b5",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          1991,
+          2012,
+          26,
+          31
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "c676d14aa06f4718879dba776e34cedd",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -2.0,
+            0.0
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -4.996861692641775,
+            -0.008115049349924242
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "c9d4d429fd1245898b5c4159644d8f4b",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          1991,
+          2120,
+          0,
+          31
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "5687c76dcb3e430c82028810a029f19a",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            2.0,
+            0.5
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -4.996861692641775,
+            -0.008115049349924242
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "29a91bc17002424d8ca83912896e118b",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          1998,
+          2017,
+          29,
+          34
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "db4cb80391df4341bcab31e21c7c0867",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -315.0513440730907,
+            -3.959581404422913
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -315.50000000000045,
+            -2.108486503946033e-242
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "a0b89d182b944db6b5bd90fdda4f6db2",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          1341,
+          1386,
+          23,
+          34
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      }
+    ],
+    "control_points": {
+      "__class__": "__extern__",
+      "path": "701f035d8b6840ef928a4d38013c25a0.control_points"
+    },
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,
@@ -186,7 +716,6 @@
       "__class__": "__extern__",
       "path": "c9d4d429fd1245898b5c4159644d8f4b.control_points"
     },
-    "spline_degree": 1,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,
@@ -203,7 +732,6 @@
       "__class__": "__extern__",
       "path": "29a91bc17002424d8ca83912896e118b.control_points"
     },
-    "spline_degree": 1,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,
@@ -215,12 +743,252 @@
     "velocity_limits": [],
     "turn_ind_points": [],
     "map_switch_points": [],
-    "intersection_paths": [],
+    "intersection_paths": [
+      {
+        "uuid": "b29c7db1473046fabab3e48fb6dec02e",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -2.0,
+            0.0
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -5.6271432997575515,
+            0.048778338252578324
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "c9d4d429fd1245898b5c4159644d8f4b",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          2007,
+          2016,
+          28,
+          31
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "6cc08f5a46224183b972ebd10f87302e",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            2.0,
+            0.0
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            -1.6271433044633083,
+            0.048584312366504775
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "29a91bc17002424d8ca83912896e118b",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          2015,
+          2024,
+          29,
+          32
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "8db52ea868fe4adf99e45b7e795aad9d",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            98.0,
+            0.0
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            94.37285658260507,
+            0.043927830488362414
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "a47834d4a7064097afd2b8df41a1c0cb",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          2207,
+          2216,
+          28,
+          31
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      },
+      {
+        "uuid": "b9fab0743370479f825c418dd51fa879",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            102.0,
+            0.0
+          ]
+        },
+        "stop_pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            98.37285657789923,
+            0.04373380322636143
+          ]
+        },
+        "stop_proj": {
+          "start": 0,
+          "end": 0,
+          "index": 0,
+          "alpha": 0.0,
+          "point": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "distance": 0.0,
+          "arc_len": 0.0,
+          "tangent": {
+            "__class__": "numpy.ndarray",
+            "dtype": "float64",
+            "data": [
+              0.0,
+              0.0
+            ]
+          },
+          "angle": 0.0,
+          "in_bounds": 0,
+          "__class__": "tplcpp.Projection"
+        },
+        "intersection_map_uuid": "3bf8a6a66f99448d9f29030e02726c82",
+        "map_segment_step_size": 2.0,
+        "offset_path_begin": -120,
+        "offset_path_end": 20,
+        "conflict_zone": [
+          2215,
+          2224,
+          29,
+          32
+        ],
+        "d_decision": 30.0,
+        "gap_acceptance": 5.0,
+        "gap_rejection": 3.0,
+        "__class__": "tpl.environment.map_module.IntersectionPath"
+      }
+    ],
     "control_points": {
       "__class__": "__extern__",
       "path": "a0b89d182b944db6b5bd90fdda4f6db2.control_points"
     },
-    "spline_degree": 1,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,
@@ -237,7 +1005,6 @@
       "__class__": "__extern__",
       "path": "a47834d4a7064097afd2b8df41a1c0cb.control_points"
     },
-    "spline_degree": 1,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,
@@ -254,7 +1021,6 @@
       "__class__": "__extern__",
       "path": "3bf8a6a66f99448d9f29030e02726c82.control_points"
     },
-    "spline_degree": 1,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 0,
@@ -316,12 +1082,15 @@
         "map_segment_step_size": 2.0,
         "offset_path_begin": -196,
         "offset_path_end": 10,
+        "conflict_zone": [
+          413,
+          430,
+          46,
+          50
+        ],
+        "d_decision": 30.0,
         "gap_acceptance": 6.0,
-        "gap_hysteresis": 2.0,
-        "v_max_approach": 3.0,
-        "stop_always": 0,
-        "stop_for_any": 0,
-        "d_min_stopped": 5.0,
+        "gap_rejection": 3.0,
         "__class__": "tpl.environment.map_module.IntersectionPath"
       },
       {
@@ -373,12 +1142,15 @@
         "map_segment_step_size": 2.0,
         "offset_path_begin": -170,
         "offset_path_end": 9,
+        "conflict_zone": [
+          189,
+          207,
+          39,
+          43
+        ],
+        "d_decision": 30.0,
         "gap_acceptance": 6.0,
-        "gap_hysteresis": 2.0,
-        "v_max_approach": 3.0,
-        "stop_always": 0,
-        "stop_for_any": 0,
-        "d_min_stopped": 5.0,
+        "gap_rejection": 3.0,
         "__class__": "tpl.environment.map_module.IntersectionPath"
       }
     ],
@@ -386,7 +1158,6 @@
       "__class__": "__extern__",
       "path": "240389f4fad545559756c43882cec038.control_points"
     },
-    "spline_degree": 5,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 1,
@@ -403,10 +1174,121 @@
       "__class__": "__extern__",
       "path": "d527ffe0e1e8472c9429384d9daf29f5.control_points"
     },
-    "spline_degree": 5,
     "smoothing": 0.0,
     "step_size_discr": 0.5,
     "closed_path": 1,
+    "__class__": "tpl.environment.map_module.Map"
+  },
+  "3d3002740b164c14975e11787dd34667": {
+    "name": "curvy",
+    "uuid": "3d3002740b164c14975e11787dd34667",
+    "velocity_limits": [
+      {
+        "uuid": "289030e1e3f54eb89a801a8b83b2d3d0",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            502.4919180735286,
+            137.5092676267136
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "__class__": "tpl.environment.map_module.VelocityLimit"
+      }
+    ],
+    "turn_ind_points": [],
+    "map_switch_points": [],
+    "intersection_paths": [],
+    "control_points": {
+      "__class__": "__extern__",
+      "path": "3d3002740b164c14975e11787dd34667.control_points"
+    },
+    "smoothing": 500.0,
+    "step_size_discr": 0.5,
+    "closed_path": 0,
+    "__class__": "tpl.environment.map_module.Map"
+  },
+  "c8d64c9e809f4dc1abb47e5e2d344cdb": {
+    "name": "velocity_limits_test",
+    "uuid": "c8d64c9e809f4dc1abb47e5e2d344cdb",
+    "velocity_limits": [
+      {
+        "uuid": "f8fb258c699e498db25b00040eead616",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            250.0,
+            50.0
+          ]
+        },
+        "limit": 8.0,
+        "length": 30.0,
+        "min_distance": 1.0,
+        "__class__": "tpl.environment.map_module.VelocityLimit"
+      },
+      {
+        "uuid": "66cdb5a02fe64fa1964a52532747cd68",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            280.0,
+            50.0
+          ]
+        },
+        "limit": 5.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "__class__": "tpl.environment.map_module.VelocityLimit"
+      },
+      {
+        "uuid": "fc1b07e021d14cb8824f333dc6735a26",
+        "pos": {
+          "__class__": "numpy.ndarray",
+          "dtype": "float64",
+          "data": [
+            225.0,
+            50.0
+          ]
+        },
+        "limit": 0.0,
+        "length": 20.0,
+        "min_distance": 1.0,
+        "__class__": "tpl.environment.map_module.VelocityLimit"
+      }
+    ],
+    "turn_ind_points": [],
+    "map_switch_points": [],
+    "intersection_paths": [],
+    "control_points": {
+      "__class__": "numpy.ndarray",
+      "dtype": "float64",
+      "data": [
+        [
+          200.0,
+          50.0,
+          2.0,
+          2.0,
+          13.88888888888889,
+          0.0
+        ],
+        [
+          500.0,
+          50.0,
+          2.0,
+          2.0,
+          13.88888888888889,
+          0.0
+        ]
+      ]
+    },
+    "smoothing": 0.0,
+    "step_size_discr": 0.5,
+    "closed_path": 0,
     "__class__": "tpl.environment.map_module.Map"
   },
   "__class__": "objtoolbox.utils.bundle"

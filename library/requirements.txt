@@ -1,5 +1,5 @@
 sympy
 numpy
 numba
-imviz>=0.2.1
+imviz>=0.2.11
 git+https://github.com/jellysheep/structstore.git@feat_locking

@@ -51,8 +51,9 @@ class CMakeBuild(build_ext):
 
         # parallelize compilation, if using make files
 
-        cpu_count = multiprocessing.cpu_count()
-        self.build_args += ['--', '-j{}'.format(cpu_count)]
+        if not platform.system() == "Windows":
+            cpu_count = multiprocessing.cpu_count()
+            self.build_args += ['--', '-j{}'.format(cpu_count)]
 
         # additional flags
 
@@ -60,12 +61,15 @@ class CMakeBuild(build_ext):
         env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(
                                 env.get('CXXFLAGS', ''),
                                 self.distribution.get_version())
-        os.makedirs(self.build_temp, exist_ok=True)
+
+        if not os.path.exists(self.build_temp):
+            os.makedirs(self.build_temp)
 
         # call cmake to configure and build
 
-        cmake_dir = Path(__file__).absolute().parent
-        subprocess.check_call(['cmake', str(cmake_dir)] + cmake_args,
+        cmake_dir = os.path.abspath(os.path.dirname(__file__))
+
+        subprocess.check_call(['cmake', cmake_dir] + cmake_args,
                               cwd=self.build_temp,
                               env=env)
 

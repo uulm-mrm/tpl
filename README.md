@@ -67,6 +67,15 @@ This means that changes in the python code are reloaded live at runtime.
 }
 ```
 
+```
+@inproceedings{FAS_2025
+  author={Ruof, Jona and Dietmayer, Klaus},
+  booktitle={16. Uni-DAS e.V. Workshop Fahrerassistenz und automatisiertes Fahren}, 
+  title={Accelerated Dynamic Programming for Trajectory Planning of Automated Vehicles}, 
+  year={2025},
+}
+```
+
 ## License
 
 This code is released under the Apache 2.0 license.

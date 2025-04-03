@@ -9,6 +9,17 @@ import objtoolbox as otb
 from tpl import util
 
 
+class SimIdmParams:
+
+    def __init__(self):
+
+        self.time_headway = 1.5
+        self.gap_min = 2.0
+        self.a = 1.5
+        self.b = 3.0
+        self.delta = 4.0
+
+
 class SimCar:
 
     def __init__(self):
@@ -24,20 +35,27 @@ class SimCar:
         self.width = 2.0
         self.length = 4.0
 
+        self.proj = None
+        self.reverse = False
+
         self.v = 10.0
         self.target_v = 10.0
+        self.target_change_dt = -1.0
+        self.target_last_change_t = 0.0
+        self.target_v_low = 5.0
+        self.target_v_high = 20.0
 
         self.use_route_velocity = False
         self.react_to_curvature = False
+
+        self.use_idm = False
+        self.params_idm = SimIdmParams()
 
         self.noise_x = 0.0
         self.noise_y = 0.0
         self.noise_yaw = 0.0
         self.noise_v = 0.0
         self.noise_hull = 0.0
-
-        self.measure_as_track = True
-        self.measure_as_blob = False
 
         self.evade = ""
 
@@ -158,40 +176,46 @@ class SimSettings:
         self.single_step_requested = False
         self.reload_if_finished = False
 
-        self.update_env_time = True
-        self.update_env_vehicle_state = True
-        self.update_env_dynamic_objects = True
-        self.update_env_dynamic_objects_dt = 0.01
-
-        self.int_step = 0.005
-
         self.use_real_time = True
         self.fixed_time_step = 0.01
+        self.int_step = 0.005
+
+        self.update_logic = True
+        self.update_vehicle_state = True
+        self.update_dynamic_objects = True
+
+        self.set_env_time = True
+        self.set_env_vehicle_state = True
+        self.set_env_dynamic_objects = True
+        self.set_env_dynamic_objects_dt = 0.01
+        self.set_env_traffic_lights = True
+        self.set_env_time_constraints = True
+
+
+class SimRuleViolation:
+
+    COLLISION = 0
+    OFF_ROAD = 1
+    WRONG_WAY = 2
+    SPEED_LIMIT = 3
+
+    def __init__(self, t, kind, msg=""):
+
+        self.t = t
+        self.kind = kind
+        self.msg = msg
 
 
 class SimRuleChecker:
 
     def __init__(self):
 
-        self.collisions = []
+        self.enable = False
 
-        self.off_road = False
         self.off_road_dist_limit = 1.0
-
-        self.wrong_way = False
-
-        self.v_max_violation = 0.0
         self.v_max_tol = 1.0
 
-    def __savestate__(self):
-
-        s = self.__dict__.copy()
-        del s["collisions"]
-        del s["off_road"]
-        del s["wrong_way"]
-        del s["v_max_violation"]
-
-        return s
+        self.violations = []
 
 
 class SimState:
@@ -223,6 +247,7 @@ class SimState:
 
         s = self.__dict__.copy()
         del s["available_maps"]
+        del s["manager"]
 
         return s
 
@@ -270,6 +295,7 @@ def state_from_shstate(sim):
     for i, c in enumerate(save_state.cars):
         sc = SimCar()
         otb.merge(sc, c)
+        sc.proj = None
         save_state.cars[i] = sc
 
     # convert to SimTrafficLight to retain correct type

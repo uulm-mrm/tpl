@@ -477,21 +477,25 @@ __device__ __host__ void PolySeptic::df0to2(double x, double* y) {
     y[2] /= d;
 }
 
-__device__ __host__ PolyQuartic::PolyQuartic(double ss, double vs, double as,
+__device__ __host__ PolyQuartic::PolyQuartic(double ts, double ss, double vs, double as,
                                              double te, double ve, double ae) {
+
+    this->ts = ts;
+
+    double dt = te - ts;
 
     a0 = ss;
     a1 = vs;
     a2 = as / 2.0f;
 
     double A[2][2];
-    A[0][0] = 3.0f * te*te;
-    A[0][1] = 4.0f * te*te*te;
-    A[1][0] = 6.0f * te;
-    A[1][1] = 12.0f * te*te;
+    A[0][0] = 3.0f * dt*dt;
+    A[0][1] = 4.0f * dt*dt*dt;
+    A[1][0] = 6.0f * dt;
+    A[1][1] = 12.0f * dt*dt;
 
     double b[2];
-    b[0] = ve - a1 - 2.0f * a2 * te;
+    b[0] = ve - a1 - 2.0f * a2 * dt;
     b[1] = ae - 2.0f * a2;
 
     double q = 1.0 / (A[0][0]*A[1][1] - A[0][1]*A[1][0]);
@@ -506,17 +510,21 @@ __device__ __host__ PolyQuartic::PolyQuartic(double ss, double vs, double as,
 }
 
 __device__ __host__ double PolyQuartic::f(double t) {
+    t -= ts;
     return a0 + a1 * t + a2 * t*t + a3 * t*t*t + a4 * t*t*t*t;
 }
 
 __device__ __host__ double PolyQuartic::df(double t) {
+    t -= ts;
     return a1 + 2.0 * a2 * t + 3.0 * a3 * t*t + 4.0 * a4 * t*t*t;
 }
 
 __device__ __host__ double PolyQuartic::ddf(double t) {
+    t -= ts;
     return 2.0 * a2 + 6.0 * a3 * t + 12.0 * a4 * t*t;
 }
 
 __device__ __host__ double PolyQuartic::dddf(double t) {
+    t -= ts;
     return 6.0 * a3 + 24.0 * a4 * t;
 }

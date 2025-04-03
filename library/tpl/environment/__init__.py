@@ -1,6 +1,5 @@
 from tpl.environment.vehicle_state import VehicleState
 from tpl.environment.map_module import (
-        Checkpoint,
         CrossWalk,
         IntersectionPath,
         Map,

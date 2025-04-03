@@ -40,11 +40,8 @@ class SimReplay:
             self.sh_state.revalidate()
             with self.sh_state.lock():
                 sim_initialized = hasattr(self.sh_state, "sim")
-                print(self.sh_state)
             print("Waiting for tplsim ...")
             time.sleep(1.0)
-
-        print("Found to tplsim.")
 
         with self.sh_state.lock():
             self.sh_state.sim = self.recording.sim_states[0]

@@ -90,13 +90,15 @@ struct PolySeptic {
 
 struct PolyQuartic {
 
+    double ts = 0.0;
     double a0 = 0.0;
     double a1 = 0.0;
     double a2 = 0.0;
     double a3 = 0.0;
     double a4 = 0.0;
 
-    __interop__ PolyQuartic(double ss,
+    __interop__ PolyQuartic(double ts,
+                            double ss,
                             double vs,
                             double as,
                             double te,

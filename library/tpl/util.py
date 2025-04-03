@@ -1,6 +1,7 @@
 import os
 import re
 import time
+import numbers
 
 import numba
 import numpy as np
@@ -14,7 +15,10 @@ from tplcpp import (
         convex_hull,
         project,
         Projection,
-        resample
+        resample,
+        gen_prediction_geometry,
+        smooth_path,
+        lerp as lerp_cpp
     )
 
 
@@ -96,33 +100,12 @@ def normalize_angle(a):
     return a
 
 
-@numba.njit(fastmath=True)
-def lerp(x, xs, ys, angle=False):
-    """
-    Simple linear interpolation function.
-    Assumes xs values are scalar and equally spaced.
-    Values in ys can be vector-valued.
-    Out of bound values will be set to values at the boundary.
-    """
+def lerp(vals, xs, ys, angle=False, clip_alpha=True):
 
-    l = len(ys)
-
-    if l == 0:
-        return None
-    elif l == 1:
-        return ys[0]
-
-    dx = xs[1] - xs[0]
-
-    q = (x - xs[0]) / dx
-    start = int(max(0, min(l-2, np.floor(q))))
-    end = int(max(0, min(l-1, np.ceil(q))))
-    alpha = q - start
-
-    if angle:
-        return ys[start] + short_angle_dist(ys[start], ys[end]) * alpha
+    if isinstance(vals, numbers.Real):
+        return lerp_cpp([vals], xs, ys, angle, clip_alpha)[0]
     else:
-        return ys[start] * (1.0 - alpha) + ys[end] * alpha
+        return lerp_cpp(vals, xs, ys, angle, clip_alpha).squeeze()
 
 
 def load_route_from_csv(path, sampling_dist=0.5):
@@ -131,6 +114,21 @@ def load_route_from_csv(path, sampling_dist=0.5):
     route = resample_path(route, 0.5, len(route))
 
     return build_route(route)
+
+
+def path_segment(path, steps_max, start_index=0, closed=False):
+
+    end_index = int(start_index + steps_max)
+    step = 1 if end_index >= start_index else -1
+
+    if closed:
+        steps = np.arange(start_index, end_index, step)
+        steps = np.mod(steps, len(path))
+    else:
+        end_index = max(0, min(len(path)-1, end_index))
+        steps = np.arange(start_index, end_index, step)
+
+    return path[steps]
 
 
 def resample_path(path,
@@ -182,55 +180,15 @@ def interp_resampled_path(path, rsi, step_size, steps, zero_vel_at_end, closed):
                 rs[i-1, 2], rs[i, 2]) / 2) / step_size
     if closed:
         gap = np.linalg.norm(rs[0, :2] - rs[-1, :2])
-        rs[-1, 4] = 2 * np.sin(short_angle_dist(
-            rs[-1, 2], rs[0, 2]) / 2) / gap
+        if gap == 0.0:
+            rs[-1, 4] = rs[-2, 4]
+        else:
+            rs[-1, 4] = 2 * np.sin(short_angle_dist(
+                rs[-1, 2], rs[0, 2]) / 2) / gap
     else:
         rs[-1, 4] = rs[-2, 4]
 
     return rs
-
-
-def smooth_route(path, step_size=0.5, smoothness=0.1):
-    """
-    Smoothes a given path by repeatedly solving an OCP.
-    """
-
-    path = np.array(path)
-
-    RefLineSmoother = opts.genopt.build(opts.config_ref_line_smoother())
-
-    opt = RefLineSmoother()
-    opt.horizon = 20
-    opt.step = step_size
-    opt.params.w_pos = 1.0
-    opt.params.s_start = 0.0
-    opt.params.w_k = smoothness
-    opt.params.w_dk = 1.0
-    opt.params.ref_step = step_size
-    opt.u_max[:] = 5.0
-    opt.u_min[:] = -5.0
-
-    rs_path = resample_path(path, step_size, opt.horizon, 0, zero_vel_at_end=True)
-    opt.x[0] = rs_path[0, [0, 1, 2, 4]]
-    opt.u[:-1] = np.diff(rs_path[:opt.horizon, 4]) / opt.step
-    opt.u[-1] = opt.u[-2]
-
-    arr = np.zeros_like(path)
-    arr[:, 3] = path[:, 3]
-
-    for i in range(0, len(path)):
-        rs_path = resample_path(path, step_size, opt.horizon, i, zero_vel_at_end=True)
-        opt.params.ref_x = rs_path[:, 0]
-        opt.params.ref_y = rs_path[:, 1]
-        opt.params.ref_s = rs_path[:, 3] - rs_path[0, 3]
-        arr[i, :2] = opt.x[0, :2].copy()
-        arr[i, 2] = normalize_angle(opt.x[0, 2])
-        arr[i, 4] = opt.x[0, 3].copy()
-        arr[i, 5] = path[i, 5].copy()
-        opt.update()
-        opt.shift(1)
-
-    return arr
 
 
 def build_route(route):
@@ -303,7 +261,7 @@ def make_class_shared(cls):
         def bind_sh_obj(self, sh_obj):
             super().__setattr__("__sh", sh_obj)
             super().__setattr__("lock", sh_obj.lock)
-            super().__setattr__("revalidate", sh_obj.lock)
+            super().__setattr__("revalidate", sh_obj.revalidate)
 
         @staticmethod
         def fromparams(path, *args, init_args=(), init_kwargs={}, **kwargs):
@@ -352,15 +310,23 @@ def make_class_shared(cls):
 class StructStoreRegistry:
 
     REGISTRY = {}
+    SHM_DIR = f"/tmp/shm-{os.getuid()}/"
 
     @staticmethod
     def get(path, *args, **kwargs):
+
+        os.makedirs(StructStoreRegistry.SHM_DIR, exist_ok=True)
+
+        if path.startswith("/"):
+            path = path[1:]
+
+        path = os.path.join(StructStoreRegistry.SHM_DIR, path)
 
         try:
             store = StructStoreRegistry.REGISTRY[path]
             return store
         except KeyError:
-            store = sts.StructStoreShared(path, *args, **kwargs)
+            store = sts.StructStoreShared(path, *args, use_file=True, **kwargs)
             StructStoreRegistry.REGISTRY[path] = store
 
         return store

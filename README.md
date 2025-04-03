@@ -9,9 +9,9 @@ It is used at our [institute](https://www.uni-ulm.de/in/mrm/) for research on re
 
 ## Features
 
+- two fast, gpu-based dynamic programming methods for combined planning and decision finding
 - an iterative, constrained, spatial trajectory planning method
-- two, fasts gpu-based dynamic programming method for combined planning and decision making
-- a practical MPC contouring controller with deadtime compensation
+- multiple practical (MPC) controllers with deadtime compensation
 - hot code reloading functionality (via [minireload](https://github.com/joruof/minireload))
 - modular architectur with simple shared memory IPC (via [structstore](https://github.com/mertemba/structstore)) 
 - an interactive and customizeable GUI (via [imviz](https://github.com/joruof/imviz) and [imdash](https://github.com/uulm-mrm/imdash))

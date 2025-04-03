@@ -9,7 +9,8 @@ It is used at our [institute](https://www.uni-ulm.de/in/mrm/) for research on re
 
 ## Features
 
-- an iterative, constrained, spatial trajectory planning method 
+- an iterative, constrained, spatial trajectory planning method
+- two, fasts gpu-based dynamic programming method for combined planning and decision making
 - a practical MPC contouring controller with deadtime compensation
 - hot code reloading functionality (via [minireload](https://github.com/joruof/minireload))
 - modular architectur with simple shared memory IPC (via [structstore](https://github.com/mertemba/structstore)) 
